@@ -16,19 +16,62 @@
         
     </div>
     <div class="buttons">
-        <form>
-            <input type="file" accept=".csv" placeholder="CSV file exported from Elektrilevi" required/>
-            <input type="submit" value="Calculate consumption"/>
-        </form>
+        <input type="file" accept=".csv" placeholder="CSV file exported from Elektrilevi" onchange="showFile(this)" required />
+        <input type="date" required id="date_start" />
+        <input type="date" required id="date_end" />
+        <input type="button" value="Calculate consumption" onclick="calculate()" />
         
     </div>
     </div>
     <div class="body">
-        <h3>Current month NPS stock prices graph</h3>
+        <h3>Selected data range NPS stock prices graph</h3>
         <div></div>
         <h3>Current month electricity consumption graph</h3>
         <div></div>
     </div>
     
+    <script>
+        // Convert user supplied .CSV file to array for later use and generate user electricity consumption table
+        function showFile(input) {
+            let file = input.files[0];
+
+            alert(`File name: ${file.name}`);
+        }
+
+        // Get user set date range from inputs
+        function dateRange () {
+            const date_start = document.getElementById("date_start");
+            const date_end = document.getElementById("date_end");
+            const date_settings = [];
+            date_settings.push(date_start.value, date_end.value);
+
+            return date_settings;
+        }
+
+        // Use user set date range for retrieving Nord Pool Spot electricity prices by Elering API means and generate prices table
+        function getDataFromElering(date_setting) {
+            let data = null;
+            console.log("Getting data from elering");
+            const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
+            fetch(url)
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error("Network response was not OK.");
+                    }
+                    return response.blob();
+                })
+                .then(response => response.json())
+                .then(out => {
+                    //handle elering data to table here
+                })
+                .catch(err => {throw err});
+        }
+
+        // Calculate electricity consumption for user based on Nord Pool Spot prices and user consumption and generate table from calculations
+        function calculate() {
+            const date_setting = dateRange();
+            getDataFromElering(date_setting);
+        }
+    </script>
 </body>
 </html>

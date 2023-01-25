@@ -1,5 +1,5 @@
 # work still in progress
-## An web application for comparing a and reading your electricity consumption data.
+## An web application for comparing and reading your electricity consumption data.
 
 Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values.
 They give it only how much you have consumed (kwh). For getting to know how much you used electricity in a
@@ -19,3 +19,6 @@ at any hour consumed in previous hours.
 NB! CSV file data wont contain 100% consumed electricity data because latest consumtion data (around 5-12 hours)
 is usually not present since Elektrilevi has not read the metering device for data. Data is updated many times 
 a day but latest data is needed to be waited for, hence no the latest data in CSV file data.
+
+### Dependencies
+Papa Parse - for CSV file data parsing.
