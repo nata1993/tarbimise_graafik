@@ -26,7 +26,7 @@
     <div class="body">
         <h3>Selected data range NPS stock prices graph</h3>
         <div style="display: block;">
-            <canvas id="npsPrices" width="500" height="250" />
+            <canvas id="npsPrices" width="500" height="250"></canvas>
         </div>
         <h3>Current month electricity consumption graph</h3>
         <div>
@@ -60,12 +60,14 @@
             fetch(url)
                 .then((response) => response.json())
                 .then((res) => {
-                    // Drawing table to canvas
+                    // Drawing graph to canvas
                     let canvas = document.getElementById("npsPrices");
                     let ctx = canvas.getContext("2d");
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.fillStyle = "#CCC";
                     // Vertical line
                     ctx.fillRect(0, 0, 500, 250);
+                    ctx.beginPath();
                     ctx.moveTo(60, 25);
                     ctx.lineTo(58, 30);
                     ctx.moveTo(60, 25);
@@ -77,24 +79,35 @@
                     ctx.lineTo(470, 202);
                     ctx.moveTo(475, 200);
                     ctx.lineTo(470, 198);
-                    ctx.font = "10px arial";
+                    ctx.font = "8px arial";
                     ctx.fillStyle = "#000";
                     ctx.fillText("0", 50, 210)
                     ctx.fillText("NPS price", 10, 40);
                     ctx.fillText("Hours", 425, 235);
-                    // Add small strokes depending on how many data points in time
+                    // Draws small strokes to horisontal line
                     let pointWidth = 385/res.data.ee.length;
                     let dataPointCount = res.data.ee.length;
                     let x = 60 + pointWidth;
-                    let x2 = 56 + pointWidth;
+                    let x2 = 57 + pointWidth;
                     ctx.moveTo(x, 200);
                     for(var i = 0; i < dataPointCount; i++) {
                         let width = x + (i * pointWidth);
                         let width2 = x2 + (i * pointWidth);
                         ctx.moveTo(width, 195);
                         ctx.lineTo(width, 205);
-                        ctx.fillText(i, width2, 215);
                     }
+                    ctx.moveTo(x, 205);
+                    // Draws diagonal lines to small vertical lines
+                    for(var i = 0; i < dataPointCount; i++) {
+                        let width = x + (i * pointWidth);
+                        let width2 = x2 + (i * pointWidth) - 1;
+                        ctx.moveTo(width, 205);
+                        ctx.lineTo(width2, 212);
+                        ctx.fillText(i+1, width2-5, 222);
+                    }
+
+                    const maxPrice = Math.max(res.data.ee);
+                    console.log(maxPrice);
 
                     ctx.stroke();
                 })

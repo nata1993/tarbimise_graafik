@@ -20,6 +20,7 @@ body {
 .body {
     width: auto;
     background-color: lightskyblue;
+    padding: 10px;
 }
 .indent {
     padding: 10px;
