@@ -58,8 +58,8 @@
             console.log("Getting data from elering");
             const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
             fetch(url)
-                .then(response => response.json())
-                .then(out => {
+                .then((response) => response.json())
+                .then((res) => {
                     // Drawing table to canvas
                     let canvas = document.getElementById("npsPrices");
                     let ctx = canvas.getContext("2d");
@@ -77,12 +77,26 @@
                     ctx.lineTo(470, 202);
                     ctx.moveTo(475, 200);
                     ctx.lineTo(470, 198);
-                    ctx.stroke();
                     ctx.font = "10px arial";
                     ctx.fillStyle = "#000";
+                    ctx.fillText("0", 50, 210)
                     ctx.fillText("NPS price", 10, 40);
-                    ctx.fillText("Hours", 425, 215);
+                    ctx.fillText("Hours", 425, 235);
+                    // Add small strokes depending on how many data points in time
+                    let pointWidth = 385/res.data.ee.length;
+                    let dataPointCount = res.data.ee.length;
+                    let x = 60 + pointWidth;
+                    let x2 = 56 + pointWidth;
+                    ctx.moveTo(x, 200);
+                    for(var i = 0; i < dataPointCount; i++) {
+                        let width = x + (i * pointWidth);
+                        let width2 = x2 + (i * pointWidth);
+                        ctx.moveTo(width, 195);
+                        ctx.lineTo(width, 205);
+                        ctx.fillText(i, width2, 215);
+                    }
 
+                    ctx.stroke();
                 })
                 .catch(err => {throw err});
         }
