@@ -24,3 +24,6 @@ body {
 .indent {
     padding: 10px;
 }
+#npsPrices {
+    border: 2px black solid;
+}

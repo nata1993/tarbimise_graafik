@@ -25,9 +25,13 @@
     </div>
     <div class="body">
         <h3>Selected data range NPS stock prices graph</h3>
-        <div></div>
+        <div style="display: block;">
+            <canvas id="npsPrices" width="500" height="250" />
+        </div>
         <h3>Current month electricity consumption graph</h3>
-        <div></div>
+        <div>
+
+        </div>
     </div>
     
     <script>
@@ -54,15 +58,31 @@
             console.log("Getting data from elering");
             const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
             fetch(url)
-                .then(response => {
-                    if(!response.ok) {
-                        throw new Error("Network response was not OK.");
-                    }
-                    return response.blob();
-                })
                 .then(response => response.json())
                 .then(out => {
-                    //handle elering data to table here
+                    // Drawing table to canvas
+                    let canvas = document.getElementById("npsPrices");
+                    let ctx = canvas.getContext("2d");
+                    ctx.fillStyle = "#CCC";
+                    // Vertical line
+                    ctx.fillRect(0, 0, 500, 250);
+                    ctx.moveTo(60, 25);
+                    ctx.lineTo(58, 30);
+                    ctx.moveTo(60, 25);
+                    ctx.lineTo(62, 30);
+                    ctx.moveTo(60, 25);
+                    ctx.lineTo(60, 200);
+                    // Horizontal line
+                    ctx.lineTo(475, 200);
+                    ctx.lineTo(470, 202);
+                    ctx.moveTo(475, 200);
+                    ctx.lineTo(470, 198);
+                    ctx.stroke();
+                    ctx.font = "10px arial";
+                    ctx.fillStyle = "#000";
+                    ctx.fillText("NPS price", 10, 40);
+                    ctx.fillText("Hours", 425, 215);
+
                 })
                 .catch(err => {throw err});
         }
