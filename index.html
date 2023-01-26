@@ -55,7 +55,6 @@
         // Use user set date range for retrieving Nord Pool Spot electricity prices by Elering API means and generate prices table
         function getDataFromElering(date_setting) {
             let data = null;
-            console.log("Getting data from elering");
             const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
             fetch(url)
                 .then((response) => response.json())
@@ -85,29 +84,40 @@
                     ctx.fillText("NPS price", 10, 40);
                     ctx.fillText("Hours", 425, 235);
                     // Draws small strokes to horisontal line
-                    let pointWidth = 385/res.data.ee.length;
+                    let widthBetweenPoints = 385/res.data.ee.length;
                     let dataPointCount = res.data.ee.length;
-                    let x = 60 + pointWidth;
-                    let x2 = 57 + pointWidth;
+                    let x = 60 + widthBetweenPoints;
+                    let x2 = 57 + widthBetweenPoints;
                     ctx.moveTo(x, 200);
                     for(var i = 0; i < dataPointCount; i++) {
-                        let width = x + (i * pointWidth);
-                        let width2 = x2 + (i * pointWidth);
+                        let width = x + (i * widthBetweenPoints);
                         ctx.moveTo(width, 195);
                         ctx.lineTo(width, 205);
                     }
                     ctx.moveTo(x, 205);
                     // Draws diagonal lines to small vertical lines
                     for(var i = 0; i < dataPointCount; i++) {
-                        let width = x + (i * pointWidth);
-                        let width2 = x2 + (i * pointWidth) - 1;
+                        let width = x + (i * widthBetweenPoints);
+                        let width2 = x2 + (i * widthBetweenPoints) - 1;
                         ctx.moveTo(width, 205);
                         ctx.lineTo(width2, 212);
                         ctx.fillText(i+1, width2-5, 222);
                     }
-
-                    const maxPrice = Math.max(res.data.ee);
-                    console.log(maxPrice);
+                    // Filter out highest price within given data sample
+                    let areaPrices = Object.values(res.data.ee);
+                    const maxPrice = maxValueFromDataset(areaPrices);
+                    const highestPriceOnGraph = Math.round(maxPrice/10)*10;
+                    // Draws small strokes to vertical line
+                    dataPointCount = highestPriceOnGraph/5;
+                    widthBetweenPoints = 150/dataPointCount;
+                    let y = 200 - widthBetweenPoints;
+                    x = 55;
+                    x2 = 65;
+                    for(var i = 0; i < dataPointCount; i++) {
+                        let width = y - (i * widthBetweenPoints);
+                        ctx.moveTo(x, width);
+                        ctx.lineTo(x2, width);
+                    }
 
                     ctx.stroke();
                 })
@@ -118,6 +128,17 @@
         function calculate() {
             const date_setting = dateRange();
             getDataFromElering(date_setting);
+        }
+
+        // Helper function for filtering out max price within dataset
+        function maxValueFromDataset(dataSample) {
+            let max = 0;
+            for(var i = 0; i < dataSample.length; i++) {
+                if (dataSample[i].price > max) {
+                    max = dataSample[i].price;
+                }
+            }
+            return max;
         }
     </script>
 </body>
