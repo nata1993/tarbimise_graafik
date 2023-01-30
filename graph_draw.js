@@ -36,7 +36,8 @@ function getDataFromElering(date_setting) {
             ctx.font = "8px arial";
             ctx.fillStyle = "#000";
             ctx.fillText("0", 50, 210)
-            ctx.fillText("NPS price\n(MWh)", 10, 40);
+            ctx.fillText("NPS price", 10, 40);
+            ctx.fillText("MWh", 10, 50);
             ctx.fillText("Hours", 425, 235);
             // Draws small strokes to horisontal line
             let widthBetweenPoints = 385/res.data.ee.length;
@@ -60,7 +61,7 @@ function getDataFromElering(date_setting) {
             }
             // Filter out highest price within given data sample
             let areaPrices = Object.values(res.data.ee);
-            const maxPrice = maxValueFromDataset(areaPrices);
+            const maxPrice = maxValueFromDataset(areaPrices)*1.2;
             const highestPriceOnGraph = Math.round(maxPrice/10)*10;
             // Draws small strokes to vertical line
             dataPointCount = highestPriceOnGraph/5;
@@ -77,11 +78,51 @@ function getDataFromElering(date_setting) {
 
             ctx.stroke();
 
-            let fullCircleInRadians = 360*Math.PI/180;
+            // Draws small dots where hour price is on graph
+            const fullCircleInRadians = 360*Math.PI/180;
 
-            ctx.beginPath();
-            ctx.arc(100, 100, 2, 0, fullCircleInRadians, false);
-            ctx.fill();
+            widthBetweenPoints = 385/res.data.ee.length;
+            let calculatedX = 60;
+            let calculatedY = null;
+            let baseY = 200;    
+
+            for(const item of res.data.ee) {
+                calculatedX += widthBetweenPoints;
+                calculatedY = baseY - item["price"];
+                hourPrice = item["price"];
+                ctx.fillStyle = "#F00";
+                if(hourPrice <= 50) {
+                    ctx.fillStyle = "#0F0";
+                }
+                else if(hourPrice > 50 && hourPrice <= 100) {
+                    ctx.fillStyle = "#00F";
+                }
+                else {
+                    console.log("red");
+                }
+                ctx.beginPath();
+                
+                ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
+                ctx.fill();
+            };
+            /*for(var i = 0; i < dataPointCount; i++) {
+                ctx.beginPath();
+                calculatedX += widthBetweenPoints;
+                    calculatedY = baseY - res.data.ee[i]["price"];
+                    hourPrice = res.data.ee[i]["price"];
+                if(hourPrice <= 50) {
+                    ctx.fillStyle = "#0F0";
+                }
+                else if(hourPrice > 50 || hourPrice <= 100) {
+                    ctx.fillStyle = "#00F";
+                }
+                else {
+                    ctx.fillStyle = "#F00";
+                }
+                ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
+                ctx.fill();
+            }*/
+            
         })
         .catch(err => {throw err});
 }
@@ -91,7 +132,7 @@ function calculate() {
     // Check if user did not choose date range
     let value1 = document.getElementById("date_start").value;
     let value2 = document.getElementById("date_end").value;
-    if(value1 === "" || value2 === "") {
+    if(value1.length == 0 || value2.length == 0) {
         // Drawing note for user to canvas
         let canvas = document.getElementById("npsPrices");
         let ctx = canvas.getContext("2d");
