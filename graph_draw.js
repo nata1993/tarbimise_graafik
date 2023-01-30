@@ -94,8 +94,8 @@ function getDataFromElering(date_setting) {
                 if(hourPrice <= 50) {
                     ctx.fillStyle = "#0F0";
                 }
-                else if(hourPrice > 50 && hourPrice <= 100) {
-                    ctx.fillStyle = "#00F";
+                else if(hourPrice > 50 && hourPrice <= 110) {
+                    ctx.fillStyle = "#FF0";
                 }
                 else {
                     console.log("red");
