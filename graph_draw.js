@@ -105,24 +105,6 @@ function getDataFromElering(date_setting) {
                 ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
                 ctx.fill();
             };
-            /*for(var i = 0; i < dataPointCount; i++) {
-                ctx.beginPath();
-                calculatedX += widthBetweenPoints;
-                    calculatedY = baseY - res.data.ee[i]["price"];
-                    hourPrice = res.data.ee[i]["price"];
-                if(hourPrice <= 50) {
-                    ctx.fillStyle = "#0F0";
-                }
-                else if(hourPrice > 50 || hourPrice <= 100) {
-                    ctx.fillStyle = "#00F";
-                }
-                else {
-                    ctx.fillStyle = "#F00";
-                }
-                ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
-                ctx.fill();
-            }*/
-            
         })
         .catch(err => {throw err});
 }
