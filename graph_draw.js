@@ -66,7 +66,7 @@ function getDataFromElering(date_setting) {
             }
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(res.data.ee);
-            const lowestPrice = minPrice(res.data.ee);
+            const lowestPrice = minPrice(res.data.ee);            
             // Special rounding to uppest tenth number
             const highestPriceOnGraph = Math.round(highestPrice/10)*10;
             // Draws small strokes to vertical line
@@ -93,9 +93,11 @@ function getDataFromElering(date_setting) {
             let calculatedY = 0;
             let baseY = 200;    
 
-            for(const item of res.data.ee) {
+            for(const item of res.data.ee) {// Calculate ratio between 175px height of vertical graph and highest price
+                const ratio = 175/highestPrice;
                 calculatedX += widthBetweenPoints;
-                calculatedY = baseY - item["price"];
+                calculatedY = baseY - item["price"]*ratio;
+                console.log(ratio);
                 hourPrice = item["price"];
                 if(hourPrice <= 50) {
                     ctx.fillStyle = "#0F0";
@@ -119,7 +121,7 @@ function getDataFromElering(date_setting) {
         .catch(err => {throw err});
 }
 
-// Draw  Nord Pool Spot prices based on user selected date range
+// Draw Nord Pool Spot prices based on user selected date range
 function calculate() {
     // Check if user did not choose date range
     let value1 = document.getElementById("date_start").value;
