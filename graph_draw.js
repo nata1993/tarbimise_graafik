@@ -41,9 +41,9 @@ function getDataFromElering(date_setting) {
             ctx.font = "8px arial";
             ctx.fillStyle = "#000";
             ctx.fillText("0", 50, 210)
-            ctx.fillText("NPS price", 10, 40);
-            ctx.fillText("MWh", 10, 50);
-            ctx.fillText("Hours", 425, 235);
+            ctx.fillText("NPS price", 10, 25);
+            ctx.fillText("MWh", 10, 35);
+            ctx.fillText("Hours", 460, 225);
             // Draws small strokes to horisontal line
             let widthBetweenPoints = 385/res.data.ee.length; // 385 is graph line length
             let dataPointCount = res.data.ee.length;
@@ -69,15 +69,32 @@ function getDataFromElering(date_setting) {
             const lowestPrice = minPrice(res.data.ee);            
             // Special rounding to uppest tenth number
             const highestPriceOnGraph = Math.round(highestPrice/10)*10;
+            let nRatio = 0;
             // Draws small strokes to vertical line
-            dataPointCount = highestPriceOnGraph/5;
+            if(highestPriceOnGraph < 100) {
+                nRatio = 5;
+                dataPointCount = highestPriceOnGraph/nRatio;
+            }
+            else if (highestPriceOnGraph >= 100 && highestPriceOnGraph < 200) {
+                nRatio = 10;
+                dataPointCount = highestPriceOnGraph/nRatio;
+            }
+            else if(highestPriceOnGraph >= 200 && highestPriceOnGraph < 300 ){
+                nRatio = 15;
+                dataPointCount = highestPriceOnGraph/nRatio;
+            }
+            else if(highestPriceOnGraph >= 300 && highestPriceOnGraph < 400 ){
+                nRatio = 20;
+                dataPointCount = highestPriceOnGraph/nRatio;
+            }
+                
             widthBetweenPoints = 150/dataPointCount;
             let y = 200 - widthBetweenPoints;
             strokeStart = 55;
             strokeEnd = 65;
             for(var i = 0; i < dataPointCount; i++) {
                 let width = y - (i * widthBetweenPoints);
-                ctx.fillText(`${5 * (i + 1)}`, strokeStart-15, width);
+                ctx.fillText(`${nRatio * (i + 1)}`, strokeStart-15, width);
                 ctx.moveTo(strokeStart, width);
                 ctx.lineTo(strokeEnd, width);
             }
@@ -93,8 +110,8 @@ function getDataFromElering(date_setting) {
             let calculatedY = 0;
             let baseY = 200;    
 
-            for(const item of res.data.ee) {// Calculate ratio between 175px height of vertical graph and highest price
-                const ratio = 175/highestPrice;
+            for(const item of res.data.ee) {
+                const ratio = 175/highestPrice; // Ratio between 175px height of vertical graph and highest price
                 calculatedX += widthBetweenPoints;
                 calculatedY = baseY - item["price"]*ratio;
                 console.log(ratio);
