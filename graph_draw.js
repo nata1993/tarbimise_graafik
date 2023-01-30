@@ -1,4 +1,6 @@
-// Get user set date range from inputs
+let baseEleringData = null;
+
+// Returns user date range from inputs
 function dateRange () {
     const date_start = document.getElementById("date_start");
     const date_end = document.getElementById("date_end");
@@ -8,19 +10,21 @@ function dateRange () {
     return date_settings;
 }
 
-// Use user set date range for retrieving Nord Pool Spot electricity prices by Elering API means and generate prices table
+// Use user set date range for retrieving Nord Pool Spot electricity prices
+// from Elering API and generate prices graph
 function getDataFromElering(date_setting) {
     const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
-            // Drawing graph to canvas
+            baseEleringData = res.data.ee;
+            // Prepare canvas
             let canvas = document.getElementById("npsPrices");
             let ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#CCC";
-            ctx.fillRect(0, 0, 500, 250);
-            // Vertical line
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Vertical graph line
             ctx.beginPath();
             ctx.moveTo(60, 25);
             ctx.lineTo(58, 30);
@@ -28,11 +32,12 @@ function getDataFromElering(date_setting) {
             ctx.lineTo(62, 30);
             ctx.moveTo(60, 25);
             ctx.lineTo(60, 200);
-            // Horizontal line
+            // Horizontal graph line
             ctx.lineTo(475, 200);
             ctx.lineTo(470, 202);
             ctx.moveTo(475, 200);
             ctx.lineTo(470, 198);
+            // Add text to graph
             ctx.font = "8px arial";
             ctx.fillStyle = "#000";
             ctx.fillText("0", 50, 210)
@@ -40,57 +45,58 @@ function getDataFromElering(date_setting) {
             ctx.fillText("MWh", 10, 50);
             ctx.fillText("Hours", 425, 235);
             // Draws small strokes to horisontal line
-            let widthBetweenPoints = 385/res.data.ee.length;
+            let widthBetweenPoints = 385/res.data.ee.length; // 385 is graph line length
             let dataPointCount = res.data.ee.length;
-            let x = 60 + widthBetweenPoints;
-            let x2 = 57 + widthBetweenPoints;
-            ctx.moveTo(x, 200);
+            let strokeStart = 60 + widthBetweenPoints;
+            let strokeEnd = 57 + widthBetweenPoints;
+            ctx.moveTo(strokeStart, 200);
             for(var i = 0; i < dataPointCount; i++) {
-                let width = x + (i * widthBetweenPoints);
+                let width = strokeStart + (i * widthBetweenPoints);
                 ctx.moveTo(width, 195);
                 ctx.lineTo(width, 205);
             }
-            ctx.moveTo(x, 205);
-            // Draws diagonal lines to small vertical lines
+            ctx.moveTo(strokeStart, 205);
+            // Draws diagonal lines to small strokes on horisontal line
             for(var i = 0; i < dataPointCount; i++) {
-                let width = x + (i * widthBetweenPoints);
-                let width2 = x2 + (i * widthBetweenPoints) - 1;
+                let width = strokeStart + (i * widthBetweenPoints);
+                let width2 = strokeEnd + (i * widthBetweenPoints) - 1;
                 ctx.moveTo(width, 205);
                 ctx.lineTo(width2, 212);
                 ctx.fillText(i+1, width2-5, 222);
             }
-            // Filter out highest price within given data sample
-            let areaPrices = Object.values(res.data.ee);
-            const maxPrice = maxValueFromDataset(areaPrices)*1.2;
-            const highestPriceOnGraph = Math.round(maxPrice/10)*10;
+            // Filter out highest and lowest price within given data sample
+            const highestPrice = maxPrice(res.data.ee);
+            const lowestPrice = minPrice(res.data.ee);
+            // Special rounding to uppest tenth number
+            const highestPriceOnGraph = Math.round(highestPrice/10)*10;
             // Draws small strokes to vertical line
             dataPointCount = highestPriceOnGraph/5;
             widthBetweenPoints = 150/dataPointCount;
             let y = 200 - widthBetweenPoints;
-            x = 55;
-            x2 = 65;
+            strokeStart = 55;
+            strokeEnd = 65;
             for(var i = 0; i < dataPointCount; i++) {
                 let width = y - (i * widthBetweenPoints);
-                ctx.fillText(`${5 * (i + 1)}`, x-15, width);
-                ctx.moveTo(x, width);
-                ctx.lineTo(x2, width);
+                ctx.fillText(`${5 * (i + 1)}`, strokeStart-15, width);
+                ctx.moveTo(strokeStart, width);
+                ctx.lineTo(strokeEnd, width);
             }
 
+            // Finalize graph drawing
             ctx.stroke();
 
-            // Draws small dots where hour price is on graph
-            const fullCircleInRadians = 360*Math.PI/180;
+            // Draws small coloured dots where hour price is on graph
+            const fullCircleInRadians = 360*Math.PI/180
 
-            widthBetweenPoints = 385/res.data.ee.length;
+            widthBetweenPoints = 385/res.data.ee.length; // 385 is graph line length
             let calculatedX = 60;
-            let calculatedY = null;
+            let calculatedY = 0;
             let baseY = 200;    
 
             for(const item of res.data.ee) {
                 calculatedX += widthBetweenPoints;
                 calculatedY = baseY - item["price"];
                 hourPrice = item["price"];
-                ctx.fillStyle = "#F00";
                 if(hourPrice <= 50) {
                     ctx.fillStyle = "#0F0";
                 }
@@ -98,24 +104,28 @@ function getDataFromElering(date_setting) {
                     ctx.fillStyle = "#FF0";
                 }
                 else {
-                    console.log("red");
+                    ctx.fillStyle = "#F00";
                 }
+
                 ctx.beginPath();
-                
                 ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
                 ctx.fill();
+
+                // Fill lowest and highest prices to HTML
+                document.getElementById("highestPrice").innerHTML = `Day highest price: ${highestPrice} €/KWh`;
+                document.getElementById("lowestPrice").innerHTML = `Day lowest price: ${lowestPrice} €/KWh`;
             };
         })
         .catch(err => {throw err});
 }
 
-// Calculate electricity consumption for user based on Nord Pool Spot prices and user consumption and generate table from calculations
+// Draw  Nord Pool Spot prices based on user selected date range
 function calculate() {
     // Check if user did not choose date range
     let value1 = document.getElementById("date_start").value;
     let value2 = document.getElementById("date_end").value;
     if(value1.length == 0 || value2.length == 0) {
-        // Drawing note for user to canvas
+        // Drawing note for user to canvas if not chosen date range
         let canvas = document.getElementById("npsPrices");
         let ctx = canvas.getContext("2d");
         ctx.fillStyle = "#CCC";
@@ -130,13 +140,26 @@ function calculate() {
     }
 }
 
-// Helper function for filtering out max price within dataset
-function maxValueFromDataset(dataSample) {
+// Helper function for filtering out max price within dataset with VAT
+function maxPrice(eleringData) {
+    const areaPrices = Object.values(eleringData);
     let max = 0;
-    for(var i = 0; i < dataSample.length; i++) {
-        if (dataSample[i].price > max) {
-            max = dataSample[i].price;
+    for(var i = 0; i < eleringData.length; i++) {
+        if (areaPrices[i].price > max) {
+            max = areaPrices[i].price;
         }
     }
-    return max;
+    return max*1.2;
+}
+
+// Helper function for filtering out min price within dataset with VAT
+function minPrice(eleringData) {
+    const areaPrices = Object.values(eleringData);
+    let low = areaPrices[0].price;
+    for(var i = 0; i < eleringData.length; i++) {
+        if(areaPrices[i].price < low) {
+            low = areaPrices[i].price;
+        }
+    }
+    return low*1.2;
 }
