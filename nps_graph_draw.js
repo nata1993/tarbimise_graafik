@@ -87,7 +87,6 @@ function getDataFromElering(date_setting) {
                 nRatio = 20;
                 dataPointCount = highestPriceOnGraph / nRatio;
             }
-
             widthBetweenPoints = 150 / dataPointCount;
             let y = 200 - widthBetweenPoints;
             strokeStart = 55;
@@ -98,22 +97,18 @@ function getDataFromElering(date_setting) {
                 ctx.moveTo(strokeStart, width);
                 ctx.lineTo(strokeEnd, width);
             }
-
             // Finalize graph drawing
             ctx.lineWidth = 1;
             ctx.stroke();
-
             // Draws continuous line of prices on graph
             widthBetweenPoints = 385 / res.data.ee.length; // 385 is graph line length
             let calculatedX = 60;
             let calculatedY = 0;
             let baseY = 200;
             const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
-
             ctx.beginPath();
             ctx.lineWidth = 2;
             ctx.moveTo(60, baseY - res.data.ee[0]["price"] * ratio);
-
             for (const item of res.data.ee) {
                 calculatedX += widthBetweenPoints;
                 calculatedY = baseY - item["price"] * ratio;
@@ -132,7 +127,6 @@ function getDataFromElering(date_setting) {
                 ctx.lineTo(calculatedX + widthBetweenPoints, calculatedY);
             };
             ctx.stroke();
-
             // Fill lowest and highest prices to HTML
             document.getElementById("highestPrice").innerHTML = `Day highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Day lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;

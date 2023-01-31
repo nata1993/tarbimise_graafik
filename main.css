@@ -1,7 +1,6 @@
 body {
     text-align: center;
 }
-
 .head {
     display: flex;
     flex-direction: column;
@@ -26,6 +25,7 @@ body {
     padding: 10px;
 }
 #npsPrices {
+    background-color: #CCC;
     border: 2px black solid;
 }
 #userConsumption {
