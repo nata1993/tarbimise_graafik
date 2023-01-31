@@ -100,18 +100,21 @@ function getDataFromElering(date_setting) {
             }
 
             // Finalize graph drawing
+            ctx.lineWidth = 1;
             ctx.stroke();
 
-            // Draws small coloured dots where hour price is on graph
-            const fullCircleInRadians = 360 * Math.PI / 180
-
+            // Draws continuous line of prices on graph
             widthBetweenPoints = 385 / res.data.ee.length; // 385 is graph line length
             let calculatedX = 60;
             let calculatedY = 0;
             let baseY = 200;
+            const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
+
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.moveTo(60, baseY - res.data.ee[0]["price"] * ratio);
 
             for (const item of res.data.ee) {
-                const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
                 calculatedX += widthBetweenPoints;
                 calculatedY = baseY - item["price"] * ratio;
                 hourPrice = item["price"];
@@ -125,14 +128,14 @@ function getDataFromElering(date_setting) {
                     ctx.fillStyle = "#F00";
                 }
 
-                ctx.beginPath();
-                ctx.arc(calculatedX, calculatedY, 3, 0, fullCircleInRadians, false);
-                ctx.fill();
-
-                // Fill lowest and highest prices to HTML
-                document.getElementById("highestPrice").innerHTML = `Day highest price: ${Number(highestPrice / 1000).toFixed(3)} \u00A2/KWh`;
-                document.getElementById("lowestPrice").innerHTML = `Day lowest price: ${Number(lowestPrice / 1000).toFixed(3)} \u00A2/KWh`;
+                ctx.lineTo(calculatedX, calculatedY);
+                ctx.lineTo(calculatedX + widthBetweenPoints, calculatedY);
             };
+            ctx.stroke();
+
+            // Fill lowest and highest prices to HTML
+            document.getElementById("highestPrice").innerHTML = `Day highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `Day lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
         })
         .catch(err => { throw err });
 }
