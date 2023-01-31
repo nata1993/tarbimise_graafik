@@ -32,20 +32,13 @@
         </div>
         <h3>Current month electricity consumption graph</h3>
         <div>
-            <svg id="userConsumption" width="500" heigth="250">
-                <circle cx="50" cy="200" r="40" stroke="green" stroke-width="4" fill="yellow" />
+            <svg id="userConsumption" version="1.1" width="100%" heigth="100%" viewbox="0 0 500 250">
+                <rect width="100%" height="100%" fill="#CCC"/>                
             </svg>
         </div>
     </div>
-    
-    <script>
-        // Convert user supplied .CSV file to array for later use and generate user electricity consumption table
-        function showFile(input) {
-            let file = input.files[0];
 
-            alert(`File name: ${file.name}`);
-        }
-    </script>
-    <script src="./graph_draw.js"></script>
+    <script src="./nps_graph_draw.js"></script>
+    <script src="./csv_graph_draw.js"></script>
 </body>
 </html>
