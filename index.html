@@ -19,7 +19,7 @@
         
     </div>
     <div class="buttons">
-        <input type="file" accept=".csv" placeholder="CSV file exported from Elektrilevi" onchange="showFile(this)" required />
+        <input id="csvFileInput" type="file" accept=".csv" placeholder="CSV file exported from Elektrilevi" onchange="drawCSVgraph()" required />
         <input type="date" id="date_start" required />
         <input type="date" id="date_end" required />
         <input type="button" value="Calculate consumption" onclick="calculate()" />
@@ -29,13 +29,13 @@
     <div class="body">
         <h3>Selected data range NPS stock prices graph</h3>
         <div>
-            <canvas id="npsPrices" width="500" height="250"></canvas>
-            <h3 id="highestPrice"></h3>
-            <h3 id="lowestPrice"></h3>
+            <canvas id="npsPrices"></canvas>
+            <h3 id="highestPrice">Period highest price: -</h3>
+            <h3 id="lowestPrice">Period lowest price: -</h3>
         </div>
         <h3>Current month electricity consumption graph</h3>
         <div>
-            <svg id="userConsumption" version="1.1" width="500" heigth="250" viewbox="0 0 500 250">
+            <svg id="userConsumption" version="1.1">
                 <rect width="100%" height="100%" fill="#CCC"/>
                 <g id="graph" stroke="#000" stroke-width="1"></g>
                 <g id="priceVerticle" stroke="#000" stroke-width="1"></g>
@@ -45,5 +45,6 @@
 
     <script src="./nps_graph_draw.js"></script>
     <script src="./csv_graph_draw.js"></script>
+    <script src="./PapaParse-5.0.2/papaparse.min.js"></script>
 </body>
 </html>

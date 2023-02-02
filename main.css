@@ -25,9 +25,13 @@ body {
     padding: 10px;
 }
 #npsPrices {
+    width: 100%;
+    height: 250px;
     background-color: #CCC;
     border: 2px black solid;
 }
 #userConsumption {
+    width: 100%;
+    height: 250px;
     border: 2px black solid;
 }

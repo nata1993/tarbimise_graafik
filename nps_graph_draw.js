@@ -128,8 +128,8 @@ function getDataFromElering(date_setting) {
             };
             ctx.stroke();
             // Fill lowest and highest prices to HTML
-            document.getElementById("highestPrice").innerHTML = `Day highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `Day lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
         })
         .catch(err => { throw err });
 }
