@@ -18,18 +18,18 @@ mean.
 
 HTML
 
-`
+```
 <canvas id="canvas" width="500" heigth="250"></canvas>
-`
+```
 
 CSS
 
-`
+```
 #canvas {
     width: 500,
     heigth: 250
 }
-`
+```
 
 The width and height specified in HTML canvas element are attributes. Those numbers are IN
 PIXELS! Can't set those to em, rm, or even %. Browser will ignore those and will just use 500
@@ -49,7 +49,7 @@ well, nonexistent. Offcourse you import it through HTML script tag either in hea
 part, both have pros and cons for that part. Offcourse you then just call it through its class 
 calling:
 
-`
+```
 Papa.parse(file, {
     {
         // This all is default configuration options taken from PapaParse documentation
@@ -80,7 +80,7 @@ Papa.parse(file, {
         delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP]
     }
 });
-`
+```
 
 e is not assigned: type error.
 file is not assigned: argument1 error.
@@ -93,17 +93,17 @@ First is:
 
 HTML
 
-`
+```
 <input type="file" accept=".csv" required onChange="getFile(this)">
-`
+```
 
 JavaScript
 
-`
+```
 function getFile(file) {
     Papa.Parse(file, {config});
 }
-`
+```
 
 Errors all the way...
 
@@ -111,16 +111,16 @@ Tried other ways also until I sumbled upon one nice solution:
 
 HTML
 
-`
+```
 <input id="graph" type="file" accept=".csv" requiredš>
-`
+```
 
 JavaScript
 
-`
+```
 const file = document.getElementById("csvFileInput").files[0];
 Papa.Parse(file, {config});
-`
+```
 
 Now it finnaly worked like a charm and altho there are many ways to retrieve file from
 input, this one worked finnaly for whatever reason.
