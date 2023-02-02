@@ -20,10 +20,13 @@ function getDataFromElering(date_setting) {
             baseEleringData = res.data.ee;
             // Prepare canvas
             let canvas = document.getElementById("npsPrices");
+            let canvasWidth = document.getElementById("parent").offsetWidth
+            canvas.setAttribute("width", canvasWidth);
+            canvas.setAttribute("height", 250);
             let ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvasWidth, canvas.height);
             ctx.fillStyle = "#CCC";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, canvasWidth, canvas.height);
             // Vertical graph line
             ctx.beginPath();
             ctx.moveTo(60, 25);
