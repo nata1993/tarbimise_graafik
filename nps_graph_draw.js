@@ -21,6 +21,7 @@ function getDataFromElering(date_setting) {
             // Prepare canvas
             let canvas = document.getElementById("npsPrices");
             let canvasWidth = document.getElementById("parent").offsetWidth
+            let graphAndVerticleDistanceFromEnd = 200;
             canvas.setAttribute("width", canvasWidth);
             canvas.setAttribute("height", 250);
             let ctx = canvas.getContext("2d");
@@ -36,19 +37,19 @@ function getDataFromElering(date_setting) {
             ctx.moveTo(60, 25);
             ctx.lineTo(60, 200);
             // Horizontal graph line
-            ctx.lineTo(475, 200);
-            ctx.lineTo(470, 202);
-            ctx.moveTo(475, 200);
-            ctx.lineTo(470, 198);
+            ctx.lineTo(canvasWidth-50, 200);
+            ctx.lineTo(canvasWidth-55, 202);
+            ctx.moveTo(canvasWidth-50, 200);
+            ctx.lineTo(canvasWidth-55, 198);
             // Add text to graph
             ctx.font = "8px arial";
             ctx.fillStyle = "#000";
             ctx.fillText("0", 50, 210)
             ctx.fillText("NPS price", 10, 25);
             ctx.fillText("€/MWh", 10, 35);
-            ctx.fillText("Hours", 460, 225);
+            ctx.fillText("Hours", (canvasWidth/2), 235);
             // Draws small strokes to horisontal line
-            let widthBetweenPoints = 385 / res.data.ee.length; // 385 is graph line length
+            let widthBetweenPoints = (canvasWidth-graphAndVerticleDistanceFromEnd) / res.data.ee.length; // 385 is graph line length
             let dataPointCount = res.data.ee.length;
             let strokeStart = 60 + widthBetweenPoints;
             let strokeEnd = 57 + widthBetweenPoints;
@@ -104,7 +105,7 @@ function getDataFromElering(date_setting) {
             ctx.lineWidth = 1;
             ctx.stroke();
             // Draws continuous line of prices on graph
-            widthBetweenPoints = 385 / res.data.ee.length; // 385 is graph line length
+            widthBetweenPoints = (canvasWidth-graphAndVerticleDistanceFromEnd) / res.data.ee.length; // 385 is graph line length
             let calculatedX = 60;
             let calculatedY = 0;
             let baseY = 200;
