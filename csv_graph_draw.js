@@ -19,8 +19,6 @@ function drawCSVgraph(){
         step: undefined,
         // Upon parsing fully the data, graph is drawn
         complete: function(results) {
-            var data = results;
-            console.log(data);
             let svgContainer = document.getElementById("userConsumption");
             let svgWidth = svgContainer.getBoundingClientRect().width;
             let offsetFromEnd = 50; // in pixels
@@ -43,6 +41,23 @@ function drawCSVgraph(){
             for(let i = 1; i < 25; i++) {
                 g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
             }
+
+            // Draw small vertical strokes
+            let maxConsumption = 0;
+            let firstResultsToIgnore = 12;
+            for (let i = firstResultsToIgnore; i < results.data.length-1; i++) {
+                console.log(results.data[i][4]);
+                if(results.data[i][4] >= maxConsumption) {
+                    maxConsumption = results.data[i][4];
+                }
+            }
+            let widthBetweenPoints = 150/8;
+            let y = 200 - widthBetweenPoints;
+            for (let i = 0; i < 8; i++) {
+                g.innerHTML += `<line x1="${60}" y1="${y}" x2="${55}" y2="${y}"/>`;
+                y -= widthBetweenPoints;
+            }
+            
         },
         error: undefined,
         download: false,
