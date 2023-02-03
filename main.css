@@ -25,6 +25,8 @@ body {
     padding: 10px;
 }
 #npsPrices {
+    width:inherit;
+    height: 250px;
     background-color: #CCC;
     border: 2px black solid;
 }

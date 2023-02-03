@@ -24,7 +24,7 @@ HTML
 
 CSS
 
-```
+```javascript
 #canvas {
     width: 500,
     heigth: 250
@@ -49,7 +49,7 @@ well, nonexistent. Offcourse you import it through HTML script tag either in hea
 part, both have pros and cons for that part. Offcourse you then just call it through its class 
 calling:
 
-```
+```javascript
 Papa.parse(file, {
     {
         // This all is default configuration options taken from PapaParse documentation
@@ -93,13 +93,13 @@ First is:
 
 HTML
 
-```
+```javascript
 <input type="file" accept=".csv" required onChange="getFile(this)">
 ```
 
 JavaScript
 
-```
+```javascript
 function getFile(file) {
     Papa.Parse(file, {config});
 }
@@ -111,13 +111,13 @@ Tried other ways also until I sumbled upon one nice solution:
 
 HTML
 
-```
+```javascript
 <input id="graph" type="file" accept=".csv" requiredš>
 ```
 
 JavaScript
 
-```
+```javascript
 const file = document.getElementById("csvFileInput").files[0];
 Papa.Parse(file, {config});
 ```
@@ -126,4 +126,34 @@ Now it finnaly worked like a charm and altho there are many ways to retrieve fil
 input, this one worked finnaly for whatever reason.
 
 ## Third hardship...
-### 
+### What do you mean you cant set canvas size easily?!
+Since I was not happy that initial canvas is only 500x250 px in size, I decided to increase its
+width to maximum of its container size. But since my initial canvas was fully rendered in a function
+where interpeter could not go until I pushed needed button, the canvas dimensions were set by
+HTML attributes. Removed them, set the CSS style dimensions and nope, not gonna work... Not even when
+set
+
+CSS
+
+```CSS
+#canvas {
+    width: inherit;
+}
+```
+or
+
+CSS
+
+```CSS
+#canvas {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+```
+
+Fixed it all by unfortunatelly moving setting canvas attributes from function scope to global scope
+in javascript code. Why unfortunatelly? Because I was hoping I could get away with as less global
+variables as possible initially.
+
+## Fourth hardship...
+### Ahhh... here we go again and let the fun begin!

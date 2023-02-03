@@ -1,4 +1,10 @@
-let baseEleringData = null;
+
+// Get canvas parent container calculated width
+let canvasWidth = document.getElementById("parent").offsetWidth;
+const canvas = document.getElementById("npsPrices");
+canvas.setAttribute("width", canvasWidth);
+canvas.setAttribute("height", 250);
+let ctx = canvas.getContext("2d");
 
 // Returns user date range from inputs
 function dateRange() {
@@ -6,7 +12,6 @@ function dateRange() {
     const date_end = document.getElementById("date_end");
     const date_settings = [];
     date_settings.push(date_start.value, date_end.value);
-
     return date_settings;
 }
 
@@ -17,14 +22,8 @@ function getDataFromElering(date_setting) {
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
-            baseEleringData = res.data.ee;
             // Prepare canvas
-            let canvas = document.getElementById("npsPrices");
-            let canvasWidth = document.getElementById("parent").offsetWidth
-            let graphAndVerticleDistanceFromEnd = 200;
-            canvas.setAttribute("width", canvasWidth);
-            canvas.setAttribute("height", 250);
-            let ctx = canvas.getContext("2d");
+            const graphAndVerticleDistanceFromEnd = 175;
             ctx.clearRect(0, 0, canvasWidth, canvas.height);
             ctx.fillStyle = "#CCC";
             ctx.fillRect(0, 0, canvasWidth, canvas.height);
@@ -37,10 +36,10 @@ function getDataFromElering(date_setting) {
             ctx.moveTo(60, 25);
             ctx.lineTo(60, 200);
             // Horizontal graph line
-            ctx.lineTo(canvasWidth-50, 200);
-            ctx.lineTo(canvasWidth-55, 202);
-            ctx.moveTo(canvasWidth-50, 200);
-            ctx.lineTo(canvasWidth-55, 198);
+            ctx.lineTo(canvasWidth-40, 200);
+            ctx.lineTo(canvasWidth-45, 202);
+            ctx.moveTo(canvasWidth-40, 200);
+            ctx.lineTo(canvasWidth-45, 198);
             // Add text to graph
             ctx.font = "8px arial";
             ctx.fillStyle = "#000";
@@ -56,7 +55,7 @@ function getDataFromElering(date_setting) {
             ctx.moveTo(strokeStart, 200);
             for (var i = 0; i < dataPointCount; i++) {
                 let width = strokeStart + (i * widthBetweenPoints);
-                ctx.moveTo(width, 195);
+                ctx.moveTo(width, 200);
                 ctx.lineTo(width, 205);
             }
             ctx.moveTo(strokeStart, 205);
@@ -94,7 +93,7 @@ function getDataFromElering(date_setting) {
             widthBetweenPoints = 150 / dataPointCount;
             let y = 200 - widthBetweenPoints;
             strokeStart = 55;
-            strokeEnd = 65;
+            strokeEnd = 60;
             for (var i = 0; i < dataPointCount; i++) {
                 let width = y - (i * widthBetweenPoints);
                 ctx.fillText(`${nRatio * (i + 1)}`, strokeStart - 15, width);
