@@ -21,12 +21,16 @@ function drawCSVgraph(){
         complete: function(results) {
             var data = results;
             console.log(data);
-
+            let svgContainer = document.getElementById("userConsumption");
+            let svgWidth = svgContainer.getBoundingClientRect().width;
+            let offsetFromEnd = 50; // in pixels
+            let endPosition = svgWidth-offsetFromEnd; // Defines how far the horisontal graph should go
+            let endPositionStrokes = endPosition - 100;
             // Get SVG container first group, the graph vertical and horisontal lines
             let g =  document.getElementById("graph");
             // X and Y coordinates for lines
             const coordinates = {
-                x : [60, 60, 60, 475, 60, 58, 60, 62, 475, 470, 475, 470],
+                x : [60, 60, 60, endPosition, 60, 58, 60, 62, endPosition, endPosition-5, endPosition, endPosition-5],
                 y : [25, 200, 200, 200, 20, 25, 20, 25, 200, 202, 200, 198]
             };
             // For the sake of it, X and Y are pairs so X and Y arrays are the same length
@@ -35,9 +39,9 @@ function drawCSVgraph(){
                 g.innerHTML += `<line x1="${coordinates.x[i]}" y1="${coordinates.y[i]}" x2="${coordinates.x[i+1]}" y2="${coordinates.y[i+1]}" />`;
             }
             // Small vertical strokes on horisontal line
-            const hzWidth = 400/25;
+            const hzWidth = endPositionStrokes/25;
             for(let i = 1; i < 25; i++) {
-                g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${195}" x2="${60 + hzWidth*i}" y2="${205}" />`;
+                g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
             }
         },
         error: undefined,
