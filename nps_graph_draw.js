@@ -1,6 +1,6 @@
 
 // Get canvas parent container calculated width
-let canvasWidth = document.getElementById("parent").offsetWidth;
+let canvasWidth = document.getElementById("parent").getBoundingClientRect().width;
 const canvas = document.getElementById("npsPrices");
 canvas.setAttribute("width", canvasWidth);
 canvas.setAttribute("height", 250);
@@ -23,7 +23,9 @@ function getDataFromElering(date_setting) {
         .then((response) => response.json())
         .then((res) => {
             // Prepare canvas
-            const graphAndVerticleDistanceFromEnd = 175;
+            let offsetFromEnd = 50;
+            let offsetFromVerticleEnd = 125;
+            const graphAndVerticleDistanceFromEnd = canvasWidth - offsetFromEnd;
             ctx.clearRect(0, 0, canvasWidth, canvas.height);
             ctx.fillStyle = "#CCC";
             ctx.fillRect(0, 0, canvasWidth, canvas.height);
@@ -48,7 +50,7 @@ function getDataFromElering(date_setting) {
             ctx.fillText("€/MWh", 10, 35);
             ctx.fillText("Hours", (canvasWidth/2), 235);
             // Draws small strokes to horisontal line
-            let widthBetweenPoints = (canvasWidth-graphAndVerticleDistanceFromEnd) / res.data.ee.length; // 385 is graph line length
+            let widthBetweenPoints = (graphAndVerticleDistanceFromEnd-offsetFromVerticleEnd) / res.data.ee.length;
             let dataPointCount = res.data.ee.length;
             let strokeStart = 60 + widthBetweenPoints;
             let strokeEnd = 57 + widthBetweenPoints;
@@ -104,7 +106,7 @@ function getDataFromElering(date_setting) {
             ctx.lineWidth = 1;
             ctx.stroke();
             // Draws continuous line of prices on graph
-            widthBetweenPoints = (canvasWidth-graphAndVerticleDistanceFromEnd) / res.data.ee.length; // 385 is graph line length
+            widthBetweenPoints = (graphAndVerticleDistanceFromEnd-offsetFromVerticleEnd) / res.data.ee.length;
             let calculatedX = 60;
             let calculatedY = 0;
             let baseY = 200;
