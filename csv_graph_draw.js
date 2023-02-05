@@ -23,7 +23,7 @@ function drawCSVgraph(){
             let svgWidth = svgContainer.getBoundingClientRect().width;
             let offsetFromEnd = 50; // in pixels
             let endPosition = svgWidth-offsetFromEnd; // Defines how far the horisontal graph should go
-            let endPositionStrokes = endPosition - 100;
+            let endPositionStrokes = endPosition - 100; // Defines how far the strokes on horisontal graph should go
             // Get SVG container first group, the graph vertical and horisontal lines
             let g =  document.getElementById("graph");
             // X and Y coordinates for lines
@@ -41,12 +41,11 @@ function drawCSVgraph(){
             for(let i = 1; i < 25; i++) {
                 g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
             }
-
             // Draw small vertical strokes
             let maxConsumption = 0;
             let firstResultsToIgnore = 12;
             for (let i = firstResultsToIgnore; i < results.data.length-1; i++) {
-                console.log(results.data[i][4]);
+                // console.log(results.data[i][4]);
                 if(results.data[i][4] >= maxConsumption) {
                     maxConsumption = results.data[i][4];
                 }
@@ -57,6 +56,14 @@ function drawCSVgraph(){
                 g.innerHTML += `<line x1="${60}" y1="${y}" x2="${55}" y2="${y}"/>`;
                 y -= widthBetweenPoints;
             }
+            let middleOfHorisontalGraph = endPositionStrokes/2;
+            let textGroup = document.getElementById("text");
+            textGroup.style.fontSize = "8px";
+            textGroup.style.fontFamily = "arial";
+            textGroup.innerHTML += `<text x="${middleOfHorisontalGraph}" y="235">Hours</text>`;
+            textGroup.innerHTML += '<text x="10" y="25">NPS price</text>';
+            textGroup.innerHTML += '<text x="10" y="35">€/MWh</text>';
+            textGroup.innerHTML += '<text x="50" y="210">0</text>';
             
         },
         error: undefined,
