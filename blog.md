@@ -156,4 +156,64 @@ in javascript code. Why unfortunatelly? Because I was hoping I could get away wi
 variables as possible initially.
 
 ## Fourth hardship...
-### Ahhh... here we go again and let the fun begin!
+### So SLOW!!!!
+
+When you have a lot of datapoints and you have to iterate all of them through, you know it will take
+some time to iterate through. And then you face the wall of waiting... Its already irritating when its
+not snappy, its irritating when it takes couple of seconds, even worse when it takes even longer 
+offcourse. I needed to draw a graph from roughly 700 datapoints. Its not much per se but it took around
+1.7-2 seconds to itretare through and draw a graph from it. The graph was still incomplite so in the
+process of making such file to have already 1.7-2 seconds of data reading and partial graph drawing, 
+well its already too much and only on roughtly 700 datapoints.
+Lets see what we can do first and the simpliest.
+
+JavaScript
+
+```javascript
+let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+for(let i = 0; i < array.length; i++) {
+    // do stuff
+}
+```
+
+Whats wrong here? Perfectly working code realy. Perfectly fine code also! Its also very readable.
+It is also not incorrect in any way realy since such code has its places all the time afterall.
+So whats the problem here?
+The problem is with reading the array length.
+When you have big array and you have to read its lenght many times, lets say three times or more, its
+better to read such array lenght once by asigning array lenght to a variable:
+
+```javascript
+let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const arrayLength = array.length;
+for(let i = 0; i < arrayLength; i++) {
+    // do stuff
+}
+```
+
+Now its just a bit faster code! How much faster? In my very small data of 700 datapoints in array
+and drawing just small strokes on a graph using for loop, instead of reading seven times array by
+asigning array lenght to separate variable, gave me during small test very roughly 0.2 seconds of
+time reduction on complite data reading and graph drawing. 0.2 seconds on just seven array lenght
+readings that were moved to the separate variable.
+
+## Fifth hardship!
+### Comma is not a comma...
+Remember those times when in floating numbers the comma means decimal points in those number? How
+about a dot represents same thing? In real life depending on where you live, there is a possibility
+that there are rules on what represents a floating point number on paper, lets say a math lesson.
+I remember when floating points was acceptable to write down as 0,53 or 0.53, same thing on paper.
+But not in CS or software development. So here we are, trying to use JavasScript built-in parseFloat()
+function or Number.parseFloat() class function to parse a floating point number in its string
+representation. The number was a string in a CSV file, so we need to convert it to a number. Easy right?
+Not unless you remember that comma is not representing a decimal point in software development but 
+dot does. So when you try to parse 0,53, you will get NaN. However parsing 0.53 will give you a floating
+point number. Took some hours to figure out the problem but did not solve the next problem that came 
+because of exact problem of NaN after trying to parse incorrectly floating point number in its string
+representation. For some reason even after fixing parsing of floating point number, the NaN error did
+not go away in SVG drawing circle. For some reason drawing circle on cy position still returned NaN
+error. That brings us to the.......
+
+## Sixth hardship...
+### "Double or no deal..." - Home Alone 3, parrot talk
+### 
