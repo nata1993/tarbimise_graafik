@@ -208,7 +208,23 @@ function or Number.parseFloat() class function to parse a floating point number 
 representation. The number was a string in a CSV file, so we need to convert it to a number. Easy right?
 Not unless you remember that comma is not representing a decimal point in software development but 
 dot does. So when you try to parse 0,53, you will get NaN. However parsing 0.53 will give you a floating
-point number. Took some hours to figure out the problem but did not solve the next problem that came 
+point number. 
+
+JavaScript
+
+```javascript
+const number = "0,53";
+parseFloat(number);
+// Returns NaN
+```
+
+```javascript
+const number = "0,53";
+parseFloat(number.replace(",", "."));
+// Returns 0.53, a number
+```
+
+Took some hours to figure out the problem but did not solve the next problem that came 
 because of exact problem of NaN after trying to parse incorrectly floating point number in its string
 representation. For some reason even after fixing parsing of floating point number, the NaN error did
 not go away in SVG drawing circle. For some reason drawing circle on cy position still returned NaN
@@ -216,4 +232,39 @@ error. That brings us to the.......
 
 ## Sixth hardship...
 ### "Double or no deal..." - Home Alone 3, parrot talk
-### 
+### Floating point parsing continues
+After having troubles with already parsing floating point numbers using parseFloat() built-in 
+JavaScript function, there were still some problems with NaN during drawing a graph in SVG.
+Funny thing is JavaScript is very forgiving language on how you can work with numbers and strings.
+Want to convert string to number? Lets say you have a string of 0,53. Multiply it by 1 and you get
+number. Easy? Well such things eventually come and bite you hard! Just like it bit me...
+Long before stumbling upon parseing problem I already worked with string represented numbers which
+by the way were converted to numbers exactly because of such multiplication jokes while trying to
+find the highest value or the lowest value without using built-in methods. Simple for loop, thats it.
+Aparently when you evaluate numerical strings, the evaluation passes simply because that string-number
+magic mumbo jumbo! Here is the code on how I found the highest consumption:
+
+JavaScript
+
+```javascript
+let maxConsumption = 0;
+    for (let i = 0; i < CSV_File_Data_Length; i++) {
+        if(CSV_File_Results[i][4] >= maxConsumption) {
+            maxConsumption = CSV_File_Results[i][4];
+        }
+    }
+```
+
+As you can see maxConsumption variable is a number and we are evaluating strings to the number.
+Since javascript is very flexible on such things, the string is internaly converted to number, evaluated
+and then it all passes, no problem at all. There is no === evaluation possible when trying to see if
+a number is higher or lower than. That means no >== or <== evaluations. That has to be done separately.
+And that is where parsing bit me finnaly...
+
+## Seventh hardship...
+### I am getting used to it!
+SVG is such great thing compared to Canvas that zooming page in or out scales perfectly the SVG
+container albeit the internals are not scaled by itself. Canvas however did not automatically scale when
+page is zoomed in or out... So... Its either rewrite Canvas to SVG since SVG is much more customizable
+with CSS or do some flexbox etc magic. Better rewrite it to SVG, I like it more anyway after working
+with both of them at the same time.
