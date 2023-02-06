@@ -36,11 +36,6 @@ function drawCSVgraph(){
             for(let i = 0; i < size; i+=2) {
                 g.innerHTML += `<line x1="${coordinates.x[i]}" y1="${coordinates.y[i]}" x2="${coordinates.x[i+1]}" y2="${coordinates.y[i+1]}" />`;
             }
-            // Small vertical strokes on horisontal line
-            const hzWidth = strokesEndPosition/25;
-            for(let i = 1; i < 25; i++) {
-                g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
-            }
             // Find highest and lowest consumption
             let maxConsumption = 0;
             let firstResultsToIgnore = 12;
@@ -58,6 +53,12 @@ function drawCSVgraph(){
             }
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
+            // Small vertical strokes on horisontal line
+            let strokesCount = results.data.length;
+            const hzWidth = strokesEndPosition/strokesCount;
+            for(let i = 1; i < strokesCount; i++) {
+                g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
+            }
             // Add small strokes to vertical graph
             let widthBetweenPoints = 150/8;
             let y = 200 - widthBetweenPoints;
