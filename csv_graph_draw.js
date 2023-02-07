@@ -40,25 +40,25 @@ function drawCSVgraph(){
 };
 
 function SVGdraw (CSV_File_Results) {
-    const CSV_File_Data_Length = CSV_File_Results.data.length-1;
-    const CSV_File_Data = CSV_File_Results.data;
+    const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
+    const CSV_File_Data = CSV_File_Results.data; // CSV data itself
     const firstResultsToIgnore = 12; // The first results are form headers
     let svgContainer = document.getElementById("userConsumption");
-    let svgWidth = svgContainer.getBoundingClientRect().width;
+    let svgWidth = svgContainer.getBoundingClientRect().width; // Width of SVG container
     let offsetFromEnd = 50; // Defines offset from SVG container end in pixels
     let endPosition = svgWidth - offsetFromEnd; // Defines how far the horisontal graph should go
     let strokesEndPosition = endPosition - 85; // Defines how far the strokes on horisontal graph should go
     // Get SVG container first group, the graph vertical and horisontal lines
     let g =  document.getElementById("graph");
     // X and Y coordinates for vertical and horizontal graph lines
-    const coordinates = {
+    const baseGraphCoordinates = {
         x : [60, 60, 60, endPosition, 60, 58, 60, 62, endPosition, endPosition-5, endPosition, endPosition-5],
         y : [25, 200, 200, 200, 20, 25, 20, 25, 200, 202, 200, 198]
     };
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
-    const size = coordinates.x.length;
-    for(let i = 0; i < size; i+=2) {
-        g.innerHTML += `<line x1="${coordinates.x[i]}" y1="${coordinates.y[i]}" x2="${coordinates.x[i+1]}" y2="${coordinates.y[i+1]}" />`;
+    const XYarraySize = baseGraphCoordinates.x.length;
+    for (let i = 0; i < XYarraySize; i+=2) {
+        g.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
     }
     // Find highest and lowest consumption
     let maxConsumption = 0;
@@ -97,7 +97,7 @@ function SVGdraw (CSV_File_Results) {
     for(let i = firstResultsToIgnore; i < CSV_File_Data_Length; i++) {
         number = parseFloat(CSV_File_Data[i][4].replace(",", "."));
         y2 = 200 - number * ratio;
-        dataPointGroup.innerHTML += `<circle cx="${60 + x*i}" cy="${y2}" r="1" fill="black" stroke="#000" />`;
+        dataPointGroup.innerHTML += `<circle cx="${60 + x*i}" cy="${y2}" r="1.5" fill="black" stroke="#000" />`;
     }
     // Adds text to the graph in third group of SVG container
     let middleOfHorisontalGraph = strokesEndPosition/2;
