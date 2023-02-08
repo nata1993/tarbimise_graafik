@@ -40,6 +40,9 @@ function drawCSVgraph(){
 };
 
 function SVGdraw (CSV_File_Results) {
+    document.getElementById("graph").innerHTML = "";
+    document.getElementById("priceVerticle").innerHTML = "";
+    document.getElementById("text").innerHTML = "";
     const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
     const CSV_File_Data = CSV_File_Results.data; // CSV data itself
     const firstResultsToIgnore = 12; // The first results are form headers
