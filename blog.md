@@ -268,3 +268,26 @@ container albeit the internals are not scaled by itself. Canvas however did not 
 page is zoomed in or out... So... Its either rewrite Canvas to SVG since SVG is much more customizable
 with CSS or do some flexbox etc magic. Better rewrite it to SVG, I like it more anyway after working
 with both of them at the same time.
+
+## Eighth hardship
+### Redraw, redraw, redraw - why it takes so long to redraw?!
+SVG is very powerful stuff but it comes with small negative side. When drawing something with SVG
+you put a lot of stuff into DOM during drawing. When you redraw without clearing SVG container of
+previously drawed stuff, it will take a lot and I mean a lot more time to draw stuff. And when it
+does finish finnaly drawing, it draws stuff on top of previously drawn stuff because stuff was 
+in DOM already when you add even more stuff to DOM. The simple fix is to just clear the previously
+drawn stuff out before drawing new stuff. Simple fix for that is this small piece of code:
+
+Javascript
+
+```javascript
+document.getElementById("SVG").innerHTML = "";
+```
+
+Apply it to whatever you need to clear inside SVG and you will improve drastically speed of redrawing
+if you need to draw a lot of stuff. In my case, drawing just roughly 700 small lines with all the needed
+x and y vector calculations took on average 3.8 seconds. Redrawing before clearing DOM took over 12 
+seconds. Clearing DOM before redrawing, reduced redrawing speed back to 3.8 seconds. I clearly have to
+find a way to increase SVG drawing speed because 3.8 seconds is still a lot of time to just do the 
+calculations on 700 elements and then it takes a second-two to actually show what has been calculated
+and drawn.
