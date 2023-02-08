@@ -43,9 +43,9 @@ function SVGdraw (CSV_File_Results) {
     const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
     const CSV_File_Data = CSV_File_Results.data; // CSV data itself
     const firstResultsToIgnore = 12; // The first results are form headers
-    let svgContainer = document.getElementById("userConsumption");
-    let svgWidth = svgContainer.getBoundingClientRect().width; // Width of SVG container
-    let offsetFromEnd = 50; // Defines offset from SVG container end in pixels
+    const svgCSV = document.getElementById("userConsumption");
+    let svgWidth = svgCSV.getBoundingClientRect().width; // Width of SVG container
+    const offsetFromEnd = 50; // Defines offset from SVG container end in pixels
     let endPosition = svgWidth - offsetFromEnd; // Defines how far the horisontal graph should go
     let strokesEndPosition = endPosition - 85; // Defines how far the strokes on horisontal graph should go
     // Get SVG container first group, the graph vertical and horisontal lines
@@ -105,7 +105,7 @@ function SVGdraw (CSV_File_Results) {
     textGroup.style.fontSize = "8px";
     textGroup.style.fontFamily = "arial";
     textGroup.innerHTML += `<text x="${middleOfHorisontalGraph}" y="235">Hours</text>`;
-    textGroup.innerHTML += '<text x="10" y="25">NPS price</text>';
-    textGroup.innerHTML += '<text x="10" y="35">€/MWh</text>';
+    textGroup.innerHTML += '<text x="10" y="25">Consumption</text>';
+    textGroup.innerHTML += '<text x="10" y="35">KWh</text>';
     textGroup.innerHTML += '<text x="50" y="210">0</text>';
 }
