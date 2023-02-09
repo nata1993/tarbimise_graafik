@@ -1,15 +1,29 @@
 
-// Get canvas parent container calculated width
-const svgNPS = document.getElementById("npsPrices");
-let svgWidth = svgNPS.getBoundingClientRect().width;
-
-// Returns user date range from inputs
-function dateRange() {
-    const date_start = document.getElementById("date_start");
-    const date_end = document.getElementById("date_end");
+// Draw Nord Pool Spot prices based on user selected date range
+function calculate() {
+    // Take 
+    const date_start = document.getElementById("date_start").value;
+    const date_end = document.getElementById("date_end").value;
     const date_settings = [];
-    date_settings.push(date_start.value, date_end.value);
-    return date_settings;
+    date_settings.push(date_start, date_end);
+
+    // Check if user did not choose date range
+    if (date_start.length == 0 || date_end.length == 0) {
+        // Drawing note for user to canvas if not chosen date range
+        let canvas = document.getElementById("npsPrices");
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#CCC";
+        ctx.fillRect(0, 0, 500, 250);
+        ctx.fillStyle = "#000";
+        ctx.font = "30px arial";
+        ctx.fillText("Please select date range", 100, 100);
+    }
+    else {
+        const before = Date.now()/1000; 
+        getDataFromElering(date_settings);
+        const after = Date.now()/1000;
+        console.log("Time elapsed: ", after - before);
+    }
 }
 
 // Use user set date range for retrieving Nord Pool Spot electricity prices
@@ -19,37 +33,55 @@ function getDataFromElering(date_setting) {
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
+            const eleringData = res.data.ee;
+            let width = 0; // Reusable variable
+
+            // Get canvas parent container calculated width
+            const svgWidth = document.getElementById("npsPrices").getBoundingClientRect().width;
+
             // Clear SVG before drawing incase of redrawing
-            let baseGraph = document.getElementById("npsBaseGraph");
-            document.getElementById("npsPriceVector").innerHTML = "";
-            document.getElementById("npsText").innerHTML = "";
-            const data = res.data.ee;
-            // Prepare canvas
+            const baseGraph = document.getElementById("npsBaseGraph");
+            const verticleGroup = document.getElementById("npsPriceVector");
+            const textGroup = document.getElementById("npsText");
+
+            // Prepare clear SVG if there has been drawn something previously
             baseGraph.innerHTML = "";
+            verticleGroup.innerHTML = "";
+            textGroup.innerHTML = "";
+
+            // Graph sizing
             const offsetFromEnd = 50;   // Defines offset from SVG container end in pixels
-            let endPosition = svgWidth - offsetFromEnd;
-            const strokesEndPosition = endPosition - 85;
+            const endPosition = svgWidth - offsetFromEnd; // Defines base graph horizontal graph end position
+            const strokesEndPosition = endPosition - 85; // Defines how far strokes go on horizontal graph
+            
+            // Coordinates for base graph vectors starts and ends
             let baseGraphCoordinates = {
                 x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition-5, endPosition, endPosition-5],
                 y: [25, 30, 25, 30, 25, 200, 200, 200, 200, 202, 200, 198]
             };
+
+            // Draw base graph
             for(let i = 0; i < baseGraphCoordinates.x.length; i+=2) {
                 baseGraph.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
             }
-            // Draws small strokes to horisontal line
-            const dataPointCount = res.data.ee.length+1;
+
+            // Draws small strokes to base graph horisontal line
+            const dataPointCount = eleringData.length+1;
             const horWidthBetweenPoints = strokesEndPosition / dataPointCount;
             let strokePosition = 60;
             for (var i = 0; i < dataPointCount; i++) {
-                let width = strokePosition + (i * horWidthBetweenPoints);
+                width = strokePosition + (i * horWidthBetweenPoints);
                 baseGraph.innerHTML += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
             }
+
             // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(data);
-            const lowestPrice = minPrice(data);
+            const highestPrice = maxPrice(eleringData);
+            const lowestPrice = minPrice(eleringData);
+
             // Special rounding to uppest tenth number
             const highestPriceOnGraph = Math.round(highestPrice / 10) * 10;
             let nRatio = 0;
+
             // Draws small strokes to vertical line
             let highestPriceLevel = null;
             if (highestPriceOnGraph < 100) {
@@ -78,16 +110,16 @@ function getDataFromElering(date_setting) {
             }
             const verWidthBetweenPoints = 150 / highestPriceLevel;
             for (var i = 0; i < highestPriceLevel; i++) {
-                let width = 200 - (i * verWidthBetweenPoints);
+                width = 200 - (i * verWidthBetweenPoints);
                 baseGraph.innerHTML += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
+
             // Draws continuous line of prices on graph
             let baseY = 200;
             let x1 = 60;
             let x2 = 60 + horWidthBetweenPoints;
             const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
-            let verticleGroup = document.getElementById("npsPriceVector");
-            for (const item of data) {
+            for (const item of eleringData) {
                 const hourPrice = item["price"];
                 let y1 = baseY - hourPrice * ratio;
                 let y2 = y1;
@@ -104,8 +136,8 @@ function getDataFromElering(date_setting) {
                 x2 += horWidthBetweenPoints;
                 
             }
+
             // Add text to graph
-            let textGroup = document.getElementById("npsText");
             textGroup.style.fontFamily = "arial";
             textGroup.style.fontSize = "8px";
             textGroup.innerHTML += `<text x="50" y="210">0</text>`;
@@ -124,6 +156,7 @@ function getDataFromElering(date_setting) {
                 textGroup.innerHTML += `<text x="30" y="${textY}">${nRatio*i}</text>`;
                 textY -= verWidthBetweenPoints;
             }
+            
             // Fill lowest and highest prices to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
@@ -131,44 +164,23 @@ function getDataFromElering(date_setting) {
         .catch(err => { throw err });
 }
 
-// Draw Nord Pool Spot prices based on user selected date range
-function calculate() {
-    // Check if user did not choose date range
-    let value1 = document.getElementById("date_start").value;
-    let value2 = document.getElementById("date_end").value;
-    if (value1.length == 0 || value2.length == 0) {
-        // Drawing note for user to canvas if not chosen date range
-        let canvas = document.getElementById("npsPrices");
-        let ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#CCC";
-        ctx.fillRect(0, 0, 500, 250);
-        ctx.fillStyle = "#000";
-        ctx.font = "30px arial";
-        ctx.fillText("Please select date range", 100, 100);
-    }
-    else {
-        const date_setting = dateRange();
-        getDataFromElering(date_setting);
-    }
-}
-
 // Helper function for filtering out max price within dataset with VAT
-function maxPrice(eleringData) {
+function maxPrice(data) {
     let max = 0;
-    for (var i = 0; i < eleringData.length; i++) {
-        if (eleringData[i].price > max) {
-            max = eleringData[i].price;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].price > max) {
+            max = data[i].price;
         }
     }
     return max * 1.2;
 }
 
 // Helper function for filtering out min price within dataset with VAT
-function minPrice(eleringData) {
-    let low = eleringData[0].price;
-    for (var i = 0; i < eleringData.length; i++) {
-        if (eleringData[i].price < low) {
-            low = eleringData[i].price;
+function minPrice(data) {
+    let low = data[0].price;
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].price < low) {
+            low = data[i].price;
         }
     }
     return low * 1.2;
