@@ -40,9 +40,9 @@ function drawCSVgraph(){
 };
 
 function SVGdraw (CSV_File_Results) {
-    document.getElementById("graph").innerHTML = "";
-    document.getElementById("priceVerticle").innerHTML = "";
-    document.getElementById("text").innerHTML = "";
+    document.getElementById("csvBaseGraph").innerHTML = "";
+    document.getElementById("csvConsumptionVector").innerHTML = "";
+    document.getElementById("csvText").innerHTML = "";
     const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
     const CSV_File_Data = CSV_File_Results.data; // CSV data itself
     const firstResultsToIgnore = 12; // The first results are form headers
@@ -52,7 +52,7 @@ function SVGdraw (CSV_File_Results) {
     let endPosition = svgWidth - offsetFromEnd; // Defines how far the horisontal graph should go
     let strokesEndPosition = endPosition - 85; // Defines how far the strokes on horisontal graph should go
     // Get SVG container first group, the graph vertical and horisontal lines
-    let g =  document.getElementById("graph");
+    let g =  document.getElementById("csvBaseGraph");
     // X and Y coordinates for vertical and horizontal graph lines
     const baseGraphCoordinates = {
         x : [60, 60, 60, endPosition, 60, 58, 60, 62, endPosition, endPosition-5, endPosition, endPosition-5],
@@ -92,7 +92,7 @@ function SVGdraw (CSV_File_Results) {
         y -= widthBetweenPoints;
     }
     // Adds datapoints to the graph in second group of SVG container
-    let dataPointGroup = document.getElementById("priceVerticle");
+    let dataPointGroup = document.getElementById("csvConsumptionVector");
     let x = strokesEndPosition/CSV_File_Data_Length;
     const ratio = 150/maxConsumption;
     let number = 0;
@@ -104,7 +104,7 @@ function SVGdraw (CSV_File_Results) {
     }
     // Adds text to the graph in third group of SVG container
     let middleOfHorisontalGraph = strokesEndPosition/2;
-    let textGroup = document.getElementById("text");
+    let textGroup = document.getElementById("csvText");
     textGroup.style.fontSize = "8px";
     textGroup.style.fontFamily = "arial";
     textGroup.innerHTML += `<text x="${middleOfHorisontalGraph}" y="235">Hours</text>`;

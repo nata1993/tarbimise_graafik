@@ -21,7 +21,7 @@ function getDataFromElering(date_setting) {
         .then((res) => {
             // Clear SVG before drawing incase of redrawing
             let baseGraph = document.getElementById("npsBaseGraph");
-            document.getElementById("npsVerticle").innerHTML = "";
+            document.getElementById("npsPriceVector").innerHTML = "";
             document.getElementById("npsText").innerHTML = "";
             const data = res.data.ee;
             // Prepare canvas
@@ -86,7 +86,7 @@ function getDataFromElering(date_setting) {
             let x1 = 60;
             let x2 = 60 + horWidthBetweenPoints;
             const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
-            let verticleGroup = document.getElementById("npsVerticle");
+            let verticleGroup = document.getElementById("npsPriceVector");
             for (const item of data) {
                 const hourPrice = item["price"];
                 let y1 = baseY - hourPrice * ratio;
