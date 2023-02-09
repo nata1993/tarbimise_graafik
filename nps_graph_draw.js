@@ -1,10 +1,7 @@
 
 // Get canvas parent container calculated width
-let canvasWidth = document.getElementById("parent").getBoundingClientRect().width;
-const canvas = document.getElementById("npsPrices");
-canvas.setAttribute("width", canvasWidth);
-canvas.setAttribute("height", 250);
-let ctx = canvas.getContext("2d");
+const svgNPS = document.getElementById("npsPrices");
+let svgWidth = svgNPS.getBoundingClientRect().width;
 
 // Returns user date range from inputs
 function dateRange() {
@@ -22,116 +19,111 @@ function getDataFromElering(date_setting) {
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
+            // Clear SVG before drawing incase of redrawing
+            let baseGraph = document.getElementById("npsBaseGraph");
+            document.getElementById("npsVerticle").innerHTML = "";
+            document.getElementById("npsText").innerHTML = "";
+            const data = res.data.ee;
             // Prepare canvas
-            let offsetFromEnd = 50;
-            let offsetFromVerticleEnd = 125;
-            const graphAndVerticleDistanceFromEnd = canvasWidth - offsetFromEnd;
-            ctx.clearRect(0, 0, canvasWidth, canvas.height);
-            ctx.fillStyle = "#CCC";
-            ctx.fillRect(0, 0, canvasWidth, canvas.height);
-            // Vertical graph line
-            ctx.beginPath();
-            ctx.moveTo(60, 25);
-            ctx.lineTo(58, 30);
-            ctx.moveTo(60, 25);
-            ctx.lineTo(62, 30);
-            ctx.moveTo(60, 25);
-            ctx.lineTo(60, 200);
-            // Horizontal graph line
-            ctx.lineTo(canvasWidth-40, 200);
-            ctx.lineTo(canvasWidth-45, 202);
-            ctx.moveTo(canvasWidth-40, 200);
-            ctx.lineTo(canvasWidth-45, 198);
-            // Add text to graph
-            ctx.font = "8px arial";
-            ctx.fillStyle = "#000";
-            ctx.fillText("0", 50, 210)
-            ctx.fillText("NPS price", 10, 25);
-            ctx.fillText("€/MWh", 10, 35);
-            ctx.fillText("Hours", (canvasWidth/2), 235);
-            // Draws small strokes to horisontal line
-            let widthBetweenPoints = (graphAndVerticleDistanceFromEnd-offsetFromVerticleEnd) / res.data.ee.length;
-            let dataPointCount = res.data.ee.length;
-            let strokeStart = 60 + widthBetweenPoints;
-            let strokeEnd = 57 + widthBetweenPoints;
-            ctx.moveTo(strokeStart, 200);
-            for (var i = 0; i < dataPointCount; i++) {
-                let width = strokeStart + (i * widthBetweenPoints);
-                ctx.moveTo(width, 200);
-                ctx.lineTo(width, 205);
+            baseGraph.innerHTML = "";
+            const offsetFromEnd = 50;   // Defines offset from SVG container end in pixels
+            let endPosition = svgWidth - offsetFromEnd;
+            const strokesEndPosition = endPosition - 85;
+            let baseGraphCoordinates = {
+                x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition-5, endPosition, endPosition-5],
+                y: [25, 30, 25, 30, 25, 200, 200, 200, 200, 202, 200, 198]
+            };
+            for(let i = 0; i < baseGraphCoordinates.x.length; i+=2) {
+                baseGraph.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
             }
-            ctx.moveTo(strokeStart, 205);
-            // Draws diagonal lines to small strokes on horisontal line
+            // Draws small strokes to horisontal line
+            const dataPointCount = res.data.ee.length+1;
+            const horWidthBetweenPoints = strokesEndPosition / dataPointCount;
+            let strokePosition = 60;
             for (var i = 0; i < dataPointCount; i++) {
-                let width = strokeStart + (i * widthBetweenPoints);
-                let width2 = strokeEnd + (i * widthBetweenPoints) - 1;
-                ctx.moveTo(width, 205);
-                ctx.lineTo(width2, 212);
-                ctx.fillText(i + 1, width2 - 5, 222);
+                let width = strokePosition + (i * horWidthBetweenPoints);
+                baseGraph.innerHTML += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
             }
             // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(res.data.ee);
-            const lowestPrice = minPrice(res.data.ee);
+            const highestPrice = maxPrice(data);
+            const lowestPrice = minPrice(data);
             // Special rounding to uppest tenth number
             const highestPriceOnGraph = Math.round(highestPrice / 10) * 10;
             let nRatio = 0;
             // Draws small strokes to vertical line
+            let highestPriceLevel = null;
             if (highestPriceOnGraph < 100) {
                 nRatio = 5;
-                dataPointCount = highestPriceOnGraph / nRatio;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 100 && highestPriceOnGraph < 200) {
                 nRatio = 10;
-                dataPointCount = highestPriceOnGraph / nRatio;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 200 && highestPriceOnGraph < 300) {
                 nRatio = 15;
-                dataPointCount = highestPriceOnGraph / nRatio;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 300 && highestPriceOnGraph < 400) {
                 nRatio = 20;
-                dataPointCount = highestPriceOnGraph / nRatio;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
-            widthBetweenPoints = 150 / dataPointCount;
-            let y = 200 - widthBetweenPoints;
-            strokeStart = 55;
-            strokeEnd = 60;
-            for (var i = 0; i < dataPointCount; i++) {
-                let width = y - (i * widthBetweenPoints);
-                ctx.fillText(`${nRatio * (i + 1)}`, strokeStart - 15, width);
-                ctx.moveTo(strokeStart, width);
-                ctx.lineTo(strokeEnd, width);
+            else if (highestPriceOnGraph >= 400 && highestPriceOnGraph < 500) {
+                nRatio = 25;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
-            // Finalize graph drawing
-            ctx.lineWidth = 1;
-            ctx.stroke();
+            else if (highestPriceOnGraph >= 500 && highestPriceOnGraph < 600) {
+                nRatio = 30;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            const verWidthBetweenPoints = 150 / highestPriceLevel;
+            for (var i = 0; i < highestPriceLevel; i++) {
+                let width = 200 - (i * verWidthBetweenPoints);
+                baseGraph.innerHTML += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
+            }
             // Draws continuous line of prices on graph
-            widthBetweenPoints = (graphAndVerticleDistanceFromEnd-offsetFromVerticleEnd) / res.data.ee.length;
-            let calculatedX = 60;
-            let calculatedY = 0;
             let baseY = 200;
+            let x1 = 60;
+            let x2 = 60 + horWidthBetweenPoints;
             const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.moveTo(60, baseY - res.data.ee[0]["price"] * ratio);
-            for (const item of res.data.ee) {
-                calculatedX += widthBetweenPoints;
-                calculatedY = baseY - item["price"] * ratio;
-                hourPrice = item["price"];
+            let verticleGroup = document.getElementById("npsVerticle");
+            for (const item of data) {
+                const hourPrice = item["price"];
+                let y1 = baseY - hourPrice * ratio;
+                let y2 = y1;
                 if (hourPrice <= 50) {
-                    ctx.fillStyle = "#0F0";
+                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0F0"/>`
                 }
                 else if (hourPrice > 50 && hourPrice <= 110) {
-                    ctx.fillStyle = "#FF0";
+                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0"/>`
                 }
                 else {
-                    ctx.fillStyle = "#F00";
+                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00"/>`
                 }
-
-                ctx.lineTo(calculatedX, calculatedY);
-                ctx.lineTo(calculatedX + widthBetweenPoints, calculatedY);
-            };
-            ctx.stroke();
+                x1 += horWidthBetweenPoints;
+                x2 += horWidthBetweenPoints;
+                
+            }
+            // Add text to graph
+            let textGroup = document.getElementById("npsText");
+            textGroup.style.fontFamily = "arial";
+            textGroup.style.fontSize = "8px";
+            textGroup.innerHTML += `<text x="50" y="210">0</text>`;
+            textGroup.innerHTML += `<text x="10" y="25">NPS price</text>`;
+            textGroup.innerHTML += `<text x="10" y="35">€/MWh</text>`;
+            textGroup.innerHTML += `<text x="10" y="45">Inc. 20%</text>`;
+            textGroup.innerHTML += `<text x="${(endPosition)/2}" y="235">Hours</text>`;
+            let x = 30 + horWidthBetweenPoints;
+            for (let i = 0; i < dataPointCount; i++) {
+                textGroup.innerHTML += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
+                x += horWidthBetweenPoints;
+            }
+            let textY = 200 - verWidthBetweenPoints;
+            for (let i = 0; i < 175/nRatio; i++) {
+                textGroup.style.textAlign = "right";
+                textGroup.innerHTML += `<text x="30" y="${textY}">${nRatio*i}</text>`;
+                textY -= verWidthBetweenPoints;
+            }
             // Fill lowest and highest prices to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
@@ -162,11 +154,10 @@ function calculate() {
 
 // Helper function for filtering out max price within dataset with VAT
 function maxPrice(eleringData) {
-    const areaPrices = Object.values(eleringData);
     let max = 0;
     for (var i = 0; i < eleringData.length; i++) {
-        if (areaPrices[i].price > max) {
-            max = areaPrices[i].price;
+        if (eleringData[i].price > max) {
+            max = eleringData[i].price;
         }
     }
     return max * 1.2;
@@ -174,11 +165,10 @@ function maxPrice(eleringData) {
 
 // Helper function for filtering out min price within dataset with VAT
 function minPrice(eleringData) {
-    const areaPrices = Object.values(eleringData);
-    let low = areaPrices[0].price;
+    let low = eleringData[0].price;
     for (var i = 0; i < eleringData.length; i++) {
-        if (areaPrices[i].price < low) {
-            low = areaPrices[i].price;
+        if (eleringData[i].price < low) {
+            low = eleringData[i].price;
         }
     }
     return low * 1.2;

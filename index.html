@@ -27,8 +27,13 @@
     </div>
     <div class="body">
         <h3>Selected data range NPS stock prices graph</h3>
-        <div id="parent">
-            <canvas id="npsPrices"></canvas>
+        <div>
+            <svg id="npsPrices" version="1.1">
+                <rect width="100%" height="100%" fill="#BBB"/>
+                <g id="npsBaseGraph" stroke="#000" stroke-width="1"></g>
+                <g id="npsVerticle" stroke-width="2"></g>
+                <g id="npsText"></g>
+            </svg>
             <h4 id="highestPrice">Period highest price: -</h3>
             <h4 id="lowestPrice">Period lowest price: -</h3>
         </div>
