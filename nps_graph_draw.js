@@ -1,3 +1,21 @@
+/*
+    Graph drawing is made in order:
+    1) Clearing graph container
+    2) Drawing base graph
+        - Vertical and horizontal graph vectors with arros on the end.
+    3) Drawing strokes on horizontal line
+        - Small vertical strokes representing hours
+    4) Drawing strokes on vertical line
+        - Small horizontal strokes representing price segment
+    5) Drawing real price vector
+        - Continuos line representing price level on the graph. Graph
+        height depends on Nord Pool Spot prices.
+    6) Draw text on the graph
+        - Text of hours on below horizontal graph
+        - Text of price segments next to vertical graph
+        - basic graph meaning text next to both horizontal and vertical graphs
+*/
+
 
 // Draw Nord Pool Spot prices based on user selected date range
 function calculate() {
@@ -35,16 +53,22 @@ function getDataFromElering(date_setting) {
         .then((res) => {
             const eleringData = res.data.ee;
             let width = 0; // Reusable variable
+            let strokeInitialPosition = 0; // Reusable variable
 
-            // Get canvas parent container calculated width
+            // Filter out highest and lowest price within given data sample
+            const highestPrice = maxPrice(eleringData);
+            const lowestPrice = minPrice(eleringData);
+            const highestPriceOnGraph = roundUp(highestPrice);
+
+            // Get SVG parent container calculated width
             const svgWidth = document.getElementById("npsPrices").getBoundingClientRect().width;
 
-            // Clear SVG before drawing incase of redrawing
+            // Get SVG container base elements
             const baseGraph = document.getElementById("npsBaseGraph");
             const verticleGroup = document.getElementById("npsPriceVector");
             const textGroup = document.getElementById("npsText");
 
-            // Prepare clear SVG if there has been drawn something previously
+            // Clear SVG contents if there has been drawn previously something 
             baseGraph.innerHTML = "";
             verticleGroup.innerHTML = "";
             textGroup.innerHTML = "";
@@ -62,28 +86,22 @@ function getDataFromElering(date_setting) {
 
             // Draw base graph
             for(let i = 0; i < baseGraphCoordinates.x.length; i+=2) {
-                baseGraph.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
+                baseGraph.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}"
+                                        x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
             }
 
             // Draws small strokes to base graph horisontal line
-            const dataPointCount = eleringData.length+1;
-            const horWidthBetweenPoints = strokesEndPosition / dataPointCount;
-            let strokePosition = 60;
-            for (var i = 0; i < dataPointCount; i++) {
-                width = strokePosition + (i * horWidthBetweenPoints);
+            const countOfDataPoints = eleringData.length+1;
+            const horizontalWidthBetweenStrokes = strokesEndPosition / countOfDataPoints;
+            strokeInitialPosition = 60;
+            for (var i = 0; i < countOfDataPoints; i++) {
+                width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
                 baseGraph.innerHTML += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
             }
-
-            // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(eleringData);
-            const lowestPrice = minPrice(eleringData);
-
-            // Special rounding to uppest tenth number
-            const highestPriceOnGraph = Math.round(highestPrice / 10) * 10;
-            let nRatio = 0;
-
-            // Draws small strokes to vertical line
-            let highestPriceLevel = null;
+            
+            // Draws small strokes to base graph vertical line
+            let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
+            let highestPriceLevel = 0;
             if (highestPriceOnGraph < 100) {
                 nRatio = 5;
                 highestPriceLevel = highestPriceOnGraph / nRatio;
@@ -108,20 +126,20 @@ function getDataFromElering(date_setting) {
                 nRatio = 30;
                 highestPriceLevel = highestPriceOnGraph / nRatio;
             }
-            const verWidthBetweenPoints = 150 / highestPriceLevel;
-            for (var i = 0; i < highestPriceLevel; i++) {
-                width = 200 - (i * verWidthBetweenPoints);
+            const verticalWidthBetweenPoints = 150 / highestPriceLevel;
+            for (var i = 0; i < highestPriceLevel+1; i++) {
+                width = 200 - (i * verticalWidthBetweenPoints);
                 baseGraph.innerHTML += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
 
             // Draws continuous line of prices on graph
-            let baseY = 200;
+            let yBaseLine = 200;
             let x1 = 60;
-            let x2 = 60 + horWidthBetweenPoints;
-            const ratio = 175 / highestPrice; // Ratio between 175px height of vertical graph and highest price
+            let x2 = 60 + horizontalWidthBetweenStrokes;
+            const ratio = 175 / highestPrice; // Ratio between 175px of vertical graph length and highest price
             for (const item of eleringData) {
                 const hourPrice = item["price"];
-                let y1 = baseY - hourPrice * ratio;
+                let y1 = yBaseLine - hourPrice * ratio;
                 let y2 = y1;
                 if (hourPrice <= 50) {
                     verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0F0"/>`
@@ -132,8 +150,8 @@ function getDataFromElering(date_setting) {
                 else {
                     verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00"/>`
                 }
-                x1 += horWidthBetweenPoints;
-                x2 += horWidthBetweenPoints;
+                x1 += horizontalWidthBetweenStrokes;
+                x2 += horizontalWidthBetweenStrokes;
                 
             }
 
@@ -141,20 +159,25 @@ function getDataFromElering(date_setting) {
             textGroup.style.fontFamily = "arial";
             textGroup.style.fontSize = "8px";
             textGroup.innerHTML += `<text x="50" y="210">0</text>`;
-            textGroup.innerHTML += `<text x="10" y="25">NPS price</text>`;
-            textGroup.innerHTML += `<text x="10" y="35">€/MWh</text>`;
-            textGroup.innerHTML += `<text x="10" y="45">Inc. 20%</text>`;
+            textGroup.innerHTML += `<text x="10" y="13">NPS price</text>`;
+            textGroup.innerHTML += `<text x="10" y="23">€/MWh</text>`;
+            textGroup.innerHTML += `<text x="10" y="33">Inc. 20%</text>`;
             textGroup.innerHTML += `<text x="${(endPosition)/2}" y="235">Hours</text>`;
-            let x = 30 + horWidthBetweenPoints;
-            for (let i = 0; i < dataPointCount; i++) {
+
+            // Add hours below horizontal graph
+            let x = 30 + horizontalWidthBetweenStrokes;
+            for (let i = 0; i < countOfDataPoints; i++) {
                 textGroup.innerHTML += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
-                x += horWidthBetweenPoints;
+                x += horizontalWidthBetweenStrokes   ;
             }
-            let textY = 200 - verWidthBetweenPoints;
-            for (let i = 0; i < 175/nRatio; i++) {
+
+            // Add price segments next to vertical graph
+            let textY = (200 - verticalWidthBetweenPoints)+2; // +2 is for centering
+            let count = 150 / verticalWidthBetweenPoints;
+            for (let i = 0; i < count; i++) {
                 textGroup.style.textAlign = "right";
-                textGroup.innerHTML += `<text x="30" y="${textY}">${nRatio*i}</text>`;
-                textY -= verWidthBetweenPoints;
+                textGroup.innerHTML += `<text x="30" y="${textY}">${nRatio * (i+1)}</text>`;
+                textY -= verticalWidthBetweenPoints;
             }
             
             // Fill lowest and highest prices to HTML
@@ -184,4 +207,9 @@ function minPrice(data) {
         }
     }
     return low * 1.2;
+}
+
+// Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
+function roundUp(price) {
+    return Math.round(price / 10) * 10;
 }
