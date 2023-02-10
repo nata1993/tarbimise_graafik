@@ -142,7 +142,7 @@ function getDataFromElering(date_setting) {
                 let y1 = yBaseLine - hourPrice * ratio;
                 let y2 = y1;
                 if (hourPrice <= 50) {
-                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0F0"/>`
+                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0"/>`
                 }
                 else if (hourPrice > 50 && hourPrice <= 110) {
                     verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0"/>`
