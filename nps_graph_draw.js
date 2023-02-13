@@ -94,7 +94,7 @@ function getDataFromElering(date_setting) {
             const countOfDataPoints = eleringData.length+1;
             const horizontalWidthBetweenStrokes = strokesEndPosition / countOfDataPoints;
             strokeInitialPosition = 60;
-            let strokesStr = null;
+            let strokesStr = "";
             for (var i = 0; i < countOfDataPoints; i++) {
                 width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
                 strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
@@ -312,19 +312,25 @@ function getDataFromElering(date_setting) {
             let x1 = 60;
             let x2 = 60 + horizontalWidthBetweenStrokes;
             const ratio = 175 / highestPrice; // Ratio between 175px of vertical graph length and highest price
-            let graphStr = null;
+            let graphStr = "";
             for (const item of eleringData) {
                 const hourPrice = item["price"];
                 let y1 = yBaseLine - hourPrice * ratio;
                 let y2 = y1;
                 if (hourPrice <= 50) {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0" stroke-width="3"/>`;
                 }
                 else if (hourPrice > 50 && hourPrice <= 110) {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0" stroke-width="3"/>`;
+                }
+                else if (hourPrice >= 1000) {
+                    graphStr += `<circle cx="${x1}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
+                    graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
+                    graphStr += `<circle cx="${x2}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000"/>`;
                 }
                 else {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00" stroke-width="3"/>`;
                 }
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
@@ -333,19 +339,21 @@ function getDataFromElering(date_setting) {
             verticleGroup.innerHTML = graphStr;
 
             // Add text to graph
-            let textStr = null;
+            let textStr = "";
             textStr += `<text x="50" y="210">0</text>`;
             textStr += `<text x="10" y="13">NPS price</text>`;
             textStr += `<text x="10" y="23">€/MWh</text>`;
             textStr += `<text x="10" y="33">Inc. 20%</text>`;
             textStr += `<text x="${(svgWidth)/2}" y="235">Hours</text>`;
+            textStr += `<circle cx="90" cy="233" r="2" stroke="#000" fill="#000"/>`;
+            textStr += `<text x="100" y="235">- Extreme price(s)</text>`;
             
 
             // Add hours below horizontal graph
             let x = 30 + horizontalWidthBetweenStrokes;
             for (let i = 0; i < countOfDataPoints; i++) {
                 textStr += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
-                x += horizontalWidthBetweenStrokes   ;
+                x += horizontalWidthBetweenStrokes;
             }
 
             // Add price segments next to vertical graph
