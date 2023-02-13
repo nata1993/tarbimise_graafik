@@ -94,9 +94,10 @@ function getDataFromElering(date_setting) {
             const countOfDataPoints = eleringData.length+1;
             const horizontalWidthBetweenStrokes = strokesEndPosition / countOfDataPoints;
             strokeInitialPosition = 60;
+            let strokesStr = null;
             for (var i = 0; i < countOfDataPoints; i++) {
                 width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
-                baseGraph.innerHTML += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
+                strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
             }
             
             // Draws small strokes to base graph vertical line
@@ -126,48 +127,224 @@ function getDataFromElering(date_setting) {
                 nRatio = 30;
                 highestPriceLevel = highestPriceOnGraph / nRatio;
             }
+            else if (highestPriceOnGraph >= 600 && highestPriceOnGraph < 700) {
+                nRatio = 35;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 700 && highestPriceOnGraph < 800) {
+                nRatio = 40;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 800 && highestPriceOnGraph < 900) {
+                nRatio = 45;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 900 && highestPriceOnGraph < 1000) {
+                nRatio = 50;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1000 && highestPriceOnGraph < 1100) {
+                nRatio = 55;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1100 && highestPriceOnGraph < 1200) {
+                nRatio = 60;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1200 && highestPriceOnGraph < 1300) {
+                nRatio = 65;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1300 && highestPriceOnGraph < 1400) {
+                nRatio = 70;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1400 && highestPriceOnGraph < 1500) {
+                nRatio = 75;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1500 && highestPriceOnGraph < 1600) {
+                nRatio = 80;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1600 && highestPriceOnGraph < 1700) {
+                nRatio = 85;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1700 && highestPriceOnGraph < 1800) {
+                nRatio = 90;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1800 && highestPriceOnGraph < 1900) {
+                nRatio = 95;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 1900 && highestPriceOnGraph < 2000) {
+                nRatio = 100;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2000 && highestPriceOnGraph < 2100) {
+                nRatio = 105;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2100 && highestPriceOnGraph < 2200) {
+                nRatio = 110;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2200 && highestPriceOnGraph < 2300) {
+                nRatio = 115;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2300 && highestPriceOnGraph < 2400) {
+                nRatio = 120;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2400 && highestPriceOnGraph < 2500) {
+                nRatio = 125;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2500 && highestPriceOnGraph < 2600) {
+                nRatio = 130;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2600 && highestPriceOnGraph < 2700) {
+                nRatio = 135;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2700 && highestPriceOnGraph < 2800) {
+                nRatio = 140;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2800 && highestPriceOnGraph < 2900) {
+                nRatio = 145;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 2900 && highestPriceOnGraph < 3000) {
+                nRatio = 150;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3000 && highestPriceOnGraph < 3100) {
+                nRatio = 155;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3100 && highestPriceOnGraph < 3200) {
+                nRatio = 160;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3200 && highestPriceOnGraph < 3300) {
+                nRatio = 165;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3300 && highestPriceOnGraph < 3400) {
+                nRatio = 170;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3400 && highestPriceOnGraph < 3500) {
+                nRatio = 175;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3500 && highestPriceOnGraph < 3600) {
+                nRatio = 180;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3600 && highestPriceOnGraph < 3700) {
+                nRatio = 185;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3700 && highestPriceOnGraph < 3800) {
+                nRatio = 190;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3800 && highestPriceOnGraph < 3900) {
+                nRatio = 195;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 3900 && highestPriceOnGraph < 4000) {
+                nRatio = 200;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4000 && highestPriceOnGraph < 4100) {
+                nRatio = 205;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4100 && highestPriceOnGraph < 4200) {
+                nRatio = 210;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4200 && highestPriceOnGraph < 4300) {
+                nRatio = 215;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4300 && highestPriceOnGraph < 4400) {
+                nRatio = 220;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4400 && highestPriceOnGraph < 4500) {
+                nRatio = 225;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4500 && highestPriceOnGraph < 4600) {
+                nRatio = 230;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4600 && highestPriceOnGraph < 4700) {
+                nRatio = 235;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4700 && highestPriceOnGraph < 4800) {
+                nRatio = 240;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
+            else if (highestPriceOnGraph >= 4800 && highestPriceOnGraph < 4900) {
+                nRatio = 245;
+                highestPriceLevel = highestPriceOnGraph / nRatio;
+            }
             const verticalWidthBetweenPoints = 150 / highestPriceLevel;
             for (var i = 0; i < highestPriceLevel+1; i++) {
                 width = 200 - (i * verticalWidthBetweenPoints);
-                baseGraph.innerHTML += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
+                strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
+
+            baseGraph.innerHTML += strokesStr;
 
             // Draws continuous line of prices on graph
             let yBaseLine = 200;
             let x1 = 60;
             let x2 = 60 + horizontalWidthBetweenStrokes;
             const ratio = 175 / highestPrice; // Ratio between 175px of vertical graph length and highest price
+            let graphStr = null;
             for (const item of eleringData) {
                 const hourPrice = item["price"];
                 let y1 = yBaseLine - hourPrice * ratio;
                 let y2 = y1;
                 if (hourPrice <= 50) {
-                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0"/>`
                 }
                 else if (hourPrice > 50 && hourPrice <= 110) {
-                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0"/>`
                 }
                 else {
-                    verticleGroup.innerHTML += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00"/>`
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00"/>`
                 }
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
-                
             }
 
+            verticleGroup.innerHTML = graphStr;
+
             // Add text to graph
-            textGroup.style.fontFamily = "arial";
-            textGroup.style.fontSize = "8px";
-            textGroup.innerHTML += `<text x="50" y="210">0</text>`;
-            textGroup.innerHTML += `<text x="10" y="13">NPS price</text>`;
-            textGroup.innerHTML += `<text x="10" y="23">€/MWh</text>`;
-            textGroup.innerHTML += `<text x="10" y="33">Inc. 20%</text>`;
-            textGroup.innerHTML += `<text x="${(endPosition)/2}" y="235">Hours</text>`;
+            let textStr = null;
+            textStr += `<text x="50" y="210">0</text>`;
+            textStr += `<text x="10" y="13">NPS price</text>`;
+            textStr += `<text x="10" y="23">€/MWh</text>`;
+            textStr += `<text x="10" y="33">Inc. 20%</text>`;
+            textStr += `<text x="${(endPosition)/2}" y="235">Hours</text>`;
+            
 
             // Add hours below horizontal graph
             let x = 30 + horizontalWidthBetweenStrokes;
             for (let i = 0; i < countOfDataPoints; i++) {
-                textGroup.innerHTML += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
+                textStr += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
                 x += horizontalWidthBetweenStrokes   ;
             }
 
@@ -175,10 +352,13 @@ function getDataFromElering(date_setting) {
             let textY = (200 - verticalWidthBetweenPoints)+2; // +2 is for centering
             let count = 150 / verticalWidthBetweenPoints;
             for (let i = 0; i < count; i++) {
-                textGroup.style.textAlign = "right";
-                textGroup.innerHTML += `<text x="30" y="${textY}">${nRatio * (i+1)}</text>`;
+                textStr += `<text x="30" y="${textY}">${nRatio * (i+1)}</text>`;
                 textY -= verticalWidthBetweenPoints;
             }
+
+            textGroup.style.fontFamily = "arial";
+            textGroup.style.fontSize = "8px";
+            textGroup.innerHTML += textStr;
             
             // Fill lowest and highest prices to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
