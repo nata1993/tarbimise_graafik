@@ -323,4 +323,5 @@ element.innerHTML = str;
 How much faster? It increased speed of rendering SVG graph with Papa Parse library from 4 seconds down to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
 I hope because 2 seconds for doing work on data + some time more for actual graph rendering with SVG
 is still in my opinion quite slow. Better than 4 seconds realy and finally graphs are starting to be
-somewhat usefull.
+somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering 
+of prices for 3 month time span to down to near instantly! Some serious speed increases right there!
