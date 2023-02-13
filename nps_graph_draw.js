@@ -338,7 +338,7 @@ function getDataFromElering(date_setting) {
             textStr += `<text x="10" y="13">NPS price</text>`;
             textStr += `<text x="10" y="23">€/MWh</text>`;
             textStr += `<text x="10" y="33">Inc. 20%</text>`;
-            textStr += `<text x="${(endPosition)/2}" y="235">Hours</text>`;
+            textStr += `<text x="${(svgWidth)/2}" y="235">Hours</text>`;
             
 
             // Add hours below horizontal graph
