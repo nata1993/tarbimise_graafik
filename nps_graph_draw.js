@@ -40,7 +40,7 @@ function calculate() {
         const before = Date.now()/1000; 
         getDataFromElering(date_settings);
         const after = Date.now()/1000;
-        console.log("Time elapsed: ", after - before);
+        console.log("Time elapsed: ", after - before, "seconds");
     }
 }
 
