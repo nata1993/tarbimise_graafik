@@ -6,13 +6,13 @@
     3) Drawing strokes on horizontal line
         - Small vertical strokes representing hours
     4) Drawing strokes on vertical line
-        - Small horizontal strokes representing price segment
+        - Small horizontal strokes representing price segment with VAT
     5) Drawing real price vector
         - Continuos line representing price level on the graph. Graph
-        height depends on Nord Pool Spot prices.
+        height depends on Nord Pool Spot prices. VAT included.
     6) Draw text on the graph
         - Text of hours on below horizontal graph
-        - Text of price segments next to vertical graph
+        - Text of price segments next to vertical graph with VAT
         - basic graph meaning text next to both horizontal and vertical graphs
 */
 

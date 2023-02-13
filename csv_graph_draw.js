@@ -53,7 +53,7 @@ function SVGdraw (CSV_File_Results) {
     // Variables
     const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
     const CSV_File_Data = CSV_File_Results.data; // CSV data itself
-    const firstResultsToIgnore = 12; // The first results are form headers
+    const firstResultsToIgnore = 12; // The first results are form headers in Elektrilevi CSV file
     const svgWidth = svgCSV.getBoundingClientRect().width; // Width of SVG container
     const offsetFromEnd = 50; // Defines offset from SVG container end in pixels
     let endPosition = svgWidth - offsetFromEnd; // Defines how far the horisontal graph should go
