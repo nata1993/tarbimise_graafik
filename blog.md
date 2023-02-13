@@ -231,7 +231,7 @@ not go away in SVG drawing circle. For some reason drawing circle on cy position
 error. That brings us to the.......
 
 ## Sixth hardship...
-### "Double or no deal..." - Home Alone 3, parrot talk
+### "Double or no deal..." - Home Alone 3, parrot words
 ### Floating point parsing continues
 After having troubles with already parsing floating point numbers using parseFloat() built-in 
 JavaScript function, there were still some problems with NaN during drawing a graph in SVG.
@@ -291,3 +291,36 @@ seconds. Clearing DOM before redrawing, reduced redrawing speed back to 3.8 seco
 find a way to increase SVG drawing speed because 3.8 seconds is still a lot of time to just do the 
 calculations on 700 elements and then it takes a second-two to actually show what has been calculated
 and drawn.
+
+## Nineth hardship
+### Still, why it takes so long to draw SVG?!?!?!
+Accessing DOM is time consuming, thats for sure. There are many ways how to reduce DOM access times
+and access ammounts. Here is one:
+
+JavaScript
+
+```javascript
+document.getElementById("SVG").innerHTML = "Something something";
+/// vs
+const element = document.getElementById("SVG");
+element.innerHTML = "Something something";
+```
+
+The first way is useful when you need to do it 2-5 times. The second one is when you need to do it
+hundret times. What about thousant times?
+In that case is faster to do it this way:
+
+JavaScript
+
+```javascript
+const element = document.getElementById("SVG");
+let str = "";
+for (let i = 0; i < 1000; i++) {
+    str += "Something Something";
+}
+element.innerHTML = str;
+```
+How much faster? It increased speed of rendering SVG graph with Papa Parse library from 4 seconds down to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
+I hope because 2 seconds for doing work on data + some time more for actual graph rendering with SVG
+is still in my opinion quite slow. Better than 4 seconds realy and finally graphs are starting to be
+somewhat usefull.
