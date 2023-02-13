@@ -22,7 +22,7 @@ function drawCSVgraph(){
             const before = Date.now()/1000; 
             SVGdraw(results);
             const after = Date.now()/1000;
-            console.log("Time elapsed: ", after - before);
+            console.log("Time elapsed: ", after - before, "seconds");
         },
         error: undefined,
         download: false,
@@ -40,29 +40,38 @@ function drawCSVgraph(){
 };
 
 function SVGdraw (CSV_File_Results) {
-    document.getElementById("csvBaseGraph").innerHTML = "";
-    document.getElementById("csvConsumptionVector").innerHTML = "";
-    document.getElementById("csvText").innerHTML = "";
+    const svgCSV = document.getElementById("userConsumption");
+    const g = document.getElementById("csvBaseGraph");
+    const dataPointGroup = document.getElementById("csvConsumptionVector");
+    const textGroup = document.getElementById("csvText");
+
+    // Clear the contents of SVG before redrawing
+    g.innerHTML = "";
+    dataPointGroup.innerHTML = "";
+    textGroup.innerHTML = "";
+
+    // Variables
     const CSV_File_Data_Length = CSV_File_Results.data.length-1; // Length of CSV data
     const CSV_File_Data = CSV_File_Results.data; // CSV data itself
     const firstResultsToIgnore = 12; // The first results are form headers
-    const svgCSV = document.getElementById("userConsumption");
-    let svgWidth = svgCSV.getBoundingClientRect().width; // Width of SVG container
+    const svgWidth = svgCSV.getBoundingClientRect().width; // Width of SVG container
     const offsetFromEnd = 50; // Defines offset from SVG container end in pixels
     let endPosition = svgWidth - offsetFromEnd; // Defines how far the horisontal graph should go
     let strokesEndPosition = endPosition - 85; // Defines how far the strokes on horisontal graph should go
-    // Get SVG container first group, the graph vertical and horisontal lines
-    let g =  document.getElementById("csvBaseGraph");
+
     // X and Y coordinates for vertical and horizontal graph lines
     const baseGraphCoordinates = {
         x : [60, 60, 60, endPosition, 60, 58, 60, 62, endPosition, endPosition-5, endPosition, endPosition-5],
         y : [25, 200, 200, 200, 20, 25, 20, 25, 200, 202, 200, 198]
     };
+
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
     const XYarraySize = baseGraphCoordinates.x.length;
+    let baseStr = null;
     for (let i = 0; i < XYarraySize; i+=2) {
-        g.innerHTML += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
+        baseStr += `<line x1="${baseGraphCoordinates.x[i]}" y1="${baseGraphCoordinates.y[i]}" x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
     }
+
     // Find highest and lowest consumption
     let maxConsumption = 0;
     for (let i = firstResultsToIgnore; i < CSV_File_Data_Length; i++) {
@@ -77,38 +86,45 @@ function SVGdraw (CSV_File_Results) {
             minConsumption = CSV_File_Data[i][4];
         }
     }
-    document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
-    document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
+    document.getElementById("highestConsumption").replaceHTML = `Period highest consumption: ${maxConsumption} KWh`;
+    document.getElementById("lowestConsumption").replaceHTML = `Period lowest consumption: ${minConsumption} KWh`;
+
     // Small vertical strokes on horisontal line
     const hzWidth = strokesEndPosition/CSV_File_Data_Length;
     for(let i = 1; i < CSV_File_Data_Length; i++) {
-        g.innerHTML += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
+        baseStr += `<line x1="${60 + hzWidth*i}" y1="${200}" x2="${60 + hzWidth*i}" y2="${205}" />`;
     }
+
     // Add small strokes to vertical graph
     let widthBetweenPoints = 150/8;
     let y = 200 - widthBetweenPoints;
     for (let i = 0; i < 8; i++) {
-        g.innerHTML += `<line x1="${60}" y1="${y}" x2="${55}" y2="${y}"/>`;
+        baseStr += `<line x1="${60}" y1="${y}" x2="${55}" y2="${y}"/>`;
         y -= widthBetweenPoints;
     }
+    g.innerHTML = baseStr;
+
     // Adds datapoints to the graph in second group of SVG container
-    let dataPointGroup = document.getElementById("csvConsumptionVector");
     let x = strokesEndPosition/CSV_File_Data_Length;
     const ratio = 150/maxConsumption;
     let number = 0;
     let y2 = 0;
+    let circleStr = null;
     for(let i = firstResultsToIgnore; i < CSV_File_Data_Length; i++) {
         number = parseFloat(CSV_File_Data[i][4].replace(",", "."));
         y2 = 200 - number * ratio;
-        dataPointGroup.innerHTML += `<circle cx="${60 + x*i}" cy="${y2}" r="1.5" fill="black" stroke="#000" />`;
+        circleStr += `<circle cx="${60 + x*i}" cy="${y2}" r="1.5" fill="black" stroke="#000" />`;
     }
+    dataPointGroup.innerHTML += circleStr;
+
     // Adds text to the graph in third group of SVG container
     let middleOfHorisontalGraph = strokesEndPosition/2;
-    let textGroup = document.getElementById("csvText");
+    let textStr = null;
+    textStr += `<text x="${middleOfHorisontalGraph}" y="235">Hours</text>`;
+    textStr += '<text x="88" y="25">Consumption</text>';
+    textStr += '<text x="8" y="35">KWh</text>';
+    textStr += '<text x="50" y="210">0</text>';
     textGroup.style.fontSize = "8px";
     textGroup.style.fontFamily = "arial";
-    textGroup.innerHTML += `<text x="${middleOfHorisontalGraph}" y="235">Hours</text>`;
-    textGroup.innerHTML += '<text x="10" y="25">Consumption</text>';
-    textGroup.innerHTML += '<text x="10" y="35">KWh</text>';
-    textGroup.innerHTML += '<text x="50" y="210">0</text>';
+    textGroup.innerHTML = textStr;
 }

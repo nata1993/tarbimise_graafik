@@ -325,3 +325,5 @@ I hope because 2 seconds for doing work on data + some time more for actual grap
 is still in my opinion quite slow. Better than 4 seconds realy and finally graphs are starting to be
 somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering 
 of prices for 3 month time span to down to near instantly! Some serious speed increases right there!
+By implementing same method for CSV graph generation, the speedreduction was outrageously massive
+for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds!
