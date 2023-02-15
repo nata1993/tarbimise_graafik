@@ -19,10 +19,21 @@
         
     </div>
     <div class="buttons">
-        <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" required />
-        <input type="date" id="date_start" required />
-        <input type="date" id="date_end" required />
-        <input type="button" value="Calculate consumption costs" onclick="calculate()" />
+        <div class="buttonsColumn">
+            <div>
+                <label>Select CSV file:</label>
+                <label>Zoom in on graph starting from:</label>
+                <label>Zoom in on graph ending on:</label>
+            </div>
+            <div>
+                <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" />
+                <input type="date" id="date_start" />
+                <input type="date" id="date_end" />
+            </div>
+        </div>
+        <div>
+            <input type="button" value="Calculate consumption costs" onclick="calculate()" />
+        </div>
     </div>
     </div>
     <div class="body">

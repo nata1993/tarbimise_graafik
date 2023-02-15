@@ -10,11 +10,26 @@ body {
 }
 .buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding: 10px;
     align-items: center;
     justify-content: center;
     background-color: lightgray;
+}
+.buttonsColumn {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+}
+.buttonsColumn div {
+    display: flex;
+    flex-direction: column;
+}
+.buttonsColumn div > label{
+    height: 22px;
+}
+.buttons input, .buttons label{
+    margin: 5px;
 }
 .body {
     width: auto;
