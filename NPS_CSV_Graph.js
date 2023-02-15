@@ -18,64 +18,104 @@
 
 
 // Draw Nord Pool Spot prices based on user selected date range
-function calculate() {
-    // Take 
-    const date_start = document.getElementById("date_start").value;
-    const date_end = document.getElementById("date_end").value;
-    const date_settings = [];
-    date_settings.push(date_start, date_end);
-
-    // Check if user did not choose date range
-    if (date_start.length == 0 || date_end.length == 0) {
-        // Drawing note for user to canvas if not chosen date range
-        let canvas = document.getElementById("npsPrices");
-        let ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#CCC";
-        ctx.fillRect(0, 0, 500, 250);
-        ctx.fillStyle = "#000";
-        ctx.font = "30px arial";
-        ctx.fillText("Please select date range", 100, 100);
-    }
-    else {
-        const before = Date.now()/1000; 
-        getDataFromElering(date_settings);
-        const after = Date.now()/1000;
-        console.log("Time elapsed: ", after - before, "seconds");
-    }
+function drawGraphs() {
+    // Retrieve file from input
+    const file = document.getElementById("csvFileInput").files[0];
+    Papa.parse(file, {
+        // Default configuration for parsing CSV files
+        delimiter: "",	// auto-detect
+        newline: "",	// auto-detect
+        quoteChar: '"',
+        escapeChar: '"',
+        header: false,
+        transformHeader: undefined,
+        dynamicTyping: false,
+        preview: 0,
+        encoding: "",
+        worker: true,
+        comments: false,
+        step: undefined,
+        // Upon parsing fully the data, graph is drawn
+        complete: function(results) {
+            const before = Date.now()/1000; 
+            NPS_CSV_Graph_Generator(results);
+            const after = Date.now()/1000;
+            console.log("Time elapsed: ", after - before, "seconds");
+        },
+        error: undefined,
+        download: false,
+        downloadRequestHeaders: undefined,
+        downloadRequestBody: undefined,
+        skipEmptyLines: true,
+        chunk: undefined,
+        chunkSize: undefined,
+        fastMode: false,
+        beforeFirstChunk: undefined,
+        withCredentials: undefined,
+        transform: undefined,
+        delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP]
+    });
+    
 }
 
 // Use user set date range for retrieving Nord Pool Spot electricity prices
-// from Elering API and generate prices graph
-function getDataFromElering(date_setting) {
-    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_setting[0]}T00%3A00%3A00.000Z&end=${date_setting[1]}T00%3A00%3A00.000Z`;
+// from Elering API and generate prices graph with consumption graph
+function NPS_CSV_Graph_Generator(CSV_File_Results) {
+    // Take date span from CSV file, rearange it for API and fetch with it for needed data
+    const date_span = CSV_File_Results.data[2][1];
+    const date_start = date_span[6] + date_span[7] + date_span[8] + date_span[9] + "-" + date_span[3] + date_span[4] + "-" + date_span[0] + date_span[1];
+    const date_end = date_span[19] + date_span[20] + date_span[21] + date_span[22]  + "-" + date_span[16] + date_span[17] + "-" + date_span[13] + date_span[14];
+
+    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}T00%3A00%3A00.000Z&end=${date_end}T00%3A00%3A00.000Z`;
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
+            // Get SVG parent container calculated width
+            const SVG_Width = document.getElementById("NPS_CSV").getBoundingClientRect().width;
+
+            // Variables
+            const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data
+            const CSV_File_Data = CSV_File_Results.data; // CSV data itself
+            const CSV_File_Data_Results_To_Ignore = 12; // The first results are form headers in Elektrilevi CSV file
             const eleringData = res.data.ee;
             let width = 0; // Reusable variable
-            let strokeInitialPosition = 0; // Reusable variable
-
+            let strokeInitialPosition = 60; // Reusable variable
+            
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
             const lowestPrice = minPrice(eleringData);
             const highestPriceOnGraph = roundUp(highestPrice);
 
-            // Get SVG parent container calculated width
-            const svgWidth = document.getElementById("npsPrices").getBoundingClientRect().width;
+            // Find highest and lowest consumption
+            let maxConsumption = 0;
+            for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
+                if(CSV_File_Data[i][4] >= maxConsumption) {
+                    maxConsumption = CSV_File_Data[i][4];
+                }
+            }
+            maxConsumption = parseFloat(maxConsumption.replace(",","."));
+            let minConsumption = CSV_File_Data[12][4];
+            for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
+                if(CSV_File_Data[i][4] <= minConsumption) {
+                    minConsumption = CSV_File_Data[i][4];
+                }
+            }
 
             // Get SVG container base elements
             const baseGraph = document.getElementById("npsBaseGraph");
             const verticleGroup = document.getElementById("npsPriceVector");
             const textGroup = document.getElementById("npsText");
+            const Data_Points_Group = document.getElementById("csvConsumptionVector");
 
             // Clear SVG contents if there has been drawn previously something 
             baseGraph.innerHTML = "";
             verticleGroup.innerHTML = "";
+            Data_Points_Group.innerHTML = "";
             textGroup.innerHTML = "";
 
             // Graph sizing
             const offsetFromEnd = 70;   // Defines offset from SVG container end in pixels
-            const endPosition = svgWidth - offsetFromEnd; // Defines base graph horizontal graph end position
+            const endPosition = SVG_Width - offsetFromEnd; // Defines base graph horizontal graph end position
             
             // Coordinates for base graph vectors starts and ends
             let baseGraphCoordinates = {
@@ -89,17 +129,16 @@ function getDataFromElering(date_setting) {
                                         x2="${baseGraphCoordinates.x[i+1]}" y2="${baseGraphCoordinates.y[i+1]}" />`;
             }
 
-            // Draws small strokes to base graph horisontal line
+            // Draws small strokes to base graph horisontal line - needs improvements
             const countOfDataPoints = eleringData.length;
             const horizontalWidthBetweenStrokes = (endPosition - 60)/ countOfDataPoints;
-            strokeInitialPosition = 60;
             let strokesStr = "";
-            for (var i = 0; i < countOfDataPoints; i++) {
+            /*for (var i = 0; i < countOfDataPoints; i++) {
                 width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
                 strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
-            }
+            }*/
             
-            // Draws small strokes to base graph vertical line on the left side
+            // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let highestPriceLevel = 0;
             if (highestPriceOnGraph < 100) {
@@ -343,12 +382,27 @@ function getDataFromElering(date_setting) {
             }
             verticleGroup.innerHTML = graphStr;
 
+            // Adds CSV file datapoints to the graph in second group of SVG container
+            let cx = 60;
+            let cx_width = (endPosition - 60) / (CSV_File_Data_Length-CSV_File_Data_Results_To_Ignore);
+            const consumption_ratio = 150/maxConsumption;
+            let number = 0;
+            let cy = 0;
+            let circleStr = "";
+            for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
+                number = parseFloat(CSV_File_Data[i][4].replace(",", "."));
+                cy = 200 - number * consumption_ratio;
+                circleStr += `<circle cx="${cx}" cy="${cy}" r="0.75" fill="#000" stroke="#000" />`;
+                cx += cx_width;
+            }
+            Data_Points_Group.innerHTML += circleStr;
+
             // Add text to graph
             let textStr = "";
             textStr += `<text x="10" y="13">NPS price</text>`;
             textStr += `<text x="10" y="23">€/MWh</text>`;
             textStr += `<text x="10" y="33">Inc. 20%</text>`;
-            textStr += `<text x="${(svgWidth)/2}" y="235">Hours</text>`;
+            textStr += `<text x="${(SVG_Width)/2}" y="235">Hours</text>`;
             textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#000" fill="#000"/>`;
             textStr += `<text x="${endPosition-90}" y="235">Extreme price(s)</text>`;
             textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
@@ -361,12 +415,12 @@ function getDataFromElering(date_setting) {
             textStr += `<text x="390" y="237">Below 50 €/MWh</text>`;
             
 
-            // Add hours below horizontal graph
-            let x = 30 + horizontalWidthBetweenStrokes;
+            // Add hours below horizontal graph - needs improvements
+            /*let x = 30 + horizontalWidthBetweenStrokes;
             for (let i = 0; i < countOfDataPoints; i++) {
                 textStr += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
                 x += horizontalWidthBetweenStrokes;
-            }
+            }*/
 
             // Add price segments next to vertical graph on the left
             let textY = (200)+2; // +2 is for centering text
@@ -380,9 +434,11 @@ function getDataFromElering(date_setting) {
             textGroup.style.fontSize = "8px";
             textGroup.innerHTML += textStr;
             
-            // Fill lowest and highest prices to HTML
+            // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
+            document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
         })
         .catch(err => { throw err });
 }

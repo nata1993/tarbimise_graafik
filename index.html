@@ -19,34 +19,34 @@
         
     </div>
     <div class="buttons">
-        <input id="csvFileInput" type="file" accept=".csv" placeholder="CSV file exported from Elektrilevi" onchange="drawCSVgraph()" required />
+        <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" required />
         <input type="date" id="date_start" required />
         <input type="date" id="date_end" required />
-        <input type="button" value="Calculate consumption" onclick="calculate()" />
+        <input type="button" value="Calculate consumption costs" onclick="calculate()" />
     </div>
     </div>
     <div class="body">
-        <h3>Selected data range NPS stock prices graph</h3>
+        <h3>NPS price and electricity consumption graph</h3>
         <div>
-            <svg id="npsPrices" version="1.1">
+            <svg id="NPS_CSV" version="1.1">
                 <rect width="100%" height="100%" fill="#DDD"/>
                 <g id="npsBaseGraph" stroke="#000" stroke-width="1"></g>
                 <g id="npsPriceVector" stroke-width="2.5"></g>
+                <g id="csvConsumptionVector"></g>
                 <g id="npsText"></g>
             </svg>
-            <h4 id="highestPrice">Period highest price: -</h3>
-            <h4 id="lowestPrice">Period lowest price: -</h3>
+            <h4 id="highestPrice">Period highest price: -</h4>
+            <h4 id="lowestPrice">Period lowest price: -</h4>
+            <h4 id="highestConsumption">Period highest consumption: -</h4>
+            <h4 id="lowestConsumption">Period lowest consumption: -</h4>
         </div>
         <h3>Current month electricity consumption graph</h3>
         <div>
             <svg id="userConsumption" version="1.1">
                 <rect width="100%" height="100%" fill="#DDD"/>
                 <g id="csvBaseGraph" stroke="#000" stroke-width="1"></g>
-                <g id="csvConsumptionVector"></g>
                 <g id="csvText"></g>
             </svg>
-            <h4 id="highestConsumption">Period highest consumption: -</h4>
-            <h4 id="lowestConsumption">Period lowest consumption: -</h4>
         </div>
     </div>
 

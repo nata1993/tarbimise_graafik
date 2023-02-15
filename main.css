@@ -24,7 +24,7 @@ body {
 .indent {
     padding: 10px;
 }
-#npsPrices {
+#NPS_CSV {
     width: 100%;
     height: 250px;
     border: 1px black solid;
