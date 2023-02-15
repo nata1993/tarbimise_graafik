@@ -74,14 +74,13 @@ function getDataFromElering(date_setting) {
             textGroup.innerHTML = "";
 
             // Graph sizing
-            const offsetFromEnd = 50;   // Defines offset from SVG container end in pixels
+            const offsetFromEnd = 70;   // Defines offset from SVG container end in pixels
             const endPosition = svgWidth - offsetFromEnd; // Defines base graph horizontal graph end position
-            const strokesEndPosition = endPosition - 85; // Defines how far strokes go on horizontal graph
             
             // Coordinates for base graph vectors starts and ends
             let baseGraphCoordinates = {
-                x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition-5, endPosition, endPosition-5],
-                y: [25, 30, 25, 30, 25, 200, 200, 200, 200, 202, 200, 198]
+                x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
+                y: [25, 30, 25, 30, 25, 200, 200, 200, 200, 25, 25, 30, 25, 30, 25]
             };
 
             // Draw base graph
@@ -91,8 +90,8 @@ function getDataFromElering(date_setting) {
             }
 
             // Draws small strokes to base graph horisontal line
-            const countOfDataPoints = eleringData.length+1;
-            const horizontalWidthBetweenStrokes = strokesEndPosition / countOfDataPoints;
+            const countOfDataPoints = eleringData.length;
+            const horizontalWidthBetweenStrokes = (endPosition - 60)/ countOfDataPoints;
             strokeInitialPosition = 60;
             let strokesStr = "";
             for (var i = 0; i < countOfDataPoints; i++) {
@@ -100,7 +99,7 @@ function getDataFromElering(date_setting) {
                 strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
             }
             
-            // Draws small strokes to base graph vertical line
+            // Draws small strokes to base graph vertical line on the left side
             let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let highestPriceLevel = 0;
             if (highestPriceOnGraph < 100) {
@@ -305,6 +304,13 @@ function getDataFromElering(date_setting) {
                 strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
 
+            // Draws small strokes to base graph vertical line on the left side
+            let widthBetweenPoints = 150/8;
+            let y = 200 - widthBetweenPoints;
+            for (let i = 0; i < 8; i++) {
+                strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+5}" y2="${y}"/>`;
+                y -= widthBetweenPoints;
+            }
             baseGraph.innerHTML += strokesStr;
 
             // Draws continuous line of prices on graph
@@ -335,18 +341,24 @@ function getDataFromElering(date_setting) {
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
             }
-
             verticleGroup.innerHTML = graphStr;
 
             // Add text to graph
             let textStr = "";
-            textStr += `<text x="50" y="210">0</text>`;
             textStr += `<text x="10" y="13">NPS price</text>`;
             textStr += `<text x="10" y="23">€/MWh</text>`;
             textStr += `<text x="10" y="33">Inc. 20%</text>`;
             textStr += `<text x="${(svgWidth)/2}" y="235">Hours</text>`;
-            textStr += `<circle cx="90" cy="233" r="2" stroke="#000" fill="#000"/>`;
-            textStr += `<text x="100" y="235">- Extreme price(s)</text>`;
+            textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#000" fill="#000"/>`;
+            textStr += `<text x="${endPosition-90}" y="235">Extreme price(s)</text>`;
+            textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
+            textStr += `<text x="${endPosition+10}" y="23">KWh</text>`;
+            textStr += `<line x1="75" y1="235" x2="90" y2="235" stroke="#F00" stroke-width="2" />`;
+            textStr += `<text x="100" y="237">Between 110 and 1000 €/MWh</text>`;
+            textStr += `<line x1="225" y1="235" x2="240" y2="235" stroke="#FF0" stroke-width="2" />`;
+            textStr += `<text x="250" y="237">Between 50 and 110 €/MWh</text>`;
+            textStr += `<line x1="365" y1="235" x2="380" y2="235" stroke="#0A0" stroke-width="2" />`;
+            textStr += `<text x="390" y="237">Below 50 €/MWh</text>`;
             
 
             // Add hours below horizontal graph
@@ -356,11 +368,11 @@ function getDataFromElering(date_setting) {
                 x += horizontalWidthBetweenStrokes;
             }
 
-            // Add price segments next to vertical graph
-            let textY = (200 - verticalWidthBetweenPoints)+2; // +2 is for centering
-            let count = 150 / verticalWidthBetweenPoints;
+            // Add price segments next to vertical graph on the left
+            let textY = (200)+2; // +2 is for centering text
+            let count = (150 / verticalWidthBetweenPoints)+1;
             for (let i = 0; i < count; i++) {
-                textStr += `<text x="30" y="${textY}">${nRatio * (i+1)}</text>`;
+                textStr += `<text x="30" y="${textY}">${nRatio * (i)}</text>`;
                 textY -= verticalWidthBetweenPoints;
             }
 
