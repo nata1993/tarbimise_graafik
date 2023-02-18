@@ -76,28 +76,29 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Variables
             const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data
             const CSV_File_Data = CSV_File_Results.data; // CSV data itself
-            const CSV_File_Data_Results_To_Ignore = 12; // The first results are form headers in Elektrilevi CSV file
+            const CSV_File_Data_Results_To_Ignore = 11; // The first results are form headers in Elektrilevi CSV file
             const eleringData = res.data.ee;
             let width = 0; // Reusable variable
-            let strokeInitialPosition = 60; // Reusable variable
+            let maxConsumption = 0;
+            let minConsumption = CSV_File_Data[11][4].replace(",", ".");
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
             const lowestPrice = minPrice(eleringData);
-            const highestPriceOnGraph = roundUp(highestPrice);
+            const highestPriceOnGraph = Math.ceil(highestPrice);
 
             // Find highest and lowest consumption
-            let maxConsumption = 0;
             for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                if(CSV_File_Data[i][4] >= maxConsumption) {
-                    maxConsumption = CSV_File_Data[i][4];
+                let h = CSV_File_Data[i][4].replace(",",".");
+                if(h >= maxConsumption) {
+                    maxConsumption = h;
                 }
             }
-            maxConsumption = parseFloat(maxConsumption.replace(",","."));
-            let minConsumption = CSV_File_Data[12][4];
+            
             for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                if(CSV_File_Data[i][4] <= minConsumption) {
-                    minConsumption = CSV_File_Data[i][4];
+                let m = CSV_File_Data[i][4].replace(",", ".");
+                if(m <= minConsumption) {
+                    minConsumption = m;
                 }
             }
 
@@ -140,211 +141,163 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
-            let highestPriceLevel = 0;
             if (highestPriceOnGraph < 100) {
                 nRatio = 5;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 100 && highestPriceOnGraph < 200) {
                 nRatio = 10;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 200 && highestPriceOnGraph < 300) {
                 nRatio = 15;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 300 && highestPriceOnGraph < 400) {
                 nRatio = 20;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 400 && highestPriceOnGraph < 500) {
                 nRatio = 25;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 500 && highestPriceOnGraph < 600) {
                 nRatio = 30;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 600 && highestPriceOnGraph < 700) {
                 nRatio = 35;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 700 && highestPriceOnGraph < 800) {
                 nRatio = 40;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 800 && highestPriceOnGraph < 900) {
                 nRatio = 45;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 900 && highestPriceOnGraph < 1000) {
                 nRatio = 50;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1000 && highestPriceOnGraph < 1100) {
                 nRatio = 55;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1100 && highestPriceOnGraph < 1200) {
                 nRatio = 60;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1200 && highestPriceOnGraph < 1300) {
                 nRatio = 65;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1300 && highestPriceOnGraph < 1400) {
                 nRatio = 70;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1400 && highestPriceOnGraph < 1500) {
                 nRatio = 75;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1500 && highestPriceOnGraph < 1600) {
                 nRatio = 80;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1600 && highestPriceOnGraph < 1700) {
                 nRatio = 85;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1700 && highestPriceOnGraph < 1800) {
                 nRatio = 90;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1800 && highestPriceOnGraph < 1900) {
                 nRatio = 95;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 1900 && highestPriceOnGraph < 2000) {
                 nRatio = 100;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2000 && highestPriceOnGraph < 2100) {
                 nRatio = 105;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2100 && highestPriceOnGraph < 2200) {
                 nRatio = 110;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2200 && highestPriceOnGraph < 2300) {
                 nRatio = 115;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2300 && highestPriceOnGraph < 2400) {
                 nRatio = 120;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2400 && highestPriceOnGraph < 2500) {
                 nRatio = 125;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2500 && highestPriceOnGraph < 2600) {
                 nRatio = 130;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2600 && highestPriceOnGraph < 2700) {
                 nRatio = 135;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2700 && highestPriceOnGraph < 2800) {
                 nRatio = 140;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2800 && highestPriceOnGraph < 2900) {
                 nRatio = 145;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 2900 && highestPriceOnGraph < 3000) {
                 nRatio = 150;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3000 && highestPriceOnGraph < 3100) {
                 nRatio = 155;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3100 && highestPriceOnGraph < 3200) {
                 nRatio = 160;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3200 && highestPriceOnGraph < 3300) {
                 nRatio = 165;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3300 && highestPriceOnGraph < 3400) {
                 nRatio = 170;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3400 && highestPriceOnGraph < 3500) {
                 nRatio = 175;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3500 && highestPriceOnGraph < 3600) {
                 nRatio = 180;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3600 && highestPriceOnGraph < 3700) {
                 nRatio = 185;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3700 && highestPriceOnGraph < 3800) {
                 nRatio = 190;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3800 && highestPriceOnGraph < 3900) {
                 nRatio = 195;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 3900 && highestPriceOnGraph < 4000) {
                 nRatio = 200;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4000 && highestPriceOnGraph < 4100) {
                 nRatio = 205;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4100 && highestPriceOnGraph < 4200) {
                 nRatio = 210;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4200 && highestPriceOnGraph < 4300) {
                 nRatio = 215;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4300 && highestPriceOnGraph < 4400) {
                 nRatio = 220;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4400 && highestPriceOnGraph < 4500) {
                 nRatio = 225;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4500 && highestPriceOnGraph < 4600) {
                 nRatio = 230;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4600 && highestPriceOnGraph < 4700) {
                 nRatio = 235;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4700 && highestPriceOnGraph < 4800) {
                 nRatio = 240;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
             else if (highestPriceOnGraph >= 4800 && highestPriceOnGraph < 4900) {
                 nRatio = 245;
-                highestPriceLevel = highestPriceOnGraph / nRatio;
             }
+
+            const highestPriceLevel = highestPrice / nRatio;
             const verticalWidthBetweenPoints = 150 / highestPriceLevel;
             for (var i = 0; i < highestPriceLevel+1; i++) {
                 width = 200 - (i * verticalWidthBetweenPoints);
                 strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
 
-            // Draws small strokes to base graph vertical line on the left side
-            let widthBetweenPoints = 150/8;
+            // Draws small strokes to base graph vertical line on the right side
+            let widthBetweenPoints = 150 / 8;
             let y = 200 - widthBetweenPoints;
             for (let i = 0; i < 8; i++) {
                 strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+5}" y2="${y}"/>`;
@@ -353,14 +306,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             baseGraph.innerHTML += strokesStr;
 
             // Draws continuous line of prices on graph
-            let yBaseLine = 200;
+            const base_y = 200;
             let x1 = 60;
             let x2 = 60 + horizontalWidthBetweenStrokes;
-            const ratio = 175 / highestPrice; // Ratio between 175px of vertical graph length and highest price
+            const price_ratio = 150 / ( highestPrice / 1.2 ); // Ratio between 150px of vertical graph length and highest price, divide by 1.2 because before we multiplied by 1.2 in maxPrice function
             let graphStr = "";
             for (const item of eleringData) {
                 const hourPrice = item["price"];
-                let y1 = yBaseLine - hourPrice * ratio;
+                let y1 = base_y - hourPrice * price_ratio;
                 let y2 = y1;
                 if (hourPrice <= 50) {
                     graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0" stroke-width="3"/>`;
@@ -369,10 +322,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0" stroke-width="3"/>`;
                 }
                 else if (hourPrice >= 1000) {
-                    graphStr += `<circle cx="${x1}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
-                    graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
-                    graphStr += `<circle cx="${x2}" cy="${y1}" r="1.5" stroke="#000" fill="#000"/>`;
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000"/>`;
+                    graphStr += `<circle cx="${x1}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<circle cx="${x2}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F0F"/>`;
                 }
                 else {
                     graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00" stroke-width="3"/>`;
@@ -384,15 +337,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container
             let cx = 60;
-            let cx_width = (endPosition - 60) / (CSV_File_Data_Length-CSV_File_Data_Results_To_Ignore);
-            const consumption_ratio = 150/maxConsumption;
-            let number = 0;
-            let cy = 0;
+            let cx_width = (endPosition - 60) / (CSV_File_Data_Length - CSV_File_Data_Results_To_Ignore);
             let circleStr = "";
+            const consumption_ratio = 150 / maxConsumption;
             for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                number = parseFloat(CSV_File_Data[i][4].replace(",", "."));
-                cy = 200 - number * consumption_ratio;
-                circleStr += `<circle cx="${cx}" cy="${cy}" r="0.75" fill="#000" stroke="#000" />`;
+                let consumption = parseFloat(CSV_File_Data[i][4].replace(",", "."));
+                let cy = 200 - consumption * consumption_ratio;
+                circleStr += `<circle id="${consumption}" cx="${cx}" cy="${cy}" r="0.75" fill="#000" stroke="#000" />`;
                 cx += cx_width;
             }
             Data_Points_Group.innerHTML += circleStr;
@@ -402,8 +353,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="10" y="13">NPS price</text>`;
             textStr += `<text x="10" y="23">€/MWh</text>`;
             textStr += `<text x="10" y="33">Inc. 20%</text>`;
-            textStr += `<text x="${(SVG_Width)/2}" y="235">Hours</text>`;
-            textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#000" fill="#000"/>`;
+            textStr += `<text x="${SVG_Width/2}" y="235">Hours</text>`;
+            textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#F0F" fill="#F0F"/>`;
             textStr += `<text x="${endPosition-90}" y="235">Extreme price(s)</text>`;
             textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
             textStr += `<text x="${endPosition+10}" y="23">KWh</text>`;
@@ -413,6 +364,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="250" y="237">Between 50 and 110 €/MWh</text>`;
             textStr += `<line x1="365" y1="235" x2="380" y2="235" stroke="#0A0" stroke-width="2" />`;
             textStr += `<text x="390" y="237">Below 50 €/MWh</text>`;
+            textStr += `<circle cx="${(SVG_Width / 2) + 250}" cy="233" r="0.75" stroke="#000" fill="#000"/>`;
+            textStr += `<text x="${(SVG_Width / 2) + 260}" y="237">Consumption</text>`;
             
 
             // Add hours below horizontal graph - needs improvements
@@ -423,9 +376,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             }*/
 
             // Add price segments next to vertical graph on the left
-            let textY = (200)+2; // +2 is for centering text
-            let count = (150 / verticalWidthBetweenPoints)+1;
-            for (let i = 0; i < count; i++) {
+            let textY = 202; // +2 is for centering text
+            let count = 150 / verticalWidthBetweenPoints;
+            for (let i = 0; i < count+1; i++) {
                 textStr += `<text x="30" y="${textY}">${nRatio * (i)}</text>`;
                 textY -= verticalWidthBetweenPoints;
             }
@@ -435,8 +388,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textGroup.innerHTML += textStr;
             
             // Fill lowest and highest prices asw ell as consumption to HTML
-            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number(highestPrice / 10).toFixed(2)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number(lowestPrice / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(2)} \u00A2/KWh`;
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
         })
@@ -456,13 +409,13 @@ function maxPrice(data) {
 
 // Helper function for filtering out min price within dataset with VAT
 function minPrice(data) {
-    let low = data[0].price;
+    let min = data[0].price;
     for (var i = 0; i < data.length; i++) {
-        if (data[i].price < low) {
-            low = data[i].price;
+        if (data[i].price < min) {
+            min = data[i].price;
         }
     }
-    return low * 1.2;
+    return min * 1.2;
 }
 
 // Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
