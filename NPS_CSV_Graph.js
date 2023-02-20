@@ -66,7 +66,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
     const date_start = date_span[6] + date_span[7] + date_span[8] + date_span[9] + "-" + date_span[3] + date_span[4] + "-" + date_span[0] + date_span[1];
     const date_end = date_span[19] + date_span[20] + date_span[21] + date_span[22]  + "-" + date_span[16] + date_span[17] + "-" + date_span[13] + date_span[14];
 
-    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}T00%3A00%3A00.000Z&end=${date_end}T00%3A00%3A00.000Z`;
+    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}T00%3A00%3A00.000Z&end=${date_end}T23%3A59%3A59.999Z`;
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
@@ -134,6 +134,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const countOfDataPoints = eleringData.length;
             const horizontalWidthBetweenStrokes = (endPosition - 60)/ countOfDataPoints;
             let strokesStr = "";
+            console.log(countOfDataPoints, "Elering");
+            console.log(CSV_File_Data_Length-12, "CSV");
             /*for (var i = 0; i < countOfDataPoints; i++) {
                 width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
                 strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
@@ -313,38 +315,38 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let graphStr = "";
             for (const item of eleringData) {
                 const hourPrice = item["price"];
-                let y1 = base_y - hourPrice * price_ratio;
-                let y2 = y1;
+                let y = base_y - hourPrice * price_ratio;
                 if (hourPrice <= 50) {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#0A0" stroke-width="3"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
                 }
                 else if (hourPrice > 50 && hourPrice <= 110) {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF0" stroke-width="3"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FF0" stroke-width="3"/>`;
                 }
                 else if (hourPrice >= 1000) {
-                    graphStr += `<circle cx="${x1}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
-                    graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
-                    graphStr += `<circle cx="${x2}" cy="${y1}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F0F"/>`;
+                    graphStr += `<circle cx="${x1}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<circle cx="${x2}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#F0F"/>`;
                 }
                 else {
-                    graphStr += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#F00" stroke-width="3"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#F00" stroke-width="3"/>`;
                 }
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
             }
             verticleGroup.innerHTML = graphStr;
 
-            // Adds CSV file datapoints to the graph in second group of SVG container
-            let cx = 60;
-            let cx_width = (endPosition - 60) / (CSV_File_Data_Length - CSV_File_Data_Results_To_Ignore);
+            // Adds CSV file datapoints to the graph in second group of SVG container;
             let circleStr = "";
             const consumption_ratio = 150 / maxConsumption;
+            x1 = 60;
+            x2 = 60 + horizontalWidthBetweenStrokes;
             for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
                 let consumption = parseFloat(CSV_File_Data[i][4].replace(",", "."));
-                let cy = 200 - consumption * consumption_ratio;
-                circleStr += `<circle id="${consumption}" cx="${cx}" cy="${cy}" r="0.75" fill="#000" stroke="#000" />`;
-                cx += cx_width;
+                let y = 200 - consumption * consumption_ratio;
+                circleStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
+                x1 += horizontalWidthBetweenStrokes;
+                x2 += horizontalWidthBetweenStrokes;
             }
             Data_Points_Group.innerHTML += circleStr;
 
@@ -359,13 +361,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
             textStr += `<text x="${endPosition+10}" y="23">KWh</text>`;
             textStr += `<line x1="75" y1="235" x2="90" y2="235" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="237">Between 110 and 1000 €/MWh</text>`;
+            textStr += `<text x="100" y="238">Between 110 and 1000 €/MWh</text>`;
             textStr += `<line x1="225" y1="235" x2="240" y2="235" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="250" y="237">Between 50 and 110 €/MWh</text>`;
+            textStr += `<text x="250" y="238">Between 50 and 110 €/MWh</text>`;
             textStr += `<line x1="365" y1="235" x2="380" y2="235" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="390" y="237">Below 50 €/MWh</text>`;
-            textStr += `<circle cx="${(SVG_Width / 2) + 250}" cy="233" r="0.75" stroke="#000" fill="#000"/>`;
-            textStr += `<text x="${(SVG_Width / 2) + 260}" y="237">Consumption</text>`;
+            textStr += `<text x="390" y="238">Below 50 €/MWh</text>`;
+            textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="235" x2="${(SVG_Width / 2) + 250}" y2="235" stroke="#000" stroke-width="2" />`;
+            textStr += `<text x="${(SVG_Width / 2) + 260}" y="238">Consumption</text>`;
             
 
             // Add hours below horizontal graph - needs improvements
