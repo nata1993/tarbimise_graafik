@@ -73,38 +73,23 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Get SVG parent container calculated width
             const SVG_Width = document.getElementById("NPS_CSV").getBoundingClientRect().width;
 
-            // Variables
+            // CSV file variables
             const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data
             const CSV_File_Data = CSV_File_Results.data; // CSV data itself
             const CSV_File_Data_Results_To_Ignore = 11; // The first results are form headers in Elektrilevi CSV file
+            
             const eleringData = res.data.ee;
             let width = 0; // Reusable variable
-            let maxConsumption = 0;
-            let minConsumption = CSV_File_Data[11][4].replace(",", ".");
-            let totalConsumption = 0;
+
+            // Filter out highest and lowest consumption within given data sample
+            const highestConsumption = maxConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
+            const lowestConsumption = minConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
+            const totalConsumption = sumConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
             const lowestPrice = minPrice(eleringData);
             const highestPriceOnGraph = Math.ceil(highestPrice);
-
-            // Find highest, lowest and total consumption
-            for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                let h = CSV_File_Data[i][4].replace(",",".");
-                if(h >= maxConsumption) {
-                    maxConsumption = h;
-                }
-            }
-            for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                let m = CSV_File_Data[i][4].replace(",", ".");
-                if(m <= minConsumption) {
-                    minConsumption = m;
-                }
-            }
-            for (let i = CSV_File_Data_Results_To_Ignore;  i < CSV_File_Data_Length; i++) {
-                let t = Number(CSV_File_Data[i][4].replace(",", "."));
-                totalConsumption += t;
-            }
 
             // Get SVG container base elements
             const baseGraph = document.getElementById("npsBaseGraph");
@@ -342,7 +327,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let circleStr = "";
-            const consumption_ratio = 150 / maxConsumption;
+            const consumption_ratio = 150 / highestConsumption;
             x1 = 60;
             x2 = 60 + horizontalWidthBetweenStrokes;
             for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
@@ -396,8 +381,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
-            document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
-            document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
+            document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${highestConsumption} KWh`;
+            document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.toFixed(3)} KWh`;
         })
         .catch(err => { throw err });
@@ -428,4 +413,38 @@ function minPrice(data) {
 // Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
 function roundUp(price) {
     return Math.round(price / 10) * 10;
+}
+
+// Helper function to find highest consumption within data
+function maxConsumption(data_start, data_length, data) {
+    let maxConsum = 0;
+    for (let i = data_start; i < data_length; i++) {
+        let h = data[i][4].replace(",",".");
+        if(h >= maxConsum) {
+            maxConsum = h;
+        }
+    }
+    return maxConsum;
+}
+
+// Helper function to find lowest consumption within data
+function minConsumption(data_start, data_length, data) {
+    let minConsum = data[11][4].replace(",", ".");
+    for (let i = data_start; i < data_length; i++) {
+        let m = data[i][4].replace(",", ".");
+        if(m <= minConsum) {
+            minConsum = m;
+        }
+    }
+    return minConsum;
+}
+
+// Helper function to fond total consumption within data
+function sumConsumption(data_start, data_length, data) {
+    let totalConsum = 0;
+    for (let i = data_start;  i < data_length; i++) {
+        let t = Number(data[i][4].replace(",", "."));
+        totalConsum += t;
+    }
+    return totalConsum;
 }
