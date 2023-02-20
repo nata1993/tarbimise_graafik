@@ -81,25 +81,29 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let width = 0; // Reusable variable
             let maxConsumption = 0;
             let minConsumption = CSV_File_Data[11][4].replace(",", ".");
+            let totalConsumption = 0;
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
             const lowestPrice = minPrice(eleringData);
             const highestPriceOnGraph = Math.ceil(highestPrice);
 
-            // Find highest and lowest consumption
+            // Find highest, lowest and total consumption
             for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
                 let h = CSV_File_Data[i][4].replace(",",".");
                 if(h >= maxConsumption) {
                     maxConsumption = h;
                 }
             }
-            
             for (let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
                 let m = CSV_File_Data[i][4].replace(",", ".");
                 if(m <= minConsumption) {
                     minConsumption = m;
                 }
+            }
+            for (let i = CSV_File_Data_Results_To_Ignore;  i < CSV_File_Data_Length; i++) {
+                let t = Number(CSV_File_Data[i][4].replace(",", "."));
+                totalConsumption += t;
             }
 
             // Get SVG container base elements
@@ -390,10 +394,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textGroup.innerHTML += textStr;
             
             // Fill lowest and highest prices asw ell as consumption to HTML
-            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(2)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(2)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${maxConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${minConsumption} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.toFixed(3)} KWh`;
         })
         .catch(err => { throw err });
 }
