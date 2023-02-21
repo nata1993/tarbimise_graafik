@@ -20,6 +20,8 @@ body {
     display: flex;
     flex-direction: row;
     align-content: center;
+    border: solid 1px black;
+    padding: 5px;
 }
 .buttonsColumn div {
     display: flex;
