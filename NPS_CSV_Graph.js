@@ -84,7 +84,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Filter out highest and lowest consumption within given data sample
             const highestConsumption = maxConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
             const lowestConsumption = minConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
-            const totalConsumption = sumConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
+            const totalConsumption = CSV_File_Data[5][4];
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
@@ -383,7 +383,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.toFixed(3)} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.replace(",", ".")} KWh`;
         })
         .catch(err => { throw err });
 }
@@ -437,14 +437,4 @@ function minConsumption(data_start, data_length, data) {
         }
     }
     return minConsum;
-}
-
-// Helper function to fond total consumption within data
-function sumConsumption(data_start, data_length, data) {
-    let totalConsum = 0;
-    for (let i = data_start;  i < data_length; i++) {
-        let t = Number(data[i][4].replace(",", "."));
-        totalConsum += t;
-    }
-    return totalConsum;
 }
