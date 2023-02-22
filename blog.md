@@ -326,4 +326,47 @@ is still in my opinion quite slow. Better than 4 seconds realy and finally graph
 somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering 
 of prices for 3 month time span to down to near instantly! Some serious speed increases right there!
 By implementing same method for CSV graph generation, the speedreduction was outrageously massive
-for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds!
+for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds! Now I am bound only by how fast I can download data from Elering...
+
+## Tenth hardship
+### GMT+1? No no... GMT+2!
+So we got so far that two initial separate graphs (consumption and price) have been merged into one.Even more, the graph is filled with data automatically by selecting apropriate range of dates for
+consumption and prices. Now we add cost graph based on consumption and prices for given period. But
+before that we have massive problem of timezones... Where I live is GMT+2, where NPS prices come from
+is GMT+1. The problem with that is that when prices come in, they are shown in my timezone starting
+from 01:00 till next day 01:00. But I need them to start from 00:00 and end at 00:00. In essence
+if data would come from 00:00 to 00:00, I would only need to ask for 24 hours of price data.
+But since data that comes in starts from 01:00 and ends at 01:00 on the next day, I have to ask for
+48 hours of data. Why? Because price data comes in 24 hour batches. So I have to select previous day
+00:00-01:00 price, then select other 23 hours from the next day prices. Simple in words, a bit
+troublesome in reality when little experience with timezoned data.
+
+## Eleventh hardship
+### ES6 2015...
+When I was learning in school, I remember we were using NodeJs for creating some of our miniprojects.
+I remember we were using ES6 import-export modules stuff. Well it was great until it is not!
+Importing and exporting is easy in JavaScript. Just write is like this:
+
+JavaScript
+```javascript
+export default function Foo() {
+    let bar = "tou";
+    return bar;
+}
+```
+
+And then when you want to import:
+JavaScript
+```javascript
+import Foo from 'exported_module.js';
+```
+
+Looks simple, works simple, easy to understand. But here is the thing, you cant do it just like that.
+In HTML you have to add one thing more, the type="module":
+
+HTML
+```html
+<script src="exported_module.js" type="module"></script>
+```
+
+Should work now! Great! NOT! Unfortunatelly you cant use import-export of ES6 in local mode. You have to use them when you have your application running on server. In my case we were using NodeJS for that, hence no problems for us at that point in time. But we didnt learn about it back then and so started the rabid hole of CORS! Back to doing stuff oldstyle since this application wil be fully local anyway.
