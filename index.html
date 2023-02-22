@@ -51,16 +51,16 @@
         </div>
         <h3>Electricity cost graph</h3>
         <div>
-            <svg id="userConsumption" version="1.1">
+            <svg id="cost" version="1.1">
                 <rect width="100%" height="100%" fill="#DDD"/>
-                <g id="csvBaseGraph" stroke="#000" stroke-width="1"></g>
-                <g id="csvText"></g>
+                <g id="costGraph" stroke="#000" stroke-width="1"></g>
+                <g id="costText"></g>
             </svg>
         </div>
     </div>
 
-    <script src="./NPS_CSV_Graph.js"></script>
-    <script src="./csv_graph_draw.js"></script>
+    <script src="./NPS_CSV_Graph.js" type="module"></script>
+    <script src="./Cost_Graph.js" type="module"></script>
     <script src="./PapaParse-5.0.2/papaparse.min.js"></script>
 </body>
 </html>

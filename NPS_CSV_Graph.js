@@ -1,3 +1,4 @@
+import drawCostGraph from './Cost_Graph.js';
 /*
     Graph drawing is made in order:
     1) Clearing graph container
@@ -384,6 +385,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.replace(",", ".")} KWh`;
+        
+            // Draw second graph
+            drawCostGraph();
         })
         .catch(err => { throw err });
 }
