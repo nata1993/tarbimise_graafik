@@ -1,4 +1,4 @@
-import drawCostGraph from './Cost_Graph.js';
+
 /*
     Graph drawing is made in order:
     1) Clearing graph container
@@ -64,10 +64,21 @@ function drawGraphs() {
 function NPS_CSV_Graph_Generator(CSV_File_Results) {
     // Take date span from CSV file, rearange it for API and fetch with it for needed data
     const date_span = CSV_File_Results.data[2][1];
-    const date_start = date_span[6] + date_span[7] + date_span[8] + date_span[9] + "-" + date_span[3] + date_span[4] + "-" + date_span[0] + date_span[1];
+
+    // Manipulate date from CSV file to include the day before CSV file start day because timezones matter
+    let date = date_span.substring(0, 10);
+    date = date.replace(/\./g, "/");        // 01.02.2023 -> 01/02/2023
+
+    let year = Number(date.substring(6, 10));
+    let month = Number(date.substring(3, 5))-1;
+    let day = Number(date.substring(0, 2));    
+    let dd = new Date(year, month, day);    // 01.02.2023 -> Wed Feb 01 2023 00:00:00 GMT+0200 (Eastern European Standard Time)
+
+    // Start date minus one day and take later 22th element from array
+    const date_start = dd.toISOString();    // 01.02.2023 -> 2023-01-31T22:00:00.000Z
     const date_end = date_span[19] + date_span[20] + date_span[21] + date_span[22]  + "-" + date_span[16] + date_span[17] + "-" + date_span[13] + date_span[14];
 
-    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}T00%3A00%3A00.000Z&end=${date_end}T23%3A59%3A59.999Z`;
+    const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}&end=${date_end}T23%3A59%3A59.999Z`;
     fetch(url)
         .then((response) => response.json())
         .then((res) => {
@@ -121,15 +132,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             }
 
             // Draws small strokes to base graph horisontal line - needs improvements
-            const countOfDataPoints = eleringData.length;
+            const eDataStart = 0;
+            const eDataEnd = eleringData.length-2; // -2 because last hour of data is over the CSV file date span and data is 0 indexed
+            const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 60)/ countOfDataPoints;
             let strokesStr = "";
-            console.log(countOfDataPoints, "Elering");
-            console.log(CSV_File_Data_Length-12, "CSV");
-            /*for (var i = 0; i < countOfDataPoints; i++) {
-                width = strokeInitialPosition + (i * horizontalWidthBetweenStrokes);
-                strokesStr += `<line x1="${width}" y1="${200}" x2="${width}" y2="${205}" />`;
-            }*/
+            console.log(eDataEnd-eDataStart, "Elering");
+            console.log(CSV_File_Data_Length-11, "CSV");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
@@ -303,8 +312,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let x2 = 60 + horizontalWidthBetweenStrokes;
             const price_ratio = 150 / ( highestPrice / 1.2 ); // Ratio between 150px of vertical graph length and highest price, divide by 1.2 because before we multiplied by 1.2 in maxPrice function
             let graphStr = "";
-            for (const item of eleringData) {
-                const hourPrice = item["price"];
+            console.log(eleringData);
+            console.log(CSV_File_Data);
+            for (let i = eDataStart; i < eDataEnd; i++) {
+                const hourPrice = eleringData[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
                 if (hourPrice <= 50) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
@@ -351,11 +362,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
             textStr += `<text x="${endPosition+10}" y="23">KWh</text>`;
             textStr += `<line x1="75" y1="235" x2="90" y2="235" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="238">Between 110 and 1000 €/MWh</text>`;
-            textStr += `<line x1="225" y1="235" x2="240" y2="235" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="250" y="238">Between 50 and 110 €/MWh</text>`;
-            textStr += `<line x1="365" y1="235" x2="380" y2="235" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="390" y="238">Below 50 €/MWh</text>`;
+            textStr += `<text x="100" y="238">Over 110 €/MWh</text>`;
+            textStr += `<line x1="175" y1="235" x2="190" y2="235" stroke="#FF0" stroke-width="2" />`;
+            textStr += `<text x="200" y="238">Between 50 and 110 €/MWh</text>`;
+            textStr += `<line x1="315" y1="235" x2="330" y2="235" stroke="#0A0" stroke-width="2" />`;
+            textStr += `<text x="340" y="238">Below 50 €/MWh</text>`;
             textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="235" x2="${(SVG_Width / 2) + 250}" y2="235" stroke="#000" stroke-width="2" />`;
             textStr += `<text x="${(SVG_Width / 2) + 260}" y="238">Consumption</text>`;
             
@@ -386,8 +397,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.replace(",", ".")} KWh`;
         
-            // Draw second graph
-            drawCostGraph();
+            // Draw second graph - from Cost_Graph.js file
+            drawCostGraph(eleringData, CSV_File_Data);
         })
         .catch(err => { throw err });
 }
