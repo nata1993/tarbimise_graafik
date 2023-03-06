@@ -340,6 +340,30 @@ But since data that comes in starts from 01:00 and ends at 01:00 on the next day
 48 hours of data. Why? Because price data comes in 24 hour batches. So I have to select previous day
 00:00-01:00 price, then select other 23 hours from the next day prices. Simple in words, a bit
 troublesome in reality when little experience with timezoned data.
+Days later still struggling albeit with at least some progress.
+Many days later after I quit on the problem for a while only to return to it with fresh mind, I found
+that converting date strings to ISO formats, takes into conideration the timeones. When parsing a date
+of lets say 01.02.2023 00:00 GMT+2, the ISO format will substract the GMT+2 and the new date will be
+2023-01-31T22:00:00.000Z, which suits me well for my needs I guess since substraction of GTM+2 is enough
+for fetching proper data from Elering.
+Since my date span comes in the form of 01.01.2023 - 31.01.2023 I had to convert it to better form for
+Date constructor before I could work with time.
+
+JavaScript
+```javascript
+// Take start date from 01.01.2023 - 31.01.2023
+let date = date_span.substring(0, 10);
+// Take substrings from start date string and feed them to Date constructor
+let year = Number(date.substring(6, 10));
+let month = Number(date.substring(3, 5))-1;     // Months is zero indexed
+let day = Number(date.substring(0, 2));    
+let dd = new Date(year, month, day);            // 01.02.2023 -> Wed Feb 01 2023 00:00:00 GMT+0200 (Eastern European Standard Time)
+
+// Convert now proper DateTime to ISO Date Time which substracts GMT+2
+const date_start = dd.toISOString();    // 01.01.2023 -> 2022-12-31T22:00:00.000Z
+```
+
+This is how I finnaly solved headache of timezones since timestamp is not timeone dependent.
 
 ## Eleventh hardship
 ### ES6 2015...
@@ -369,4 +393,5 @@ HTML
 <script src="exported_module.js" type="module"></script>
 ```
 
-Should work now! Great! NOT! Unfortunatelly you cant use import-export of ES6 in local mode. You have to use them when you have your application running on server. In my case we were using NodeJS for that, hence no problems for us at that point in time. But we didnt learn about it back then and so started the rabid hole of CORS! Back to doing stuff oldstyle since this application wil be fully local anyway.
+Should work now! Great! NOT! Unfortunatelly you cant use import-export of ES6 in local mode. You have to use them when you have your application running on server. In my case we were using NodeJS for that, hence no problems for us at that point in time. But we didnt learn about it back then and so started the rabid hole of CORS! Back to doing stuff oldstyle since this application wil be fully local anyway. So we are back to square one by just basic script tag in HTML code and src path to other JavaSript file. This works but
+makes code quite a bit more bloated. Remember to add at least a small comment to reference from where function'n'stuff came from.
