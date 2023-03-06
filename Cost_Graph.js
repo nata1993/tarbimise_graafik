@@ -1,5 +1,5 @@
 // Draw graph from CSV file
-export default function drawCostGraph(){
+function drawCostGraph(Elering_Data, CSV_Data){
     // Get SVG container width
     const Cost_SVG_Width = document.getElementById("cost").getBoundingClientRect().width;
 
@@ -28,7 +28,6 @@ export default function drawCostGraph(){
     for (let i = 0; i < length; i+=2) {
         baseStr += `<line x1="${Base_Graph_Coordinates.X[i]}" y1="${Base_Graph_Coordinates.Y[i]}" x2="${Base_Graph_Coordinates.X[i+1]}" y2="${Base_Graph_Coordinates.Y[i+1]}" />`;
     }
-
 
 
 }
