@@ -6,6 +6,7 @@ function drawCostGraph(Elering_Data, CSV_Data){
     // Find elements to work with
     const Cost_Graph = document.getElementById("costGraph");
     const Text_Group = document.getElementById("costText");
+    const Base_Graph = document.getElementById("costBaseGraph");
 
     // Clear the contents of SVG before redrawing
     Cost_Graph.innerHTML = "";
@@ -28,6 +29,8 @@ function drawCostGraph(Elering_Data, CSV_Data){
     for (let i = 0; i < length; i+=2) {
         baseStr += `<line x1="${Base_Graph_Coordinates.X[i]}" y1="${Base_Graph_Coordinates.Y[i]}" x2="${Base_Graph_Coordinates.X[i+1]}" y2="${Base_Graph_Coordinates.Y[i+1]}" />`;
     }
+
+    Base_Graph.innerHTML = baseStr;
 
 
 }
