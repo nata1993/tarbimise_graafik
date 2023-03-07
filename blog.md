@@ -256,9 +256,10 @@ let maxConsumption = 0;
 ```
 
 As you can see maxConsumption variable is a number and we are evaluating strings to the number.
-Since javascript is very flexible on such things, the string is internaly converted to number, evaluated
-and then it all passes, no problem at all. There is no === evaluation possible when trying to see if
-a number is higher or lower than. That means no >== or <== evaluations. That has to be done separately.
+Since javascript is very flexible on such things, the string is internaly converted to number,
+evaluated and then it all passes, no problem at all. There is no === evaluation possible when
+trying to see if a number is higher or lower than. That means no >== or <== evaluations. That
+has to be done separately.
 And that is where parsing bit me finnaly...
 
 ## Seventh hardship...
@@ -320,17 +321,20 @@ for (let i = 0; i < 1000; i++) {
 }
 element.innerHTML = str;
 ```
-How much faster? It increased speed of rendering SVG graph with Papa Parse library from 4 seconds down to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
+How much faster? It increased speed of rendering SVG graph with Papa Parse library from 4 seconds down
+to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
 I hope because 2 seconds for doing work on data + some time more for actual graph rendering with SVG
 is still in my opinion quite slow. Better than 4 seconds realy and finally graphs are starting to be
 somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering 
 of prices for 3 month time span to down to near instantly! Some serious speed increases right there!
 By implementing same method for CSV graph generation, the speedreduction was outrageously massive
-for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds! Now I am bound only by how fast I can download data from Elering...
+for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds! Now I am bound only by how fast
+I can download data from Elering...
 
 ## Tenth hardship
 ### GMT+1? No no... GMT+2!
-So we got so far that two initial separate graphs (consumption and price) have been merged into one.Even more, the graph is filled with data automatically by selecting apropriate range of dates for
+So we got so far that two initial separate graphs (consumption and price) have been merged into one.
+Even more, the graph is filled with data automatically by selecting apropriate range of dates for
 consumption and prices. Now we add cost graph based on consumption and prices for given period. But
 before that we have massive problem of timezones... Where I live is GMT+2, where NPS prices come from
 is GMT+1. The problem with that is that when prices come in, they are shown in my timezone starting
@@ -393,5 +397,10 @@ HTML
 <script src="exported_module.js" type="module"></script>
 ```
 
-Should work now! Great! NOT! Unfortunatelly you cant use import-export of ES6 in local mode. You have to use them when you have your application running on server. In my case we were using NodeJS for that, hence no problems for us at that point in time. But we didnt learn about it back then and so started the rabid hole of CORS! Back to doing stuff oldstyle since this application wil be fully local anyway. So we are back to square one by just basic script tag in HTML code and src path to other JavaSript file. This works but
-makes code quite a bit more bloated. Remember to add at least a small comment to reference from where function'n'stuff came from.
+Should work now! Great! NOT! Unfortunatelly you cant use import-export of ES6 in local mode. You have
+to use them when you have your application running on server. In my case we were using NodeJS for that,
+hence no problems for us at that point in time. But we didnt learn about it back then and so started the
+rabid hole of CORS! Back to doing stuff oldstyle since this application wil be fully local anyway. So we
+are back to square one by just basic script tag in HTML code and src path to other JavaSript file. This
+works but makes code quite a bit more bloated. Remember to add at least a small comment to reference from
+where function'n'stuff came from.
