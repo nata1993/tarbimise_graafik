@@ -67,8 +67,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
     // Manipulate date from CSV file to include the day before CSV file start day because timezones matter
     let date = date_span.substring(0, 10);
-    date = date.replace(/\./g, "/");        // 01.02.2023 -> 01/02/2023
-
     let year = Number(date.substring(6, 10));
     let month = Number(date.substring(3, 5))-1;
     let day = Number(date.substring(0, 2));    
@@ -382,7 +380,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let textY = 202; // +2 is for centering text
             let count = 150 / verticalWidthBetweenPoints;
             for (let i = 0; i < count+1; i++) {
-                textStr += `<text x="30" y="${textY}">${nRatio * (i)}</text>`;
+                textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
                 textY -= verticalWidthBetweenPoints;
             }
 
