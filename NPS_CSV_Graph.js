@@ -135,7 +135,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const eDataStart = 0;
             const eDataEnd = eleringData.length-2; // -2 because last hour of data is over the CSV file date span and data is 0 indexed
             const countOfDataPoints = eDataEnd - eDataStart;
-            const horizontalWidthBetweenStrokes = (endPosition - 60)/ countOfDataPoints;
+            const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
             console.log(eDataEnd-eDataStart, "Elering");
             console.log(CSV_File_Data_Length-11, "CSV");
@@ -308,8 +308,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws continuous line of prices on graph
             const base_y = 200;
-            let x1 = 60;
-            let x2 = 60 + horizontalWidthBetweenStrokes;
+            let x1 = 61;
+            let x2 = 61 + horizontalWidthBetweenStrokes;
             const price_ratio = 150 / ( highestPrice / 1.2 ); // Ratio between 150px of vertical graph length and highest price, divide by 1.2 because before we multiplied by 1.2 in maxPrice function
             let graphStr = "";
             console.log(eleringData);
@@ -338,18 +338,18 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             verticleGroup.innerHTML = graphStr;
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
-            let circleStr = "";
+            let lineStr = "";
             const consumption_ratio = 150 / highestConsumption;
-            x1 = 60;
-            x2 = 60 + horizontalWidthBetweenStrokes;
+            x1 = 61;
+            x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
                 let consumption = parseFloat(CSV_File_Data[i][4].replace(",", "."));
                 let y = 200 - consumption * consumption_ratio;
-                circleStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
+                lineStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
             }
-            Data_Points_Group.innerHTML += circleStr;
+            Data_Points_Group.innerHTML += lineStr;
 
             // Add text to graph
             let textStr = "";
@@ -398,7 +398,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.replace(",", ".")} KWh`;
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(eleringData, CSV_File_Data);
+            drawCostGraph(eleringData, CSV_File_Data, horizontalWidthBetweenStrokes);
         })
         .catch(err => { throw err });
 }
