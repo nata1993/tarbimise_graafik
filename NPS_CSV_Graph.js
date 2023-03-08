@@ -87,14 +87,20 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data
             const CSV_File_Data = CSV_File_Results.data; // CSV data itself
             const CSV_File_Data_Results_To_Ignore = 11; // The first results are form headers in Elektrilevi CSV file
-            
+            const CSV_Normalized_Data = CSVdataNormalization(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);  // Take only consumption data from file
+            const CSV_Normalized_Data_Length = CSV_Normalized_Data.length;
+
+            // Elering variables
             const eleringData = res.data.ee;
+            const eleringData_length = eleringData.length;
+
+
             let width = 0; // Reusable variable
 
             // Filter out highest and lowest consumption within given data sample
-            const highestConsumption = maxConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
-            const lowestConsumption = minConsumption(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);
-            const totalConsumption = CSV_File_Data[5][4];
+            const highestConsumption = maxConsumption(CSV_Normalized_Data);
+            const lowestConsumption = minConsumption(CSV_Normalized_Data);
+            const totalConsumption = CSV_File_Data[5][4].replace(",", ".");
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
@@ -131,12 +137,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws small strokes to base graph horisontal line - needs improvements
             const eDataStart = 0;
-            const eDataEnd = eleringData.length-2; // -2 because last hour of data is over the CSV file date span and data is 0 indexed
+            const eDataEnd = eleringData_length-2; // -2 because last hour of data is over the CSV file date span and data is 0 indexed
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
             console.log(eDataEnd-eDataStart, "Elering");
-            console.log(CSV_File_Data_Length-11, "CSV");
+            console.log(CSV_Normalized_Data_Length, "CSV");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
@@ -310,8 +316,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let x2 = 61 + horizontalWidthBetweenStrokes;
             const price_ratio = 150 / ( highestPrice / 1.2 ); // Ratio between 150px of vertical graph length and highest price, divide by 1.2 because before we multiplied by 1.2 in maxPrice function
             let graphStr = "";
+
             console.log(eleringData);
             console.log(CSV_File_Data);
+
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = eleringData[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
@@ -340,8 +348,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const consumption_ratio = 150 / highestConsumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
-            for(let i = CSV_File_Data_Results_To_Ignore; i < CSV_File_Data_Length; i++) {
-                let consumption = parseFloat(CSV_File_Data[i][4].replace(",", "."));
+            for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
+                let consumption = CSV_Normalized_Data[i];
                 let y = 200 - consumption * consumption_ratio;
                 lineStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
                 x1 += horizontalWidthBetweenStrokes;
@@ -393,10 +401,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption.replace(",", ".")} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption} KWh`;
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(eleringData, CSV_File_Data, horizontalWidthBetweenStrokes);
+            drawCostGraph(eleringData, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
         })
         .catch(err => { throw err });
 }
@@ -429,11 +437,12 @@ function roundUp(price) {
 }
 
 // Helper function to find highest consumption within data
-function maxConsumption(data_start, data_length, data) {
+function maxConsumption(data) {
     let maxConsum = 0;
-    for (let i = data_start; i < data_length; i++) {
-        let h = data[i][4].replace(",",".");
-        if(h >= maxConsum) {
+    let length = data.length;
+    for (let i = 0; i < length; i++) {
+        let h = data[i];
+        if(h > maxConsum) {
             maxConsum = h;
         }
     }
@@ -441,13 +450,22 @@ function maxConsumption(data_start, data_length, data) {
 }
 
 // Helper function to find lowest consumption within data
-function minConsumption(data_start, data_length, data) {
-    let minConsum = data[11][4].replace(",", ".");
-    for (let i = data_start; i < data_length; i++) {
-        let m = data[i][4].replace(",", ".");
+function minConsumption(data) {
+    let minConsum = data[0];
+    let length = data.length;
+    for (let i = 0; i < length; i++) {
+        let m = data[i];
         if(m <= minConsum) {
             minConsum = m;
         }
     }
     return minConsum;
+}
+
+function CSVdataNormalization(ignoreBeginning, length, data) {
+    let normalizedData = [];
+    for (let i = ignoreBeginning; i < length; i++) {
+        normalizedData.push(Number(data[i][4].replace(",", ".")));
+    }
+    return normalizedData; 
 }
