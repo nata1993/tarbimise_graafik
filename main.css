@@ -1,11 +1,13 @@
 body {
     text-align: center;
+    font-size: 20px;
 }
 .head {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: lightgreen;
+    background-color: rgb(47, 74, 151);
+    color: white;
     text-align: left;
 }
 .buttons {

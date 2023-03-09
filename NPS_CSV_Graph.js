@@ -365,14 +365,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="${SVG_Width/2}" y="235">Hours</text>`;
             textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#F0F" fill="#F0F"/>`;
             textStr += `<text x="${endPosition-90}" y="235">Extreme price(s)</text>`;
-            textStr += `<text x="${endPosition+10}" y="13">Consumption</text>`;
-            textStr += `<text x="${endPosition+10}" y="23">KWh</text>`;
+            textStr += `<text x="${endPosition+5}" y="13">Consumption</text>`;
+            textStr += `<text x="${endPosition+5}" y="23">KWh</text>`;
             textStr += `<line x1="75" y1="235" x2="90" y2="235" stroke="#F00" stroke-width="2" />`;
             textStr += `<text x="100" y="238">Over 110 €/MWh</text>`;
-            textStr += `<line x1="175" y1="235" x2="190" y2="235" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="200" y="238">Between 50 and 110 €/MWh</text>`;
-            textStr += `<line x1="315" y1="235" x2="330" y2="235" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="340" y="238">Below 50 €/MWh</text>`;
+            textStr += `<line x1="190" y1="235" x2="205" y2="235" stroke="#FF0" stroke-width="2" />`;
+            textStr += `<text x="215" y="238">Between 50 and 110 €/MWh</text>`;
+            textStr += `<line x1="350" y1="235" x2="365" y2="235" stroke="#0A0" stroke-width="2" />`;
+            textStr += `<text x="375" y="238">Below 50 €/MWh</text>`;
             textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="235" x2="${(SVG_Width / 2) + 250}" y2="235" stroke="#000" stroke-width="2" />`;
             textStr += `<text x="${(SVG_Width / 2) + 260}" y="238">Consumption</text>`;
             
@@ -393,7 +393,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             }
 
             textGroup.style.fontFamily = "arial";
-            textGroup.style.fontSize = "8px";
+            textGroup.style.fontSize = "10px";
             textGroup.innerHTML += textStr;
             
             // Fill lowest and highest prices asw ell as consumption to HTML
