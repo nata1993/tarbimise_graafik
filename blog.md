@@ -404,3 +404,85 @@ rabid hole of CORS! Back to doing stuff oldstyle since this application wil be f
 are back to square one by just basic script tag in HTML code and src path to other JavaSript file. This
 works but makes code quite a bit more bloated. Remember to add at least a small comment to reference from
 where function'n'stuff came from.
+
+## Twelvth hardship
+### Y U NO LOOP OVER?!
+Now this is some funny stuff that I have yet encountered by my memory only on javascript. Beg to pardon if
+I am incorrect, memory fails me on this.
+Looping over array with for loop in JavaScript has one small problem. 
+
+Javascript
+```javascript
+for (let i = 0; i < length; i++) {
+    return array[i];
+}
+```
+
+This piece of code works perfectly fine!
+
+Javascript
+```javascript
+for (let i = 0; i < length; i++) {
+    return array[i+1];
+}
+```
+
+Now this piece did not work for whatever reason. Now before you start shouting ofcourse it does not work, I know
+why this code does not work but let me show you where exacly same thing did not work but it should have worked.
+
+Javascript
+```javascript
+let array = [a, b, c];
+let array2 = [d, e, f, g, h, i];
+for (let i = 0; i < array.length; i++) {
+    return array[i] * array2[i+3];
+}
+```
+
+Yep, this one should work and it doesnt.
+It wont work even if I modify it a little.
+
+Javascript
+```javascript
+let array = [a, b, c];
+let array2 = [d, e, f, g, h, i];
+let index = 3;
+for (let i = 0; i < array.length; i++) {
+    index += i;
+    return array[i] * array2[index];
+}
+```
+
+Again does not work! However, if I put inde into the for loop, then both of the last examples work!
+
+Javascript
+```javascript
+let array = [a, b, c];
+let array2 = [d, e, f, g, h, i];
+for (let i = 0; i < array.length; i++) {
+    let index = i + 3;
+    return array[i] * array2[index];
+}
+```
+
+Unfortunatelly this was incorrect way for me because the data was such that output was incorrect because
+for whatever reason index did not increment but stayed at  value 3. Eventually I took the easier route
+and just normalized data. Those two arrays had data: one with price, other from CSV file data. 
+CSV file data had lots of blank info like strings of text which I did not need at all. After all the text
+the numbers came and the count of these numbers was exactly same as in the first array. So simple solution
+was to loop over the second array and remove all the unnecessary parts to get two same length arrays. And
+then ofcourse I could do the multiplication looping over arrays without any problems anymore.
+
+Javascript
+```javascript
+let array = [a, b, c];
+let array2 = [d, e, f, g, h, i];
+let array3 = [];
+for (let i = 3; i < array2.length; i++) {
+    array3.push(array2[i]);
+}
+
+for(let i = 0; i < array.length; i++) {
+    return array[i] * array2[i];
+}
+```
