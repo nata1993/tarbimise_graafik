@@ -91,11 +91,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const CSV_Normalized_Data_Length = CSV_Normalized_Data.length;
 
             // Elering variables
-            const eleringData = res.data.ee;
+            const eleringData = EleringDataNormalization(res.data.ee);
             const eleringData_length = eleringData.length;
-
-
-            let width = 0; // Reusable variable
 
             // Filter out highest and lowest consumption within given data sample
             const highestConsumption = maxConsumption(CSV_Normalized_Data);
@@ -294,6 +291,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 nRatio = 245;
             }
 
+            let width = 0;
             const highestPriceLevel = highestPrice / nRatio;
             const verticalWidthBetweenPoints = 150 / highestPriceLevel;
             for (var i = 0; i < highestPriceLevel+1; i++) {
@@ -310,16 +308,17 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             }
             baseGraph.innerHTML += strokesStr;
 
-            // Draws continuous line of prices on graph
-            const base_y = 200;
-            let x1 = 61;
-            let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = 150 / ( highestPrice / 1.2 ); // Ratio between 150px of vertical graph length and highest price, divide by 1.2 because before we multiplied by 1.2 in maxPrice function
-            let graphStr = "";
+
 
             console.log(eleringData);
             console.log(CSV_File_Data);
 
+            // Draws continuous line of prices on graph
+            const base_y = 200;
+            let x1 = 61;
+            let x2 = 61 + horizontalWidthBetweenStrokes;
+            const price_ratio = 150 / highestPrice; // Ratio between 150px of vertical graph length and highest price
+            let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = eleringData[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
@@ -417,7 +416,7 @@ function maxPrice(data) {
             max = data[i].price;
         }
     }
-    return max * 1.2;
+    return max;
 }
 
 // Helper function for filtering out min price within dataset with VAT
@@ -428,7 +427,7 @@ function minPrice(data) {
             min = data[i].price;
         }
     }
-    return min * 1.2;
+    return min;
 }
 
 // Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
@@ -468,4 +467,14 @@ function CSVdataNormalization(ignoreBeginning, length, data) {
         normalizedData.push(Number(data[i][4].replace(",", ".")));
     }
     return normalizedData; 
+}
+
+// Adds 20% tax to elering prices
+function EleringDataNormalization(data) {
+    let normalizedData = [];
+    let length = data.length;
+    for(let i = 0; i < length; i++) {
+        normalizedData.push({timestamp : data[i]["timestamp"], price : (data[i]["price"] * 1.2)});
+    }
+    return normalizedData;
 }

@@ -42,7 +42,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     // Find highest and average cost as well as when and what etc
     let highestCost = cost_data[0];
     let averageCost = 0;
-    let whenHighestCost = null;
+    let whenHighestCost = 0;
     let whatElectricityPrice = 0;
     let whatConsumption = 0;
     const costDataLength = cost_data.length;
@@ -74,6 +74,6 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     Cost_Graph.innerHTML += lineStr;
 
     document.getElementById("highestCost").innerHTML = `Period highest cost of consumption: ${highestCost.toFixed(3)} \u00A2`;
-    document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
+    document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
     document.getElementById("averageCost").innerHTML = `Period average cost of consumption: ${averageCost.toFixed(3)} \u00A2`;
 }
