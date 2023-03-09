@@ -58,7 +58,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
         averageCost += cost_data[i];
     }
     averageCost = averageCost/costDataLength;
-    const highest_consumption_date = new Date(whenHighestCost); // invalid date...
+    const highest_consumption_date = new Date(whenHighestCost).toLocaleDateString("fi-FI"); // invalid date...
 
     // Map cost data to cost graph
     let lineStr = "";
