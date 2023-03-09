@@ -51,7 +51,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
         if(cost_data[i] >= highestCost) {
             highestCost = cost_data[i];
             whenHighestCost = Elering_Data[i].timestamp * 1000;
-            whatElectricityPrice = Elering_Data[i].price;
+            whatElectricityPrice = Elering_Data[i].price / 10; // MWh -> KWh
             whatConsumption = CSV_Data[i];
         }
         // Sum for average cost
