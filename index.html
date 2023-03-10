@@ -36,12 +36,6 @@
     <div class="body">
         <h3>NPS price and electricity consumption</h3>
         <div>
-            <h4 id="highestPrice">Period highest price: -</h4>
-            <h4 id="lowestPrice">Period lowest price: -</h4>
-            <h4 id="highestConsumption">Period highest consumption: -</h4>
-            <h4 id="lowestConsumption">Period lowest consumption: -</h4>
-            <h4 id="totalConsumption">Period total consumption: -</h4>
-
             <svg id="NPS_CSV_Cost" version="1.1">
                 <rect width="100%" height="100%" fill="#DDD"/>
                 <g id="npsBaseGraph" stroke="#000" stroke-width="1"></g>
@@ -52,10 +46,16 @@
                 <g id="costGraph" stroke="#000" stroke-width="1"></g>
                 <g id="costText"></g>
             </svg>
+            
+            <h4 id="highestPrice">Period highest price: -</h4>
+            <h4 id="lowestPrice">Period lowest price: -</h4>
+            <h4 id="highestConsumption">Period highest consumption: -</h4>
+            <h4 id="lowestConsumption">Period lowest consumption: -</h4>
+            <h4 id="totalConsumption">Period total consumption: -</h4>
 
+            <h4 id="averageCost">Period average cost of consumption: -</h4>
             <h4 id="highestCost">Period highest cost of consumption: -</h4>
             <p id="whenCost"></p>
-            <h4 id="averageCost">Period average cost of consumption: -</h4>
         </div>
     </div>
 

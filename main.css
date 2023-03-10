@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 10px;
-    background-color: rgb(47, 74, 151);
+    background-color: rgb(40, 83, 202);
     color: white;
     text-align: left;
 }
@@ -37,7 +37,7 @@ body {
 }
 .body {
     width: auto;
-    background-color: lightskyblue;
+    background-color: rgb(111, 158, 187);
     padding: 10px;
 }
 .indent {
