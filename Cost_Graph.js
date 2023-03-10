@@ -77,7 +77,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
 
     Graph_Title.style.fontFamily = "arial";
     Graph_Title.style.fontSize = "16px";
-    Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Electricity cost graph</text>`;
+    Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Consumption cost graph</text>`;
 
     document.getElementById("highestCost").innerHTML = `Period highest cost of consumption: ${highestCost.toFixed(3)} \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
