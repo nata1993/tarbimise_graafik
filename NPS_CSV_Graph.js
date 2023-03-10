@@ -81,7 +81,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
         .then((response) => response.json())
         .then((res) => {
             // Get SVG parent container calculated width
-            const SVG_Width = document.getElementById("NPS_CSV").getBoundingClientRect().width;
+            const SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
             // CSV file variables
             const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data

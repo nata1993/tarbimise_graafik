@@ -43,13 +43,8 @@ body {
 .indent {
     padding: 10px;
 }
-#NPS_CSV {
+#NPS_CSV_Cost {
     width: 100%;
-    height: 250px;
-    border: 1px black solid;
-}
-#cost {
-    width: 100%;
-    height: 250px;
+    height: 650px;
     border: 1px black solid;
 }

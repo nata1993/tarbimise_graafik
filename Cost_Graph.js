@@ -1,7 +1,7 @@
 // Draw graph from CSV file
 function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     // Get SVG container width
-    const Cost_SVG_Width = document.getElementById("cost").getBoundingClientRect().width;
+    const Cost_SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
     // Find elements to work with
     const Cost_Graph = document.getElementById("costGraph");
@@ -20,7 +20,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
         X : [60, 60, 60, Horizontal_Graph_End_Position, 60, 58, 60, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position-5, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position-5],
-        Y : [25, 200, 200, 200, 20, 25, 20, 25, 200, 202, 200, 198]
+        Y : [350, 600, 600, 600, 350, 355, 350, 355, 600, 602, 600, 598]
     };
 
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
@@ -62,11 +62,11 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
 
     // Map cost data to cost graph
     let lineStr = "";
-    const cost_ratio = 150 / highestCost;
+    const cost_ratio = 200 / highestCost;
     let x1 = 61;
     let x2 = 61 + horizontalWidthBetweenStrokes;
     for(let i = 0; i < Elering_Data.length; i++) {
-        let y = 200 - cost_data[i] * cost_ratio;
+        let y = 600 - cost_data[i] * cost_ratio;
         lineStr += `<line id="cost${cost_data[i]}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
         x1 += horizontalWidthBetweenStrokes;
         x2 += horizontalWidthBetweenStrokes;
