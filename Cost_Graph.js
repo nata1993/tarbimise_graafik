@@ -7,11 +7,13 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     const Cost_Graph = document.getElementById("costGraph");
     const Text_Group = document.getElementById("costText");
     const Base_Graph = document.getElementById("costBaseGraph");
+    const Graph_Title = document.getElementById("graphTwoTitle");
 
     // Clear the contents of SVG before redrawing
     Cost_Graph.innerHTML = "";
     Text_Group.innerHTML = "";
     Base_Graph.innerHTML = "";
+    Graph_Title.innerHTML = "";
 
     // Variables
     const Graph_Offset_From_End = 50; // Defines offset from SVG container end in pixels
@@ -73,9 +75,9 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     }
     Cost_Graph.innerHTML += lineStr;
 
-    Text_Group.style.fontFamily = "arial";
-    Text_Group.style.fontSize = "14px";
-    Text_Group.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="635">Electricity cost graph</text>`;
+    Graph_Title.style.fontFamily = "arial";
+    Graph_Title.style.fontSize = "16px";
+    Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Electricity cost graph</text>`;
 
     document.getElementById("highestCost").innerHTML = `Period highest cost of consumption: ${highestCost.toFixed(3)} \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;

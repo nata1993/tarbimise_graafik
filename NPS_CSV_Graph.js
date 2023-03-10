@@ -109,21 +109,25 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const verticleGroup = document.getElementById("npsPriceVector");
             const textGroup = document.getElementById("npsText");
             const Data_Points_Group = document.getElementById("csvConsumptionVector");
+            const Graph_Title = document.getElementById("graphOneTitle");
 
             // Clear SVG contents if there has been drawn previously something 
             baseGraph.innerHTML = "";
             verticleGroup.innerHTML = "";
             Data_Points_Group.innerHTML = "";
             textGroup.innerHTML = "";
+            Graph_Title.innerHTML = "";
 
             // Graph sizing
             const offsetFromEnd = 70;   // Defines offset from SVG container end in pixels
             const endPosition = SVG_Width - offsetFromEnd; // Defines base graph horizontal graph end position
+            const base_y = 275;
+            const graphHeigth = 200;
             
             // Coordinates for base graph vectors starts and ends
             let baseGraphCoordinates = {
                 x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
-                y: [25, 30, 25, 30, 25, 200, 200, 200, 200, 25, 25, 30, 25, 30, 25]
+                y: [50, 55, 50, 55, 50, base_y, base_y, base_y, base_y, 50, 50, 55, 50, 55, 50]
             };
 
             // Draw base graph
@@ -293,31 +297,25 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             let width = 0;
             const highestPriceLevel = highestPrice / nRatio;
-            const verticalWidthBetweenPoints = 150 / highestPriceLevel;
+            const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (var i = 0; i < highestPriceLevel+1; i++) {
-                width = 200 - (i * verticalWidthBetweenPoints);
+                width = base_y - (i * verticalWidthBetweenPoints);
                 strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
 
             // Draws small strokes to base graph vertical line on the right side
-            let widthBetweenPoints = 150 / 8;
-            let y = 200 - widthBetweenPoints;
+            let widthBetweenPoints = graphHeigth / 8;
+            let y = base_y - widthBetweenPoints;
             for (let i = 0; i < 8; i++) {
                 strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+5}" y2="${y}"/>`;
                 y -= widthBetweenPoints;
             }
             baseGraph.innerHTML += strokesStr;
 
-
-
-            console.log(eleringData);
-            console.log(CSV_File_Data);
-
             // Draws continuous line of prices on graph
-            const base_y = 200;
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = 150 / highestPrice; // Ratio between 150px of vertical graph length and highest price
+            const price_ratio = graphHeigth / highestPrice; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = eleringData[i]["price"];
@@ -344,12 +342,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let lineStr = "";
-            const consumption_ratio = 150 / highestConsumption;
+            const consumption_ratio = graphHeigth / highestConsumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
                 let consumption = CSV_Normalized_Data[i];
-                let y = 200 - consumption * consumption_ratio;
+                let y = base_y - consumption * consumption_ratio;
                 lineStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
                 x1 += horizontalWidthBetweenStrokes;
                 x2 += horizontalWidthBetweenStrokes;
@@ -357,44 +355,40 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Data_Points_Group.innerHTML += lineStr;
 
             // Add text to graph
+            let textOffsetBelowGraph = base_y + 25;
             let textStr = "";
-            textStr += `<text x="10" y="13">NPS price</text>`;
-            textStr += `<text x="10" y="23">€/MWh</text>`;
-            textStr += `<text x="10" y="33">Inc. 20%</text>`;
-            textStr += `<text x="${SVG_Width/2}" y="235">Hours</text>`;
-            textStr += `<circle cx="${endPosition-100}" cy="233" r="2" stroke="#F0F" fill="#F0F"/>`;
-            textStr += `<text x="${endPosition-90}" y="235">Extreme price(s)</text>`;
-            textStr += `<text x="${endPosition+5}" y="13">Consumption</text>`;
-            textStr += `<text x="${endPosition+5}" y="23">KWh</text>`;
-            textStr += `<line x1="75" y1="235" x2="90" y2="235" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="238">Over 110 €/MWh</text>`;
-            textStr += `<line x1="190" y1="235" x2="205" y2="235" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="215" y="238">Between 50 and 110 €/MWh</text>`;
-            textStr += `<line x1="350" y1="235" x2="365" y2="235" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="375" y="238">Below 50 €/MWh</text>`;
-            textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="235" x2="${(SVG_Width / 2) + 250}" y2="235" stroke="#000" stroke-width="2" />`;
-            textStr += `<text x="${(SVG_Width / 2) + 260}" y="238">Consumption</text>`;
-            
-
-            // Add hours below horizontal graph - needs improvements
-            /*let x = 30 + horizontalWidthBetweenStrokes;
-            for (let i = 0; i < countOfDataPoints; i++) {
-                textStr += `<text x="${x}" y="215">${i} - ${i+1}</text>`;
-                x += horizontalWidthBetweenStrokes;
-            }*/
+            textGroup.style.fontFamily = "arial";
+            textGroup.style.fontSize = "10px";
+            textStr += `<text x="10" y="25">NPS price</text>`;
+            textStr += `<text x="10" y="35">€/MWh</text>`;
+            textStr += `<text x="10" y="45">Inc. 20%</text>`;
+            textStr += `<text x="${(SVG_Width/2) - 15}" y="${textOffsetBelowGraph}">Hours</text>`;
+            textStr += `<circle cx="${endPosition-100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
+            textStr += `<text x="${endPosition-90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
+            textStr += `<text x="${endPosition+4}" y="35">Consumption</text>`;
+            textStr += `<text x="${endPosition+4}" y="45">KWh</text>`;
+            textStr += `<line x1="75" y1="${textOffsetBelowGraph}" x2="90" y2="${textOffsetBelowGraph}" stroke="#F00" stroke-width="2" />`;
+            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over 110 €/MWh</text>`;
+            textStr += `<line x1="190" y1="${textOffsetBelowGraph}" x2="205" y2="${textOffsetBelowGraph}" stroke="#FF0" stroke-width="2" />`;
+            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between 50 and 110 €/MWh</text>`;
+            textStr += `<line x1="350" y1="${textOffsetBelowGraph}" x2="365" y2="${textOffsetBelowGraph}" stroke="#0A0" stroke-width="2" />`;
+            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below 50 €/MWh</text>`;
+            textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="${textOffsetBelowGraph}" x2="${(SVG_Width / 2) + 250}" y2="${textOffsetBelowGraph}" stroke="#000" stroke-width="2" />`;
+            textStr += `<text x="${(SVG_Width / 2) + 260}" y="${textOffsetBelowGraph + 3}">Consumption</text>`;
 
             // Add price segments next to vertical graph on the left
-            let textY = 202; // +2 is for centering text
-            let count = 150 / verticalWidthBetweenPoints;
+            let textY = base_y + 2; // +2 is for centering text
+            let count = graphHeigth / verticalWidthBetweenPoints;
             for (let i = 0; i < count+1; i++) {
                 textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
                 textY -= verticalWidthBetweenPoints;
             }
 
-            textGroup.style.fontFamily = "arial";
-            textGroup.style.fontSize = "10px";
             textGroup.innerHTML += textStr;
-            
+
+            Graph_Title.style.fontSize = "16px";
+            Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
+
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
