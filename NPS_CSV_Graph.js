@@ -390,11 +390,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
 
             // Fill lowest and highest prices asw ell as consumption to HTML
-            document.getElementById("highestPrice").innerHTML = `Period highest price: ${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `Period lowest price: ${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
-            document.getElementById("highestConsumption").innerHTML = `Period highest consumption: ${highestConsumption} KWh`;
-            document.getElementById("lowestConsumption").innerHTML = `Period lowest consumption: ${lowestConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `Period total consumption: ${totalConsumption} KWh`;
+            document.getElementById("highestPrice").innerHTML = `${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("highestConsumption").innerHTML = `${highestConsumption} KWh`;
+            document.getElementById("lowestConsumption").innerHTML = `${lowestConsumption} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `${totalConsumption} KWh`;
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(eleringData, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
