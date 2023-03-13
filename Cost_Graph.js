@@ -16,7 +16,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     Graph_Title.innerHTML = "";
 
     // Variables
-    const Graph_Offset_From_End = 50; // Defines offset from SVG container end in pixels
+    const Graph_Offset_From_End = 70; // Defines offset from SVG container end in pixels
     const Horizontal_Graph_End_Position = Cost_SVG_Width - Graph_Offset_From_End; // Defines how far the horisontal graph should go
 
     // X and Y coordinates for vertical and horizontal graph lines
@@ -84,6 +84,11 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
         x2 += horizontalWidthBetweenStrokes;
     }
     Cost_Graph.innerHTML += lineStr;
+
+    let weightedRatio = 200 / weightedCost;
+    let y = 600 - weightedCost * weightedRatio;
+    console.log(y);
+    Cost_Graph.innerHTML += `<line x1="${61}" y1="${y}" x2="${Horizontal_Graph_End_Position}" y2="${y}" stroke="#FFF" stroke-width="3" />`;
 
     Graph_Title.style.fontFamily = "arial";
     Graph_Title.style.fontSize = "16px";
