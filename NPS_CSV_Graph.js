@@ -177,7 +177,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 if (hourPrice <= 5) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
                 }
-                else if (hourPrice > 5 && hourPrice <= 11) {
+                else if (hourPrice > 5 && hourPrice <= 12) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FF0" stroke-width="3"/>`;
                 }
                 else if (hourPrice >= 100) {
