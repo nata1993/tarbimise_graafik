@@ -10,7 +10,9 @@ got Junior Software Developer "degree". Almost zero knowledge, almost zero mento
 on its own. Maybe its better that way... Anyway...
 
 ## First hardship...
+
 ### What do you mean width and height are not width and height?!
+
 HTML attribute and CSS style are different thing apparently when there is exactly same word
 used. HTML canvas element width and heigth attribute are totally different thing than CSS
 style attribute width and height. Let look at this code snippet to get the grasp of what I
@@ -18,7 +20,7 @@ mean.
 
 HTML
 
-```
+```html
 <canvas id="canvas" width="500" heigth="250"></canvas>
 ```
 
@@ -42,12 +44,16 @@ somehow else - either use HTML attribute or create canvas element with all the n
 width and heights with javascript or use both.
 
 ## Second hardship...
+
 ### Hey Papa Parse!
+
 PapaParse is nice library for reading .CSV files. It can be used server-side or it can be used
 client-side. Well for starters the documentation on how to initalize for using PapaParse was
 well, nonexistent. Offcourse you import it through HTML script tag either in head or in the body
 part, both have pros and cons for that part. Offcourse you then just call it through its class 
 calling:
+
+JavaScript
 
 ```javascript
 Papa.parse(file, {
@@ -126,7 +132,9 @@ Now it finnaly worked like a charm and altho there are many ways to retrieve fil
 input, this one worked finnaly for whatever reason.
 
 ## Third hardship...
+
 ### What do you mean you cant set canvas size easily?!
+
 Since I was not happy that initial canvas is only 500x250 px in size, I decided to increase its
 width to maximum of its container size. But since my initial canvas was fully rendered in a function
 where interpeter could not go until I pushed needed button, the canvas dimensions were set by
@@ -156,6 +164,7 @@ in javascript code. Why unfortunatelly? Because I was hoping I could get away wi
 variables as possible initially.
 
 ## Fourth hardship...
+
 ### So SLOW!!!!
 
 When you have a lot of datapoints and you have to iterate all of them through, you know it will take
@@ -183,6 +192,8 @@ The problem is with reading the array length.
 When you have big array and you have to read its lenght many times, lets say three times or more, its
 better to read such array lenght once by asigning array lenght to a variable:
 
+JavaScript
+
 ```javascript
 let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const arrayLength = array.length;
@@ -198,7 +209,9 @@ time reduction on complite data reading and graph drawing. 0.2 seconds on just s
 readings that were moved to the separate variable.
 
 ## Fifth hardship!
+
 ### Comma is not a comma...
+
 Remember those times when in floating numbers the comma means decimal points in those number? How
 about a dot represents same thing? In real life depending on where you live, there is a possibility
 that there are rules on what represents a floating point number on paper, lets say a math lesson.
@@ -231,8 +244,11 @@ not go away in SVG drawing circle. For some reason drawing circle on cy position
 error. That brings us to the.......
 
 ## Sixth hardship...
-### "Double or no deal..." - Home Alone 3, parrot words
+
+#### "Double or no deal..." - Home Alone 3, parrot words
+
 ### Floating point parsing continues
+
 After having troubles with already parsing floating point numbers using parseFloat() built-in 
 JavaScript function, there were still some problems with NaN during drawing a graph in SVG.
 Funny thing is JavaScript is very forgiving language on how you can work with numbers and strings.
@@ -263,7 +279,9 @@ has to be done separately.
 And that is where parsing bit me finnaly...
 
 ## Seventh hardship...
+
 ### I am getting used to it!
+
 SVG is such great thing compared to Canvas that zooming page in or out scales perfectly the SVG
 container albeit the internals are not scaled by itself. Canvas however did not automatically scale when
 page is zoomed in or out... So... Its either rewrite Canvas to SVG since SVG is much more customizable
@@ -271,7 +289,9 @@ with CSS or do some flexbox etc magic. Better rewrite it to SVG, I like it more 
 with both of them at the same time.
 
 ## Eighth hardship
+
 ### Redraw, redraw, redraw - why it takes so long to redraw?!
+
 SVG is very powerful stuff but it comes with small negative side. When drawing something with SVG
 you put a lot of stuff into DOM during drawing. When you redraw without clearing SVG container of
 previously drawed stuff, it will take a lot and I mean a lot more time to draw stuff. And when it
@@ -294,7 +314,9 @@ calculations on 700 elements and then it takes a second-two to actually show wha
 and drawn.
 
 ## Nineth hardship
+
 ### Still, why it takes so long to draw SVG?!?!?!
+
 Accessing DOM is time consuming, thats for sure. There are many ways how to reduce DOM access times
 and access ammounts. Here is one:
 
@@ -321,6 +343,7 @@ for (let i = 0; i < 1000; i++) {
 }
 element.innerHTML = str;
 ```
+
 How much faster? It increased speed of rendering SVG graph with Papa Parse library from 4 seconds down
 to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
 I hope because 2 seconds for doing work on data + some time more for actual graph rendering with SVG
@@ -332,7 +355,9 @@ for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds! Now I am bou
 I can download data from Elering...
 
 ## Tenth hardship
+
 ### GMT+1? No no... GMT+2!
+
 So we got so far that two initial separate graphs (consumption and price) have been merged into one.
 Even more, the graph is filled with data automatically by selecting apropriate range of dates for
 consumption and prices. Now we add cost graph based on consumption and prices for given period. But
@@ -354,6 +379,7 @@ Since my date span comes in the form of 01.01.2023 - 31.01.2023 I had to convert
 Date constructor before I could work with time.
 
 JavaScript
+
 ```javascript
 // Take start date from 01.01.2023 - 31.01.2023
 let date = date_span.substring(0, 10);
@@ -370,12 +396,15 @@ const date_start = dd.toISOString();    // 01.01.2023 -> 2022-12-31T22:00:00.000
 This is how I finnaly solved headache of timezones since timestamp is not timeone dependent.
 
 ## Eleventh hardship
+
 ### ES6 2015...
+
 When I was learning in school, I remember we were using NodeJs for creating some of our miniprojects.
 I remember we were using ES6 import-export modules stuff. Well it was great until it is not!
 Importing and exporting is easy in JavaScript. Just write is like this:
 
 JavaScript
+
 ```javascript
 export default function Foo() {
     let bar = "tou";
@@ -384,7 +413,9 @@ export default function Foo() {
 ```
 
 And then when you want to import:
+
 JavaScript
+
 ```javascript
 import Foo from 'exported_module.js';
 ```
@@ -393,6 +424,7 @@ Looks simple, works simple, easy to understand. But here is the thing, you cant 
 In HTML you have to add one thing more, the type="module":
 
 HTML
+
 ```html
 <script src="exported_module.js" type="module"></script>
 ```
@@ -406,12 +438,15 @@ works but makes code quite a bit more bloated. Remember to add at least a small 
 where function'n'stuff came from.
 
 ## Twelvth hardship
+
 ### Y U NO LOOP OVER?!
+
 Now this is some funny stuff that I have yet encountered by my memory only on javascript. Beg to pardon if
 I am incorrect, memory fails me on this.
 Looping over array with for loop in JavaScript has one small problem. 
 
 Javascript
+
 ```javascript
 for (let i = 0; i < length; i++) {
     return array[i];
@@ -421,6 +456,7 @@ for (let i = 0; i < length; i++) {
 This piece of code works perfectly fine!
 
 Javascript
+
 ```javascript
 for (let i = 0; i < length; i++) {
     return array[i+1];
@@ -431,6 +467,7 @@ Now this piece did not work for whatever reason. Now before you start shouting o
 why this code does not work but let me show you where exacly same thing did not work but it should have worked.
 
 Javascript
+
 ```javascript
 let array = [a, b, c];
 let array2 = [d, e, f, g, h, i];
@@ -443,6 +480,7 @@ Yep, this one should work and it doesnt.
 It wont work even if I modify it a little.
 
 Javascript
+
 ```javascript
 let array = [a, b, c];
 let array2 = [d, e, f, g, h, i];
@@ -456,6 +494,7 @@ for (let i = 0; i < array.length; i++) {
 Again does not work! However, if I put inde into the for loop, then both of the last examples work!
 
 Javascript
+
 ```javascript
 let array = [a, b, c];
 let array2 = [d, e, f, g, h, i];
@@ -474,6 +513,7 @@ was to loop over the second array and remove all the unnecessary parts to get tw
 then ofcourse I could do the multiplication looping over arrays without any problems anymore.
 
 Javascript
+
 ```javascript
 let array = [a, b, c];
 let array2 = [d, e, f, g, h, i];
