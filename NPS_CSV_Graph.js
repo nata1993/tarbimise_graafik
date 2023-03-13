@@ -470,7 +470,7 @@ function minConsumption(data) {
 }
 
 function CSVdataNormalization(ignoreBeginning, length, data) {
-    let normalizedData = [];
+    const normalizedData = [];
     for (let i = ignoreBeginning; i < length; i++) {
         normalizedData.push(Number(data[i][4].replace(",", ".")));
     }
@@ -480,7 +480,7 @@ function CSVdataNormalization(ignoreBeginning, length, data) {
 // Adds 20% tax to elering prices
 function EleringDataNormalization(data) {
     let normalizedData = [];
-    let length = data.length;
+    const length = data.length;
     for(let i = 0; i < length; i++) {
         normalizedData.push({timestamp : data[i]["timestamp"], price : (data[i]["price"] * 1.2)});
     }
