@@ -148,11 +148,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = ratio(highestPriceOnGraph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
-
             let width = 0;
             const highestPriceLevel = highestPrice / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
-            for (var i = 0; i < highestPriceLevel+1; i++) {
+            for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
                 strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
@@ -345,149 +344,80 @@ function ratio (price) {
     if (price < 10) {
         ratio = 5;
     }
-    else if (price >= 10 && price < 20) {
+    else if (price >= 10 && price < 30) {
         ratio = 1;
     }
-    else if (price >= 20 && price < 30) {
-        ratio = 1.5;
-    }
-    else if (price >= 30 && price < 40) {
+    else if (price >= 30 && price < 50) {
         ratio = 2;
     }
-    else if (price >= 40 && price < 50) {
-        ratio = 2.5;
-    }
-    else if (price >= 50 && price < 60) {
+    else if (price >= 50 && price < 70) {
         ratio = 3;
     }
-    else if (price >= 60 && price < 70) {
-        ratio = 3.5;
-    }
-    else if (price >= 70 && price < 80) {
+    else if (price >= 70 && price < 90) {
         ratio = 4;
     }
-    else if (price >= 80 && price < 90) {
-        ratio = 4.5;
-    }
-    else if (price >= 90 && price < 100) {
+    else if (price >= 90 && price < 110) {
         ratio = 5;
     }
-    else if (price >= 100 && price < 110) {
-        ratio = 5.5;
-    }
-    else if (price >= 110 && price < 120) {
+    else if (price >= 110 && price < 130) {
         ratio = 6;
     }
-    else if (price >= 120 && price < 130) {
-        ratio = 6.5;
-    }
-    else if (price >= 130 && price < 140) {
+    else if (price >= 130 && price < 150) {
         ratio = 7;
     }
-    else if (price >= 140 && price < 150) {
-        ratio = 7.5;
-    }
-    else if (price >= 150 && price < 160) {
+    else if (price >= 150 && price < 170) {
         ratio = 8;
     }
-    else if (price >= 160 && price < 170) {
-        ratio = 8.5;
-    }
-    else if (price >= 170 && price < 180) {
+    else if (price >= 170 && price < 190) {
         ratio = 9;
     }
-    else if (price >= 180 && price < 190) {
-        ratio = 9.5;
-    }
-    else if (price >= 190 && price < 200) {
+    else if (price >= 190 && price < 210) {
         ratio = 10;
     }
-    else if (price >= 200 && price < 210) {
-        ratio = 10.5;
-    }
-    else if (price >= 210 && price < 220) {
+    else if (price >= 210 && price < 230) {
         ratio = 11;
     }
-    else if (price >= 220 && price < 230) {
-        ratio = 11.5;
-    }
-    else if (price >= 230 && price < 240) {
+    else if (price >= 230 && price < 250) {
         ratio = 12;
     }
-    else if (price >= 240 && price < 250) {
-        ratio = 12.5;
-    }
-    else if (price >= 250 && price < 260) {
+    else if (price >= 250 && price < 270) {
         ratio = 13;
     }
-    else if (price >= 260 && price < 270) {
-        ratio = 13.5;
-    }
-    else if (price >= 270 && price < 280) {
+    else if (price >= 270 && price < 290) {
         ratio = 14;
     }
-    else if (price >= 280 && price < 290) {
-        ratio = 14.5;
-    }
-    else if (price >= 290 && price < 300) {
+    else if (price >= 290 && price < 310) {
         ratio = 15;
     }
-    else if (price >= 300 && price < 310) {
-        ratio = 15.5;
-    }
-    else if (price >= 310 && price < 320) {
+    else if (price >= 310 && price < 330) {
         ratio = 16;
     }
-    else if (price >= 320 && price < 330) {
-        ratio = 16.5;
-    }
-    else if (price >= 330 && price < 340) {
+    else if (price >= 330 && price < 350) {
         ratio = 17;
     }
-    else if (price >= 340 && price < 350) {
-        ratio = 17.5;
-    }
-    else if (price >= 350 && price < 360) {
+    else if (price >= 350 && price < 370) {
         ratio = 18;
     }
-    else if (price >= 360 && price < 370) {
-        ratio = 18.5;
-    }
-    else if (price >= 370 && price < 380) {
+    else if (price >= 370 && price < 390) {
         ratio = 19;
     }
-    else if (price >= 380 && price < 390) {
-        ratio = 19.5;
-    }
-    else if (price >= 390 && price < 400) {
+    else if (price >= 390 && price < 410) {
         ratio = 20;
     }
-    else if (price >= 400 && price < 410) {
-        ratio = 20.5;
-    }
-    else if (price >= 410 && price < 420) {
+    else if (price >= 410 && price < 430) {
         ratio = 21;
     }
-    else if (price >= 420 && price < 430) {
-        ratio = 21.5;
-    }
-    else if (price >= 430 && price < 440) {
+    else if (price >= 430 && price < 450) {
         ratio = 22;
     }
-    else if (price >= 440 && price < 450) {
-        ratio = 22.5;
-    }
-    else if (price >= 450 && price < 460) {
+    else if (price >= 450 && price < 470) {
         ratio = 23;
     }
-    else if (price >= 460 && price < 470) {
-        ratio = 23.5;
-    }
-    else if (price >= 470 && price < 480) {
+    else if (price >= 470 && price < 490) {
         ratio = 24;
     }
-    else if (price >= 480 && price < 490) {
-        ratio = 24.5;
+    else if (price >= 490 && price < 510) {
+        ratio = 25;
     }
 
 
