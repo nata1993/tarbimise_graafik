@@ -67,7 +67,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     const cost_ratio = 200 / highestCost;
     let x1 = 61;
     let x2 = 61 + horizontalWidthBetweenStrokes;
-    for(let i = 0; i < Elering_Data.length; i++) {
+    for(let i = 0; i < CSV_Data.length; i++) {
         let y = 600 - cost_data[i] * cost_ratio;
         lineStr += `<line id="cost${cost_data[i]}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
         x1 += horizontalWidthBetweenStrokes;
