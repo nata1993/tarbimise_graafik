@@ -102,6 +102,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
             const lowestPrice = minPrice(eleringData);
+            const averagePrice = avgPrice(eleringData);
             const highestPriceOnGraph = Math.ceil(highestPrice);
 
             // Get SVG container base elements
@@ -392,6 +393,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("highestPrice").innerHTML = `${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${totalConsumption} KWh`;
@@ -405,7 +407,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 // Helper function for filtering out max price within dataset with VAT
 function maxPrice(data) {
     let max = 0;
-    for (var i = 0; i < data.length; i++) {
+    const length = data.length;
+    for (let i = 0; i < length; i++) {
         if (data[i].price > max) {
             max = data[i].price;
         }
@@ -416,12 +419,23 @@ function maxPrice(data) {
 // Helper function for filtering out min price within dataset with VAT
 function minPrice(data) {
     let min = data[0].price;
-    for (var i = 0; i < data.length; i++) {
+    const length = data.length;
+    for (let i = 0; i < length; i++) {
         if (data[i].price < min) {
             min = data[i].price;
         }
     }
     return min;
+}
+
+function avgPrice(data) {
+    let avg = 0;
+    const length = data.length;
+    for(let i = 0; i < length; i++) {
+        avg += data[i].price;
+    }
+    avg = (avg / length) / 10;
+    return avg.toFixed(3);
 }
 
 // Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
@@ -432,7 +446,7 @@ function roundUp(price) {
 // Helper function to find highest consumption within data
 function maxConsumption(data) {
     let maxConsum = 0;
-    let length = data.length;
+    const length = data.length;
     for (let i = 0; i < length; i++) {
         let h = data[i];
         if(h > maxConsum) {
@@ -445,7 +459,7 @@ function maxConsumption(data) {
 // Helper function to find lowest consumption within data
 function minConsumption(data) {
     let minConsum = data[0];
-    let length = data.length;
+    const length = data.length;
     for (let i = 0; i < length; i++) {
         let m = data[i];
         if(m <= minConsum) {
