@@ -147,154 +147,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             console.log(CSV_Normalized_Data_Length, "CSV");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
-            let nRatio = 0; // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
-            if (highestPriceOnGraph < 100) {
-                nRatio = 5;
-            }
-            else if (highestPriceOnGraph >= 100 && highestPriceOnGraph < 200) {
-                nRatio = 10;
-            }
-            else if (highestPriceOnGraph >= 200 && highestPriceOnGraph < 300) {
-                nRatio = 15;
-            }
-            else if (highestPriceOnGraph >= 300 && highestPriceOnGraph < 400) {
-                nRatio = 20;
-            }
-            else if (highestPriceOnGraph >= 400 && highestPriceOnGraph < 500) {
-                nRatio = 25;
-            }
-            else if (highestPriceOnGraph >= 500 && highestPriceOnGraph < 600) {
-                nRatio = 30;
-            }
-            else if (highestPriceOnGraph >= 600 && highestPriceOnGraph < 700) {
-                nRatio = 35;
-            }
-            else if (highestPriceOnGraph >= 700 && highestPriceOnGraph < 800) {
-                nRatio = 40;
-            }
-            else if (highestPriceOnGraph >= 800 && highestPriceOnGraph < 900) {
-                nRatio = 45;
-            }
-            else if (highestPriceOnGraph >= 900 && highestPriceOnGraph < 1000) {
-                nRatio = 50;
-            }
-            else if (highestPriceOnGraph >= 1000 && highestPriceOnGraph < 1100) {
-                nRatio = 55;
-            }
-            else if (highestPriceOnGraph >= 1100 && highestPriceOnGraph < 1200) {
-                nRatio = 60;
-            }
-            else if (highestPriceOnGraph >= 1200 && highestPriceOnGraph < 1300) {
-                nRatio = 65;
-            }
-            else if (highestPriceOnGraph >= 1300 && highestPriceOnGraph < 1400) {
-                nRatio = 70;
-            }
-            else if (highestPriceOnGraph >= 1400 && highestPriceOnGraph < 1500) {
-                nRatio = 75;
-            }
-            else if (highestPriceOnGraph >= 1500 && highestPriceOnGraph < 1600) {
-                nRatio = 80;
-            }
-            else if (highestPriceOnGraph >= 1600 && highestPriceOnGraph < 1700) {
-                nRatio = 85;
-            }
-            else if (highestPriceOnGraph >= 1700 && highestPriceOnGraph < 1800) {
-                nRatio = 90;
-            }
-            else if (highestPriceOnGraph >= 1800 && highestPriceOnGraph < 1900) {
-                nRatio = 95;
-            }
-            else if (highestPriceOnGraph >= 1900 && highestPriceOnGraph < 2000) {
-                nRatio = 100;
-            }
-            else if (highestPriceOnGraph >= 2000 && highestPriceOnGraph < 2100) {
-                nRatio = 105;
-            }
-            else if (highestPriceOnGraph >= 2100 && highestPriceOnGraph < 2200) {
-                nRatio = 110;
-            }
-            else if (highestPriceOnGraph >= 2200 && highestPriceOnGraph < 2300) {
-                nRatio = 115;
-            }
-            else if (highestPriceOnGraph >= 2300 && highestPriceOnGraph < 2400) {
-                nRatio = 120;
-            }
-            else if (highestPriceOnGraph >= 2400 && highestPriceOnGraph < 2500) {
-                nRatio = 125;
-            }
-            else if (highestPriceOnGraph >= 2500 && highestPriceOnGraph < 2600) {
-                nRatio = 130;
-            }
-            else if (highestPriceOnGraph >= 2600 && highestPriceOnGraph < 2700) {
-                nRatio = 135;
-            }
-            else if (highestPriceOnGraph >= 2700 && highestPriceOnGraph < 2800) {
-                nRatio = 140;
-            }
-            else if (highestPriceOnGraph >= 2800 && highestPriceOnGraph < 2900) {
-                nRatio = 145;
-            }
-            else if (highestPriceOnGraph >= 2900 && highestPriceOnGraph < 3000) {
-                nRatio = 150;
-            }
-            else if (highestPriceOnGraph >= 3000 && highestPriceOnGraph < 3100) {
-                nRatio = 155;
-            }
-            else if (highestPriceOnGraph >= 3100 && highestPriceOnGraph < 3200) {
-                nRatio = 160;
-            }
-            else if (highestPriceOnGraph >= 3200 && highestPriceOnGraph < 3300) {
-                nRatio = 165;
-            }
-            else if (highestPriceOnGraph >= 3300 && highestPriceOnGraph < 3400) {
-                nRatio = 170;
-            }
-            else if (highestPriceOnGraph >= 3400 && highestPriceOnGraph < 3500) {
-                nRatio = 175;
-            }
-            else if (highestPriceOnGraph >= 3500 && highestPriceOnGraph < 3600) {
-                nRatio = 180;
-            }
-            else if (highestPriceOnGraph >= 3600 && highestPriceOnGraph < 3700) {
-                nRatio = 185;
-            }
-            else if (highestPriceOnGraph >= 3700 && highestPriceOnGraph < 3800) {
-                nRatio = 190;
-            }
-            else if (highestPriceOnGraph >= 3800 && highestPriceOnGraph < 3900) {
-                nRatio = 195;
-            }
-            else if (highestPriceOnGraph >= 3900 && highestPriceOnGraph < 4000) {
-                nRatio = 200;
-            }
-            else if (highestPriceOnGraph >= 4000 && highestPriceOnGraph < 4100) {
-                nRatio = 205;
-            }
-            else if (highestPriceOnGraph >= 4100 && highestPriceOnGraph < 4200) {
-                nRatio = 210;
-            }
-            else if (highestPriceOnGraph >= 4200 && highestPriceOnGraph < 4300) {
-                nRatio = 215;
-            }
-            else if (highestPriceOnGraph >= 4300 && highestPriceOnGraph < 4400) {
-                nRatio = 220;
-            }
-            else if (highestPriceOnGraph >= 4400 && highestPriceOnGraph < 4500) {
-                nRatio = 225;
-            }
-            else if (highestPriceOnGraph >= 4500 && highestPriceOnGraph < 4600) {
-                nRatio = 230;
-            }
-            else if (highestPriceOnGraph >= 4600 && highestPriceOnGraph < 4700) {
-                nRatio = 235;
-            }
-            else if (highestPriceOnGraph >= 4700 && highestPriceOnGraph < 4800) {
-                nRatio = 240;
-            }
-            else if (highestPriceOnGraph >= 4800 && highestPriceOnGraph < 4900) {
-                nRatio = 245;
-            }
+            let nRatio = ratio(highestPriceOnGraph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
 
             let width = 0;
             const highestPriceLevel = highestPrice / nRatio;
@@ -321,13 +174,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = eleringData[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
-                if (hourPrice <= 50) {
+                if (hourPrice <= 5) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
                 }
-                else if (hourPrice > 50 && hourPrice <= 110) {
+                else if (hourPrice > 5 && hourPrice <= 11) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FF0" stroke-width="3"/>`;
                 }
-                else if (hourPrice >= 1000) {
+                else if (hourPrice >= 100) {
                     graphStr += `<circle cx="${x1}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
                     graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
                     graphStr += `<circle cx="${x2}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
@@ -361,19 +214,19 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textGroup.style.fontFamily = "arial";
             textGroup.style.fontSize = "10px";
             textStr += `<text x="10" y="25">NPS price</text>`;
-            textStr += `<text x="10" y="35">€/MWh</text>`;
+            textStr += `<text x="10" y="35">\u00A2/KWh</text>`;
             textStr += `<text x="10" y="45">Inc. 20%</text>`;
             textStr += `<text x="${(SVG_Width/2) - 15}" y="${textOffsetBelowGraph}">Hours</text>`;
-            textStr += `<circle cx="${endPosition-100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
-            textStr += `<text x="${endPosition-90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
-            textStr += `<text x="${endPosition+4}" y="35">Consumption</text>`;
-            textStr += `<text x="${endPosition+4}" y="45">KWh</text>`;
+            textStr += `<circle cx="${endPosition - 100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
+            textStr += `<text x="${endPosition - 90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
+            textStr += `<text x="${endPosition + 4}" y="35">Consumption</text>`;
+            textStr += `<text x="${endPosition + 4}" y="45">KWh</text>`;
             textStr += `<line x1="75" y1="${textOffsetBelowGraph}" x2="90" y2="${textOffsetBelowGraph}" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over 110 €/MWh</text>`;
+            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over 11 \u00A2/KWh</text>`;
             textStr += `<line x1="190" y1="${textOffsetBelowGraph}" x2="205" y2="${textOffsetBelowGraph}" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between 50 and 110 €/MWh</text>`;
+            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between 5 and 11 \u00A2/KWh</text>`;
             textStr += `<line x1="350" y1="${textOffsetBelowGraph}" x2="365" y2="${textOffsetBelowGraph}" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below 50 €/MWh</text>`;
+            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below 5 \u00A2/KWh</text>`;
             textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="${textOffsetBelowGraph}" x2="${(SVG_Width / 2) + 250}" y2="${textOffsetBelowGraph}" stroke="#000" stroke-width="2" />`;
             textStr += `<text x="${(SVG_Width / 2) + 260}" y="${textOffsetBelowGraph + 3}">Consumption</text>`;
 
@@ -391,8 +244,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
 
             // Fill lowest and highest prices asw ell as consumption to HTML
-            document.getElementById("highestPrice").innerHTML = `${Number((highestPrice) / 10).toFixed(3)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${Number((lowestPrice) / 10).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `${Number(highestPrice).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${Number(lowestPrice).toFixed(3)} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${lowestConsumption} KWh`;
@@ -434,7 +287,7 @@ function avgPrice(data) {
     for(let i = 0; i < length; i++) {
         avg += data[i].price;
     }
-    avg = (avg / length) / 10;
+    avg = avg / length;
     return avg.toFixed(3);
 }
 
@@ -482,7 +335,161 @@ function EleringDataNormalization(data) {
     let normalizedData = [];
     const length = data.length;
     for(let i = 0; i < length; i++) {
-        normalizedData.push({timestamp : data[i]["timestamp"], price : (data[i]["price"] * 1.2)});
+        normalizedData.push({timestamp : data[i]["timestamp"], price : ((data[i]["price"] * 1.2) / 10)}); // Divide by 10 because MWh -> KWh
     }
     return normalizedData;
+}
+
+function ratio (price) {
+    let ratio = 0;
+    if (price < 10) {
+        ratio = 5;
+    }
+    else if (price >= 10 && price < 20) {
+        ratio = 1;
+    }
+    else if (price >= 20 && price < 30) {
+        ratio = 1.5;
+    }
+    else if (price >= 30 && price < 40) {
+        ratio = 2;
+    }
+    else if (price >= 40 && price < 50) {
+        ratio = 2.5;
+    }
+    else if (price >= 50 && price < 60) {
+        ratio = 3;
+    }
+    else if (price >= 60 && price < 70) {
+        ratio = 3.5;
+    }
+    else if (price >= 70 && price < 80) {
+        ratio = 4;
+    }
+    else if (price >= 80 && price < 90) {
+        ratio = 4.5;
+    }
+    else if (price >= 90 && price < 100) {
+        ratio = 5;
+    }
+    else if (price >= 100 && price < 110) {
+        ratio = 5.5;
+    }
+    else if (price >= 110 && price < 120) {
+        ratio = 6;
+    }
+    else if (price >= 120 && price < 130) {
+        ratio = 6.5;
+    }
+    else if (price >= 130 && price < 140) {
+        ratio = 7;
+    }
+    else if (price >= 140 && price < 150) {
+        ratio = 7.5;
+    }
+    else if (price >= 150 && price < 160) {
+        ratio = 8;
+    }
+    else if (price >= 160 && price < 170) {
+        ratio = 8.5;
+    }
+    else if (price >= 170 && price < 180) {
+        ratio = 9;
+    }
+    else if (price >= 180 && price < 190) {
+        ratio = 9.5;
+    }
+    else if (price >= 190 && price < 200) {
+        ratio = 10;
+    }
+    else if (price >= 200 && price < 210) {
+        ratio = 10.5;
+    }
+    else if (price >= 210 && price < 220) {
+        ratio = 11;
+    }
+    else if (price >= 220 && price < 230) {
+        ratio = 11.5;
+    }
+    else if (price >= 230 && price < 240) {
+        ratio = 12;
+    }
+    else if (price >= 240 && price < 250) {
+        ratio = 12.5;
+    }
+    else if (price >= 250 && price < 260) {
+        ratio = 13;
+    }
+    else if (price >= 260 && price < 270) {
+        ratio = 13.5;
+    }
+    else if (price >= 270 && price < 280) {
+        ratio = 14;
+    }
+    else if (price >= 280 && price < 290) {
+        ratio = 14.5;
+    }
+    else if (price >= 290 && price < 300) {
+        ratio = 15;
+    }
+    else if (price >= 300 && price < 310) {
+        ratio = 15.5;
+    }
+    else if (price >= 310 && price < 320) {
+        ratio = 16;
+    }
+    else if (price >= 320 && price < 330) {
+        ratio = 16.5;
+    }
+    else if (price >= 330 && price < 340) {
+        ratio = 17;
+    }
+    else if (price >= 340 && price < 350) {
+        ratio = 17.5;
+    }
+    else if (price >= 350 && price < 360) {
+        ratio = 18;
+    }
+    else if (price >= 360 && price < 370) {
+        ratio = 18.5;
+    }
+    else if (price >= 370 && price < 380) {
+        ratio = 19;
+    }
+    else if (price >= 380 && price < 390) {
+        ratio = 19.5;
+    }
+    else if (price >= 390 && price < 400) {
+        ratio = 20;
+    }
+    else if (price >= 400 && price < 410) {
+        ratio = 20.5;
+    }
+    else if (price >= 410 && price < 420) {
+        ratio = 21;
+    }
+    else if (price >= 420 && price < 430) {
+        ratio = 21.5;
+    }
+    else if (price >= 430 && price < 440) {
+        ratio = 22;
+    }
+    else if (price >= 440 && price < 450) {
+        ratio = 22.5;
+    }
+    else if (price >= 450 && price < 460) {
+        ratio = 23;
+    }
+    else if (price >= 460 && price < 470) {
+        ratio = 23.5;
+    }
+    else if (price >= 470 && price < 480) {
+        ratio = 24;
+    }
+    else if (price >= 480 && price < 490) {
+        ratio = 24.5;
+    }
+
+
+    return ratio;
 }
