@@ -243,6 +243,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
 
             // Fill lowest and highest prices asw ell as consumption to HTML
+            document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
             document.getElementById("highestPrice").innerHTML = `${Number(highestPrice).toFixed(3)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Number(lowestPrice).toFixed(3)} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`

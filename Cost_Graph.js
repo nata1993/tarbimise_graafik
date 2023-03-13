@@ -34,11 +34,21 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     }
     Base_Graph.innerHTML = baseStr;
 
+    // Weighted average cost
+    let weightedCost = 0;
+    let weightedTerms = 0;
+    let totalOfTerms = 0;
+    for(let i = 0; i < CSV_Data.length; i++) {
+        weightedTerms += Elering_Data[i + 1].price * CSV_Data[i];
+        totalOfTerms += CSV_Data[i];
+    }
+    weightedCost = weightedTerms / totalOfTerms;
+
     // Calculate cost for each hour of spending
     let cost_data = [];
-    let eleringData_length = Elering_Data.length - 2;
-    for (let i = 0; i < eleringData_length; i++) {
-        cost_data.push(Elering_Data[i].price * CSV_Data[i]);
+    let data_length = CSV_Data.length;
+    for (let i = 0; i < data_length; i++) {
+        cost_data.push(Elering_Data[i + 1].price * CSV_Data[i]);
     }
 
     // Find highest and average cost as well as when and what etc
@@ -59,7 +69,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
         // Sum for average cost
         averageCost += cost_data[i];
     }
-    averageCost = averageCost/costDataLength;
+    averageCost = averageCost / costDataLength;
     const highest_consumption_date = new Date(whenHighestCost).toLocaleDateString("fi-FI");
 
     // Map cost data to cost graph
@@ -80,6 +90,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Consumption cost graph</text>`;
 
     document.getElementById("averageCost").innerHTML = `${averageCost.toFixed(3)} \u00A2`;
+    document.getElementById("weightedCost").innerHTML = `${weightedCost.toFixed(3)} \u00A2`;
     document.getElementById("highestCost").innerHTML = `${highestCost.toFixed(3)} \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
 }
