@@ -17,7 +17,7 @@ body {
 }
 #text div {
     padding: 15px;
-
+    flex: 1;
 }
 #whenCost {
     word-wrap: break-word;
