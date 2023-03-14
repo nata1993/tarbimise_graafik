@@ -32,49 +32,66 @@
             </div>
         </div>
     </div>
-    </div>
     <div class="body">
-        <div>
-            <h2 id="period">Periood: -</h2>
-            <!-- Graph -->
-            <svg id="NPS_CSV_Cost" version="1.1">
-                <rect width="100%" height="100%" fill="#DDD"/>
-                <g id="graphOneTitle"></g>
-                <g id="npsBaseGraph" stroke="#000" stroke-width="1"></g>
-                <g id="npsPriceVector" stroke-width="2.5"></g>
-                <g id="csvConsumptionVector"></g>
-                <g id="npsText"></g>
-                <g id="graphTwoTitle"></g>
-                <g id="costBaseGraph" stroke="#000" stroke-width="1"></g>
-                <g id="costGraph" stroke="#000" stroke-width="1"></g>
-                <g id="costText"></g>
-            </svg>
-            <!-- Text -->
-            <div id="text">
-                <div>
+        <h2 id="period">Periood: -</h2>
+        <!-- Graph -->
+        <svg id="NPS_CSV_Cost" version="1.1">
+            <rect width="100%" height="100%" fill="#DDD"/>
+            <g id="graphOneTitle"></g>
+            <g id="npsBaseGraph" stroke="#000" stroke-width="1"></g>
+            <g id="npsPriceVector" stroke-width="2.5"></g>
+            <g id="csvConsumptionVector"></g>
+            <g id="npsText"></g>
+            <g id="graphTwoTitle"></g>
+            <g id="costBaseGraph" stroke="#000" stroke-width="1"></g>
+            <g id="costGraph" stroke="#000" stroke-width="1"></g>
+            <g id="costText"></g>
+        </svg>
+        <!-- Text -->
+        <div id="text">
+            <div>
+                <div class="titleContainer" title="Highest price of electricity in a given period.">
                     <h4>Period highest price</h4>
                     <p id="highestPrice">-</p>
+                </div>
+                <div class="titleContainer" title="Lowest price of electricity in a given period.">
                     <h4>Period lowest price</h4>
                     <p id="lowestPrice">-</p>
+                </div>
+                <div class="titleContainer" title="Average price of electricity in a given period. Consists of sum of all period prices divided by their ammount.">
                     <h4>Period average price</h4>
                     <p id="averagePrice">-</p>
                 </div>
-                <div>
+            </div>
+            <div>
+                <div class="titleContainer" title="Highest consumption of electricity in a given period.">
                     <h4>Period highest consumption</h4>
                     <p id="highestConsumption">-</p>
+                </div>
+                <div class="titleContainer" title="Lowest consumption of electricity in a given period.">
                     <h4>Period lowest consumption</h4>
                     <p id="lowestConsumption">-</p>
+                </div>
+                <div class="titleContainer" title="Average consumption of electricity in a given period.">
                     <h4>Period average consumption</h4>
                     <p id="averageConsumption">-</p>
+                </div>
+                <div class="titleContainer" title="Total consumption of electricity in a given period.">
                     <h4>Period total consumption</h4>
                     <p id="totalConsumption">-</p>
                 </div>
-                <div>
+            </div>
+            <div>
+                <div class="titleContainer" title="Highest cost of electricity consumption in a given period. Essentially at what day in a given hour was the most expensive cost of using electricity.">
                     <h4>Period highest cost of consumption</h4>
                     <p id="highestCost">-</p>
-                    <p id="whenCost"></p>
+                    <p class="wordWrap" id="whenCost"></p>
+                </div>
+                <div class="titleContainer" title="Weighted average of electricity price of consumed electricity in a given period.">
                     <h4>Period weighted average cost of consumption</h4>
                     <p id="weightedCost">-</p>
+                </div>
+                <div class="titleContainer" title="The usual aerage cost of consumption in a given period. Essentially sum of all hourly consumptions divided by hours in a given period.">
                     <h4>Period arithmetic mean cost of consumption</h4>
                     <p id="averageCost">-</p>
                 </div>
