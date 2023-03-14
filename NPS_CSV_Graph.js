@@ -98,6 +98,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const highestConsumption = maxConsumption(CSV_Normalized_Data);
             const lowestConsumption = minConsumption(CSV_Normalized_Data);
             const totalConsumption = CSV_File_Data[5][4].replace(",", ".");
+            const averageConsumption = avgConsumption(CSV_Normalized_Data);
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(eleringData);
@@ -139,7 +140,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws small strokes to base graph horisontal line - needs improvements
             const eDataStart = 0;
-            const eDataEnd = eleringData_length-2; // -2 because last hour of data is over the CSV file date span and data is 0 indexed
+            const eDataEnd = eleringData_length;
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
@@ -244,12 +245,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
-            document.getElementById("highestPrice").innerHTML = `${Number(highestPrice).toFixed(3)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${Number(lowestPrice).toFixed(3)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `${highestPrice.toFixed(3)} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${lowestPrice.toFixed(3)} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${totalConsumption} KWh`;
+            document.getElementById("averageConsumption").innerHTML = `${averageConsumption.toFixed(3)} KWh`
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(eleringData, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
@@ -320,6 +322,16 @@ function minConsumption(data) {
         }
     }
     return minConsum;
+}
+
+function avgConsumption(data) {
+    let avgConsum = 0;
+    const length = data.length;
+    for(let i = 0; i < length; i++){
+        avgConsum += data[i];
+    }
+    avgConsum = avgConsum / length;
+    return avgConsum;
 }
 
 function CSVdataNormalization(ignoreBeginning, length, data) {
