@@ -1,4 +1,4 @@
-# About creation of this thing....
+# About creation of this thing...
 
 Since Eesti Gaas nor Eesti Energia nor Elektrilevi nor anyone is not giving simple way on
 viewing how much and with what cost as well as calculated total was electricity used, I
@@ -37,7 +37,7 @@ The width and height specified in HTML canvas element are attributes. Those numb
 PIXELS! Can't set those to em, rm, or even %. Browser will ignore those and will just use 500
 and 250 and they will be in pixels.
 The width and height in CSS code, are the different kind of width and height. Canvas use two
-systems: one for rendering aka internal size, one for rendering canvas (the container for 
+systems: one for rendering aka internal size, one for rendering canvas (the container for
 rendering) itself. That means when you set only CSS style for canvas, the canvas container
 will only be set, the canvas internal width and height will not be set. That has to be managed
 somehow else - either use HTML attribute or create canvas element with all the needed computed
@@ -50,7 +50,7 @@ width and heights with javascript or use both.
 PapaParse is nice library for reading .CSV files. It can be used server-side or it can be used
 client-side. Well for starters the documentation on how to initalize for using PapaParse was
 well, nonexistent. Offcourse you import it through HTML script tag either in head or in the body
-part, both have pros and cons for that part. Offcourse you then just call it through its class 
+part, both have pros and cons for that part. Offcourse you then just call it through its class
 calling:
 
 JavaScript
@@ -165,14 +165,14 @@ variables as possible initially.
 
 ## Fourth hardship...
 
-### So SLOW!!!!
+### So SLOW!!!
 
 When you have a lot of datapoints and you have to iterate all of them through, you know it will take
 some time to iterate through. And then you face the wall of waiting... Its already irritating when its
-not snappy, its irritating when it takes couple of seconds, even worse when it takes even longer 
+not snappy, its irritating when it takes couple of seconds, even worse when it takes even longer
 offcourse. I needed to draw a graph from roughly 700 datapoints. Its not much per se but it took around
 1.7-2 seconds to itretare through and draw a graph from it. The graph was still incomplite so in the
-process of making such file to have already 1.7-2 seconds of data reading and partial graph drawing, 
+process of making such file to have already 1.7-2 seconds of data reading and partial graph drawing,
 well its already too much and only on roughtly 700 datapoints.
 Lets see what we can do first and the simpliest.
 
@@ -219,9 +219,9 @@ I remember when floating points was acceptable to write down as 0,53 or 0.53, sa
 But not in CS or software development. So here we are, trying to use JavasScript built-in parseFloat()
 function or Number.parseFloat() class function to parse a floating point number in its string
 representation. The number was a string in a CSV file, so we need to convert it to a number. Easy right?
-Not unless you remember that comma is not representing a decimal point in software development but 
+Not unless you remember that comma is not representing a decimal point in software development but
 dot does. So when you try to parse 0,53, you will get NaN. However parsing 0.53 will give you a floating
-point number. 
+point number.
 
 JavaScript
 
@@ -237,7 +237,7 @@ parseFloat(number.replace(",", "."));
 // Returns 0.53, a number
 ```
 
-Took some hours to figure out the problem but did not solve the next problem that came 
+Took some hours to figure out the problem but did not solve the next problem that came
 because of exact problem of NaN after trying to parse incorrectly floating point number in its string
 representation. For some reason even after fixing parsing of floating point number, the NaN error did
 not go away in SVG drawing circle. For some reason drawing circle on cy position still returned NaN
@@ -249,7 +249,7 @@ error. That brings us to the.......
 
 ### Floating point parsing continues
 
-After having troubles with already parsing floating point numbers using parseFloat() built-in 
+After having troubles with already parsing floating point numbers using parseFloat() built-in
 JavaScript function, there were still some problems with NaN during drawing a graph in SVG.
 Funny thing is JavaScript is very forgiving language on how you can work with numbers and strings.
 Want to convert string to number? Lets say you have a string of 0,53. Multiply it by 1 and you get
@@ -295,7 +295,7 @@ with both of them at the same time.
 SVG is very powerful stuff but it comes with small negative side. When drawing something with SVG
 you put a lot of stuff into DOM during drawing. When you redraw without clearing SVG container of
 previously drawed stuff, it will take a lot and I mean a lot more time to draw stuff. And when it
-does finish finnaly drawing, it draws stuff on top of previously drawn stuff because stuff was 
+does finish finnaly drawing, it draws stuff on top of previously drawn stuff because stuff was
 in DOM already when you add even more stuff to DOM. The simple fix is to just clear the previously
 drawn stuff out before drawing new stuff. Simple fix for that is this small piece of code:
 
@@ -307,9 +307,9 @@ document.getElementById("SVG").innerHTML = "";
 
 Apply it to whatever you need to clear inside SVG and you will improve drastically speed of redrawing
 if you need to draw a lot of stuff. In my case, drawing just roughly 700 small lines with all the needed
-x and y vector calculations took on average 3.8 seconds. Redrawing before clearing DOM took over 12 
+x and y vector calculations took on average 3.8 seconds. Redrawing before clearing DOM took over 12
 seconds. Clearing DOM before redrawing, reduced redrawing speed back to 3.8 seconds. I clearly have to
-find a way to increase SVG drawing speed because 3.8 seconds is still a lot of time to just do the 
+find a way to increase SVG drawing speed because 3.8 seconds is still a lot of time to just do the
 calculations on 700 elements and then it takes a second-two to actually show what has been calculated
 and drawn.
 
@@ -348,7 +348,7 @@ How much faster? It increased speed of rendering SVG graph with Papa Parse libra
 to two seconds. Impressive speed increase but there surely is more ways to increase rendering speed
 I hope because 2 seconds for doing work on data + some time more for actual graph rendering with SVG
 is still in my opinion quite slow. Better than 4 seconds realy and finally graphs are starting to be
-somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering 
+somewhat usefull. But on other graph, the Nord Pool Spot graph, it went from over 15 second rendering
 of prices for 3 month time span to down to near instantly! Some serious speed increases right there!
 By implementing same method for CSV graph generation, the speedreduction was outrageously massive
 for roughly 700 datapoints - from 3.5 seconds down to 0.01 seconds! Now I am bound only by how fast
@@ -443,7 +443,7 @@ where function'n'stuff came from.
 
 Now this is some funny stuff that I have yet encountered by my memory only on javascript. Beg to pardon if
 I am incorrect, memory fails me on this.
-Looping over array with for loop in JavaScript has one small problem. 
+Looping over array with for loop in JavaScript has one small problem.
 
 Javascript
 
@@ -506,7 +506,7 @@ for (let i = 0; i < array.length; i++) {
 
 Unfortunatelly this was incorrect way for me because the data was such that output was incorrect because
 for whatever reason index did not increment but stayed at  value 3. Eventually I took the easier route
-and just normalized data. Those two arrays had data: one with price, other from CSV file data. 
+and just normalized data. Those two arrays had data: one with price, other from CSV file data.
 CSV file data had lots of blank info like strings of text which I did not need at all. After all the text
 the numbers came and the count of these numbers was exactly same as in the first array. So simple solution
 was to loop over the second array and remove all the unnecessary parts to get two same length arrays. And
