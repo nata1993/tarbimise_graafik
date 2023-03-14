@@ -21,8 +21,8 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
 
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
-        X : [60, 60, 60, Horizontal_Graph_End_Position, 60, 58, 60, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position-5, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position-5],
-        Y : [350, 600, 600, 600, 350, 355, 350, 355, 600, 602, 600, 598]
+        X : [60, 60, 60, Horizontal_Graph_End_Position, 60, 58, 60, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position],
+        Y : [350, 600, 600, 600, 350, 355, 350, 355, 600, 600, 350, 600]
     };
 
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
