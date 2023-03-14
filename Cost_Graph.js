@@ -39,7 +39,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     let weightedTerms = 0;
     let totalOfTerms = 0;
     for(let i = 0; i < CSV_Data.length; i++) {
-        weightedTerms += Elering_Data[i + 1].price * CSV_Data[i];
+        weightedTerms += Elering_Data[i].price * CSV_Data[i];
         totalOfTerms += CSV_Data[i];
     }
     weightedCost = weightedTerms / totalOfTerms;
@@ -48,7 +48,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     let cost_data = [];
     let data_length = CSV_Data.length;
     for (let i = 0; i < data_length; i++) {
-        cost_data.push(Elering_Data[i + 1].price * CSV_Data[i]);
+        cost_data.push(Elering_Data[i].price * CSV_Data[i]);
     }
 
     // Find highest and average cost as well as when and what etc
@@ -60,9 +60,9 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     const costDataLength = cost_data.length;
     for(let i = 0; i < costDataLength; i++) {
         // Highest cost
-        if(cost_data[i] >= highestCost) {
+        if(cost_data[i] > highestCost) {
             highestCost = cost_data[i];
-            whenHighestCost = Elering_Data[i].timestamp * 1000;
+            whenHighestCost = Elering_Data[i].timestamp * 1000; // ms into s
             whatElectricityPrice = Elering_Data[i].price;
             whatConsumption = CSV_Data[i];
         }

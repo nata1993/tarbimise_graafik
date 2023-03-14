@@ -346,7 +346,7 @@ function CSVdataNormalization(ignoreBeginning, length, data) {
 function EleringDataNormalization(data) {
     let normalizedData = [];
     const length = data.length;
-    for(let i = 0; i < length; i++) {
+    for(let i = 0; i < length - 2; i++) {
         normalizedData.push({timestamp : data[i]["timestamp"], price : ((data[i]["price"] * 1.2) / 10)}); // Divide by 10 because MWh -> KWh
     }
     return normalizedData;
