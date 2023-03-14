@@ -85,10 +85,6 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     }
     Cost_Graph.innerHTML += lineStr;
 
-    let weightedRatio = 200 / weightedCost;
-    let y = 600 - weightedCost * weightedRatio;
-    Cost_Graph.innerHTML += `<line x1="${61}" y1="${y}" x2="${Horizontal_Graph_End_Position}" y2="${y}" stroke="#FFF" stroke-width="3" />`;
-
     Graph_Title.style.fontFamily = "arial";
     Graph_Title.style.fontSize = "16px";
     Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Consumption cost graph</text>`;
