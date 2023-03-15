@@ -105,6 +105,9 @@ function dataLengthWithoutNull(data) {
             length = i;
             break;
         }
+        else {
+            length = i;
+        }
     }
     return length;
 }
