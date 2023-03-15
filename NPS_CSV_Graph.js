@@ -91,8 +91,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const CSV_Normalized_Data_Length = CSV_Normalized_Data.length;
 
             // Elering variables
-            const eleringData = EleringDataNormalization(res.data.ee);
-            const eleringData_length = eleringData.length;
+            const Elering_Normalized_Data = EleringDataNormalization(res.data.ee);
+            const Elering_Normalized_Data_length = Elering_Normalized_Data.length;
+
+            // Merging two datasets into one
+            const mergedData = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
+            console.log(mergedData);
 
             // Filter out highest and lowest consumption within given data sample
             const highestConsumption = maxConsumption(CSV_Normalized_Data);
@@ -101,9 +105,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const averageConsumption = avgConsumption(CSV_Normalized_Data);
             
             // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(eleringData);
-            const lowestPrice = minPrice(eleringData);
-            const averagePrice = avgPrice(eleringData);
+            const highestPrice = maxPrice(Elering_Normalized_Data);
+            const lowestPrice = minPrice(Elering_Normalized_Data);
+            const averagePrice = avgPrice(Elering_Normalized_Data);
             const highestPriceOnGraph = Math.ceil(highestPrice);
 
             // Get SVG container base elements
@@ -140,7 +144,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws small strokes to base graph horisontal line - needs improvements
             const eDataStart = 0;
-            const eDataEnd = eleringData_length;
+            const eDataEnd = Elering_Normalized_Data_length;
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
@@ -172,7 +176,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const price_ratio = graphHeigth / highestPrice; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
-                const hourPrice = eleringData[i]["price"];
+                const hourPrice = Elering_Normalized_Data[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
                 if (hourPrice <= 5) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
@@ -254,7 +258,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("averageConsumption").innerHTML = `${averageConsumption.toFixed(3)} KWh`
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(eleringData, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
+            drawCostGraph(Elering_Normalized_Data, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
         })
         .catch(err => { throw err });
 }
@@ -350,6 +354,30 @@ function EleringDataNormalization(data) {
         normalizedData.push({timestamp : data[i]["timestamp"], price : ((data[i]["price"] * 1.2) / 10)}); // Divide by 10 because MWh -> KWh
     }
     return normalizedData;
+}
+
+function FullDataNormalization(data1, data2) {
+    let data = [];
+    const length = data1.length;
+    for(let i = 0; i < length; i++){
+        const timestamp = data1[i]["timestamp"]
+        const price = data1[i]["price"];
+        const consumption = data2[i];
+
+        if(typeof consumption === "undefined" || consumption === NaN )
+        {
+            consumption = null;
+        }
+
+        data.push(
+            {
+                timestamp : timestamp,
+                price : price,
+                consumption : consumption
+        });
+    }
+
+    return data;
 }
 
 function ratio (price) {
