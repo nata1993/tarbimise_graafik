@@ -108,7 +108,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const Highest_Price = maxPrice(Merged_Data);
             const Lowest_Price = minPrice(Merged_Data);
             const Average_Price = avgPrice(Merged_Data);
-            const highestPriceOnGraph = Math.ceil(Highest_Price);
+            const Highest_Price_On_Graph = Math.ceil(Highest_Price);
 
             // Get SVG container base elements
             const baseGraph = document.getElementById("npsBaseGraph");
@@ -152,7 +152,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             console.log(CSV_Normalized_Data_Length, "CSV");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
-            let nRatio = ratio(highestPriceOnGraph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
+            let nRatio = ratio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
             const highestPriceLevel = Highest_Price / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
