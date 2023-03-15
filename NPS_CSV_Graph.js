@@ -297,11 +297,6 @@ function avgPrice(data) {
     return avg.toFixed(3);
 }
 
-// Helper function for rounding up to the closesth tenth - 87 -> 90, 93 -> 90
-function roundUp(price) {
-    return Math.round(price / 10) * 10;
-}
-
 // Helper function to find highest consumption within data
 function maxConsumption(data) {
     let maxConsum = 0;
