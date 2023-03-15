@@ -18,13 +18,7 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     // Variables
     const Graph_Offset_From_End = 70; // Defines offset from SVG container end in pixels
     const Horizontal_Graph_End_Position = Cost_SVG_Width - Graph_Offset_From_End; // Defines how far the horisontal graph should go
-    let Length_Without_Null = 0;
-    for(let i = 0; i < Merged_Data.length; i++) {
-        if ( Merged_Data[i]["consumption"] === null ) {
-            Length_Without_Null = i;
-            break;
-        }
-    }
+    const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
 
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
@@ -53,8 +47,7 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
 
     // Calculate cost for each hour of spending
     let cost_data = [];
-    let data_length = Length_Without_Null;
-    for (let i = 0; i < data_length; i++) {
+    for (let i = 0; i < Length_Without_Null; i++) {
         cost_data.push(Merged_Data[i]["price"] * Merged_Data[i]["consumption"]);
     }
 
@@ -101,4 +94,17 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     document.getElementById("weightedCost").innerHTML = `${ weightedCost } \u00A2/KWh`;
     document.getElementById("highestCost").innerHTML = `${ highestCost } \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
+}
+
+// Consumption data lacks data on last consumption hours if data taken in mid month so we need to filter that part out
+function dataLengthWithoutNull(data) {
+    let length = 0;
+    const l = data.length;
+    for(let i = 0; i < l; i++) {
+        if ( data[i]["consumption"] === null ) {
+            length = i;
+            break;
+        }
+    }
+    return length;
 }
