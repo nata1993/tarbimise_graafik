@@ -132,7 +132,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             
             // Coordinates for base graph vectors starts and ends
             let baseGraphCoordinates = {
-                x: [60, 58, 60, 62, 60, 60, 60, endPosition, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
+                x: [60, 58, 60, 62, 60, 60, 60, endPosition+5, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
                 y: [50, 55, 50, 55, 50, base_y, base_y, base_y, base_y, 50, 50, 55, 50, 55, 50]
             };
 
@@ -238,9 +238,17 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Add price segments next to vertical graph on the left
             let textY = base_y + 2; // +2 is for centering text
             let count = graphHeigth / verticalWidthBetweenPoints;
-            for (let i = 0; i < count+1; i++) {
+            for (let i = 0; i < count+1; i += 2) {
                 textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
-                textY -= verticalWidthBetweenPoints;
+                textY -= verticalWidthBetweenPoints * 2;
+            }
+
+            // Add consumption segments next to vertical graph on the right
+            textY = base_y +2;
+            count = graphHeigth / widthBetweenPoints;
+            for(let i = 0; i < count + 1; i++) {
+                textStr += `<text x="${endPosition + 15}" y="${textY}">${((Highest_Consumption / 8) * i).toFixed(3)}</text>`;
+                textY -= widthBetweenPoints;
             }
 
             Text_Group.innerHTML += textStr;
