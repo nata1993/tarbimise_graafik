@@ -95,11 +95,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const Elering_Normalized_Data_length = Elering_Normalized_Data.length;
 
             // Merging two datasets into one
-            const mergedData = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
-            console.log(mergedData);
+            const Merged_Data = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
+            console.log(Merged_Data);
 
             // Filter out highest and lowest consumption within given data sample
-            const highestConsumption = maxConsumption(CSV_Normalized_Data);
+            const Highest_Consumption = maxConsumption(CSV_Normalized_Data);
             const lowestConsumption = minConsumption(CSV_Normalized_Data);
             const totalConsumption = CSV_File_Data[5][4].replace(",", ".");
             const averageConsumption = avgConsumption(CSV_Normalized_Data);
@@ -200,7 +200,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let lineStr = "";
-            const consumption_ratio = graphHeigth / highestConsumption;
+            const consumption_ratio = graphHeigth / Highest_Consumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
@@ -252,7 +252,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestPrice").innerHTML = `${highestPrice.toFixed(3)} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${lowestPrice.toFixed(3)} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
-            document.getElementById("highestConsumption").innerHTML = `${highestConsumption} KWh`;
+            document.getElementById("highestConsumption").innerHTML = `${Highest_Consumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${totalConsumption} KWh`;
             document.getElementById("averageConsumption").innerHTML = `${averageConsumption.toFixed(3)} KWh`
@@ -362,7 +362,7 @@ function FullDataNormalization(data1, data2) {
     for(let i = 0; i < length; i++){
         const timestamp = data1[i]["timestamp"]
         const price = data1[i]["price"];
-        const consumption = data2[i];
+        let consumption = data2[i];
 
         if(typeof consumption === "undefined" || consumption === NaN )
         {
