@@ -246,8 +246,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Add consumption segments next to vertical graph on the right
             textY = base_y +2;
             count = graphHeigth / widthBetweenPoints;
+            const consumGraphRatio = Highest_Consumption / 8;
             for(let i = 0; i < count + 1; i++) {
-                textStr += `<text x="${endPosition + 15}" y="${textY}">${((Highest_Consumption / 8) * i).toFixed(3)}</text>`;
+                textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;
                 textY -= widthBetweenPoints;
             }
 
