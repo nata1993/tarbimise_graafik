@@ -150,9 +150,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let strokesStr = "";
             console.log(eDataEnd-eDataStart, "Elering");
             console.log(CSV_Normalized_Data_Length, "CSV");
+            console.log(Merged_Data, "Merged");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
-            let nRatio = ratio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
+            let nRatio = priceRatio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
             const highestPriceLevel = Highest_Price / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
@@ -176,7 +177,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const price_ratio = graphHeigth / Highest_Price; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
-                const hourPrice = Elering_Normalized_Data[i]["price"];
+                const hourPrice = Merged_Data[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
                 if (hourPrice <= 5) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
@@ -204,7 +205,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
-                let consumption = CSV_Normalized_Data[i];
+                let consumption = Merged_Data[i]["consumption"];
                 let y = base_y - consumption * consumption_ratio;
                 lineStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
                 x1 += horizontalWidthBetweenStrokes;
@@ -255,7 +256,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestConsumption").innerHTML = `${Highest_Consumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Lowest_Consumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${Total_Consumption} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Average_Consumption.toFixed(3)} KWh`
+            document.getElementById("averageConsumption").innerHTML = `${Average_Consumption} KWh`
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(Elering_Normalized_Data, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
@@ -334,7 +335,7 @@ function avgConsumption(data) {
         avgConsum += data[i]["consumption"];
     }
     avgConsum = avgConsum / length;
-    return avgConsum;
+    return avgConsum.toFixed(3);
 }
 
 // Replaces comma with dot and then string to number
@@ -383,7 +384,7 @@ function FullDataNormalization(data1, data2) {
     return data;
 }
 
-function ratio (price) {
+function priceRatio (price) {
     let ratio = 0;
     if (price < 10) {
         ratio = 5;
@@ -464,6 +465,21 @@ function ratio (price) {
         ratio = 25;
     }
 
+
+    return ratio;
+}
+
+function consumptionRatio(consum) {
+    let ratio = 0;
+    if(consum < 1) {
+        ratio = 8;
+    }
+    else if (consum < 2) {
+        ratio = 16;
+    }
+    else if (consum < 3) {
+        ratio = 24;
+    }
 
     return ratio;
 }
