@@ -99,10 +99,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             console.log(Merged_Data);
 
             // Filter out highest and lowest consumption within given data sample
-            const Highest_Consumption = maxConsumption(CSV_Normalized_Data);
-            const Lowest_Consumption = minConsumption(CSV_Normalized_Data);
+            const Highest_Consumption = maxConsumption(Merged_Data);
+            const Lowest_Consumption = minConsumption(Merged_Data);
             const Total_Consumption = CSV_File_Data[5][4].replace(",", ".");
-            const Average_Consumption = avgConsumption(CSV_Normalized_Data);
+            const Average_Consumption = avgConsumption(Merged_Data);
             
             // Filter out highest and lowest price within given data sample
             const highestPrice = maxPrice(Elering_Normalized_Data);
@@ -307,7 +307,7 @@ function maxConsumption(data) {
     let maxConsum = 0;
     const length = data.length;
     for (let i = 0; i < length; i++) {
-        let h = data[i];
+        let h = data[i]["consumption"];
         if(h > maxConsum) {
             maxConsum = h;
         }
@@ -317,12 +317,14 @@ function maxConsumption(data) {
 
 // Helper function to find lowest consumption within data
 function minConsumption(data) {
-    let minConsum = data[0];
+    let minConsum = data[0]["consumption"];
     const length = data.length;
     for (let i = 0; i < length; i++) {
-        let m = data[i];
-        if(m <= minConsum) {
-            minConsum = m;
+        let m = data[i]["consumption"];
+        if( m != null ) {
+            if( m <= minConsum ) {
+                minConsum = m;
+            }
         }
     }
     return minConsum;
@@ -332,7 +334,7 @@ function avgConsumption(data) {
     let avgConsum = 0;
     const length = data.length;
     for(let i = 0; i < length; i++){
-        avgConsum += data[i];
+        avgConsum += data[i]["consumption"];
     }
     avgConsum = avgConsum / length;
     return avgConsum;
