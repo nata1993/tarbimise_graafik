@@ -287,6 +287,7 @@ function minPrice(data) {
     return min.toFixed(3);
 }
 
+// Helper function to find average price within data with VAT
 function avgPrice(data) {
     let avg = 0;
     const length = data.length;
@@ -325,6 +326,7 @@ function minConsumption(data) {
     return minConsum;
 }
 
+// Helper function to find average consumption within data
 function avgConsumption(data) {
     let avgConsum = 0;
     const length = data.length;
@@ -335,6 +337,7 @@ function avgConsumption(data) {
     return avgConsum;
 }
 
+// Replaces comma with dot and then string to number
 function CSVdataNormalization(ignoreBeginning, length, data) {
     const normalizedData = [];
     for (let i = ignoreBeginning; i < length; i++) {
@@ -348,11 +351,15 @@ function EleringDataNormalization(data) {
     let normalizedData = [];
     const length = data.length;
     for(let i = 0; i < length - 2; i++) {
-        normalizedData.push({timestamp : data[i]["timestamp"], price : ((data[i]["price"] * 1.2) / 10)}); // Divide by 10 because MWh -> KWh
+        normalizedData.push({
+            timestamp : data[i]["timestamp"],
+            price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh
+        });
     }
     return normalizedData;
 }
 
+// Merges two datasets together
 function FullDataNormalization(data1, data2) {
     let data = [];
     const length = data1.length;
@@ -366,11 +373,10 @@ function FullDataNormalization(data1, data2) {
             consumption = null;
         }
 
-        data.push(
-            {
-                timestamp : timestamp,
-                price : price,
-                consumption : consumption
+        data.push({
+            timestamp : timestamp,
+            price : price,
+            consumption : consumption
         });
     }
 
