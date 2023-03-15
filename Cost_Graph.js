@@ -1,5 +1,5 @@
 // Draw graph from CSV file
-function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
+function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     // Get SVG container width
     const Cost_SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
@@ -18,6 +18,13 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     // Variables
     const Graph_Offset_From_End = 70; // Defines offset from SVG container end in pixels
     const Horizontal_Graph_End_Position = Cost_SVG_Width - Graph_Offset_From_End; // Defines how far the horisontal graph should go
+    let Length_Without_Null = 0;
+    for(let i = 0; i < Merged_Data.length; i++) {
+        if ( Merged_Data[i]["consumption"] === null ) {
+            Length_Without_Null = i;
+            break;
+        }
+    }
 
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
@@ -38,17 +45,17 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     let weightedCost = 0;
     let weightedTerms = 0;
     let totalOfTerms = 0;
-    for(let i = 0; i < CSV_Data.length; i++) {
-        weightedTerms += Elering_Data[i].price * CSV_Data[i];
-        totalOfTerms += CSV_Data[i];
+    for(let i = 0; i < Length_Without_Null; i++) {
+        weightedTerms += Merged_Data[i]["price"] * Merged_Data[i]["consumption"];
+        totalOfTerms += Merged_Data[i]["consumption"];
     }
-    weightedCost = weightedTerms / totalOfTerms;
+    weightedCost = ( weightedTerms / totalOfTerms ).toFixed(3);
 
     // Calculate cost for each hour of spending
     let cost_data = [];
-    let data_length = CSV_Data.length;
+    let data_length = Length_Without_Null;
     for (let i = 0; i < data_length; i++) {
-        cost_data.push(Elering_Data[i].price * CSV_Data[i]);
+        cost_data.push(Merged_Data[i]["price"] * Merged_Data[i]["consumption"]);
     }
 
     // Find highest and average cost as well as when and what etc
@@ -62,14 +69,15 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
         // Highest cost
         if(cost_data[i] > highestCost) {
             highestCost = cost_data[i];
-            whenHighestCost = Elering_Data[i].timestamp * 1000; // ms into s
-            whatElectricityPrice = Elering_Data[i].price;
-            whatConsumption = CSV_Data[i];
+            whenHighestCost = Merged_Data[i]["timestamp"] * 1000; // ms into s
+            whatElectricityPrice = Merged_Data[i]["price"];
+            whatConsumption = Merged_Data[i]["consumption"];
         }
         // Sum for average cost
         averageCost += cost_data[i];
     }
-    averageCost = averageCost / costDataLength;
+    highestCost = highestCost.toFixed(3);
+    averageCost = (averageCost / costDataLength).toFixed(3);
     const highest_consumption_date = new Date(whenHighestCost).toLocaleDateString("fi-FI");
 
     // Map cost data to cost graph
@@ -77,7 +85,7 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     const cost_ratio = 200 / highestCost;
     let x1 = 61;
     let x2 = 61 + horizontalWidthBetweenStrokes;
-    for(let i = 0; i < CSV_Data.length; i++) {
+    for(let i = 0; i < Length_Without_Null; i++) {
         let y = 600 - cost_data[i] * cost_ratio;
         lineStr += `<line id="cost${cost_data[i]}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
         x1 += horizontalWidthBetweenStrokes;
@@ -89,8 +97,8 @@ function drawCostGraph(Elering_Data, CSV_Data, horizontalWidthBetweenStrokes){
     Graph_Title.style.fontSize = "16px";
     Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Consumption cost graph</text>`;
 
-    document.getElementById("averageCost").innerHTML = `${averageCost.toFixed(3)} \u00A2`;
-    document.getElementById("weightedCost").innerHTML = `${weightedCost.toFixed(3)} \u00A2/KWh`;
-    document.getElementById("highestCost").innerHTML = `${highestCost.toFixed(3)} \u00A2`;
+    document.getElementById("averageCost").innerHTML = `${ averageCost } \u00A2`;
+    document.getElementById("weightedCost").innerHTML = `${ weightedCost } \u00A2/KWh`;
+    document.getElementById("highestCost").innerHTML = `${ highestCost } \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
 }

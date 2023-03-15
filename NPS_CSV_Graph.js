@@ -259,7 +259,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("averageConsumption").innerHTML = `${Average_Consumption} KWh`
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(Elering_Normalized_Data, CSV_Normalized_Data, horizontalWidthBetweenStrokes);
+            drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes);
         })
         .catch(err => { throw err });
 }
