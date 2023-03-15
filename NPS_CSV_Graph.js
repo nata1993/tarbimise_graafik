@@ -105,9 +105,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const Average_Consumption = avgConsumption(Merged_Data);
             
             // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(Elering_Normalized_Data);
-            const lowestPrice = minPrice(Elering_Normalized_Data);
-            const averagePrice = avgPrice(Elering_Normalized_Data);
+            const highestPrice = maxPrice(Merged_Data);
+            const lowestPrice = minPrice(Merged_Data);
+            const averagePrice = avgPrice(Merged_Data);
             const highestPriceOnGraph = Math.ceil(highestPrice);
 
             // Get SVG container base elements
@@ -249,8 +249,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
-            document.getElementById("highestPrice").innerHTML = `${highestPrice.toFixed(3)} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${lowestPrice.toFixed(3)} \u00A2/KWh`;
+            document.getElementById("highestPrice").innerHTML = `${highestPrice} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${lowestPrice} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Highest_Consumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Lowest_Consumption} KWh`;
@@ -269,10 +269,10 @@ function maxPrice(data) {
     const length = data.length;
     for (let i = 0; i < length; i++) {
         if (data[i].price > max) {
-            max = data[i].price;
+            max = data[i]["price"];
         }
     }
-    return max;
+    return max.toFixed(3);
 }
 
 // Helper function for filtering out min price within dataset with VAT
@@ -281,17 +281,17 @@ function minPrice(data) {
     const length = data.length;
     for (let i = 0; i < length; i++) {
         if (data[i].price < min) {
-            min = data[i].price;
+            min = data[i]["price"];
         }
     }
-    return min;
+    return min.toFixed(3);
 }
 
 function avgPrice(data) {
     let avg = 0;
     const length = data.length;
     for(let i = 0; i < length; i++) {
-        avg += data[i].price;
+        avg += data[i]["price"];
     }
     avg = avg / length;
     return avg.toFixed(3);
