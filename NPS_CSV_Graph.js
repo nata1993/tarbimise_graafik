@@ -105,10 +105,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const Average_Consumption = avgConsumption(Merged_Data);
             
             // Filter out highest and lowest price within given data sample
-            const highestPrice = maxPrice(Merged_Data);
-            const lowestPrice = minPrice(Merged_Data);
-            const averagePrice = avgPrice(Merged_Data);
-            const highestPriceOnGraph = Math.ceil(highestPrice);
+            const Highest_Price = maxPrice(Merged_Data);
+            const Lowest_Price = minPrice(Merged_Data);
+            const Average_Price = avgPrice(Merged_Data);
+            const highestPriceOnGraph = Math.ceil(Highest_Price);
 
             // Get SVG container base elements
             const baseGraph = document.getElementById("npsBaseGraph");
@@ -154,7 +154,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = ratio(highestPriceOnGraph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
-            const highestPriceLevel = highestPrice / nRatio;
+            const highestPriceLevel = Highest_Price / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
@@ -173,7 +173,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Draws continuous line of prices on graph
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = graphHeigth / highestPrice; // Ratio between 150px of vertical graph length and highest price
+            const price_ratio = graphHeigth / Highest_Price; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = Elering_Normalized_Data[i]["price"];
@@ -249,9 +249,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
-            document.getElementById("highestPrice").innerHTML = `${highestPrice} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${lowestPrice} \u00A2/KWh`;
-            document.getElementById("averagePrice").innerHTML = `${averagePrice} \u00A2/KWh`
+            document.getElementById("highestPrice").innerHTML = `${Highest_Price} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${Lowest_Price} \u00A2/KWh`;
+            document.getElementById("averagePrice").innerHTML = `${Average_Price} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Highest_Consumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Lowest_Consumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${Total_Consumption} KWh`;
