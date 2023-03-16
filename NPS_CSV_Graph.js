@@ -177,6 +177,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Base_Graph.innerHTML += strokesStr;
 
             // Draws continuous line of prices on graph
+            const pricelevel1 = 6;
+            const pricelevel2 = 12;
+            const extremepricelevel = 100;
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
             const price_ratio = graphHeigth / Highest_Price; // Ratio between 150px of vertical graph length and highest price
@@ -184,13 +187,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = Merged_Data[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
-                if (hourPrice <= 5) {
+                if (hourPrice <= pricelevel1) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
                 }
-                else if (hourPrice > 5 && hourPrice <= 12) {
+                else if (hourPrice > pricelevel1 && hourPrice <= pricelevel2) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FF0" stroke-width="3"/>`;
                 }
-                else if (hourPrice >= 100) {
+                else if (hourPrice >= extremepricelevel) {
                     graphStr += `<circle cx="${x1}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
                     graphStr += `<circle cx="${x1+(horizontalWidthBetweenStrokes/2)}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
                     graphStr += `<circle cx="${x2}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
@@ -232,11 +235,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             textStr += `<text x="${endPosition + 4}" y="35">Consumption</text>`;
             textStr += `<text x="${endPosition + 4}" y="45">KWh</text>`;
             textStr += `<line x1="75" y1="${textOffsetBelowGraph}" x2="90" y2="${textOffsetBelowGraph}" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over 11 \u00A2/KWh</text>`;
+            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over ${pricelevel2} \u00A2/KWh</text>`;
             textStr += `<line x1="190" y1="${textOffsetBelowGraph}" x2="205" y2="${textOffsetBelowGraph}" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between 5 and 11 \u00A2/KWh</text>`;
+            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between ${pricelevel1} and ${pricelevel2} \u00A2/KWh</text>`;
             textStr += `<line x1="350" y1="${textOffsetBelowGraph}" x2="365" y2="${textOffsetBelowGraph}" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below 5 \u00A2/KWh</text>`;
+            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below ${pricelevel1} \u00A2/KWh</text>`;
             textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="${textOffsetBelowGraph}" x2="${(SVG_Width / 2) + 250}" y2="${textOffsetBelowGraph}" stroke="#000" stroke-width="2" />`;
             textStr += `<text x="${(SVG_Width / 2) + 260}" y="${textOffsetBelowGraph + 3}">Consumption</text>`;
 
