@@ -19,11 +19,13 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     const Graph_Offset_From_End = 70; // Defines offset from SVG container end in pixels
     const Horizontal_Graph_End_Position = Cost_SVG_Width - Graph_Offset_From_End; // Defines how far the horisontal graph should go
     const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
+    const base_y = 600;
+    const base_x = 60;
 
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
-        X : [60, 60, 60, Horizontal_Graph_End_Position, 60, 58, 60, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position],
-        Y : [350, 600, 600, 600, 350, 355, 350, 355, 600, 600, 350, 600]
+        X : [base_x, base_x, base_x, Horizontal_Graph_End_Position, base_x, 58, base_x, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position],
+        Y : [350, base_y, base_y, base_y, 350, 355, 350, 355, base_y, base_y, 350, base_y+5]
     };
 
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
@@ -32,6 +34,11 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     for (let i = 0; i < length; i+=2) {
         baseStr += `<line x1="${Base_Graph_Coordinates.X[i]}" y1="${Base_Graph_Coordinates.Y[i]}"
                     x2="${Base_Graph_Coordinates.X[i+1]}"y2="${Base_Graph_Coordinates.Y[i+1]}" />`;
+    }
+    // Strokes on horizontal verticle
+    for(let i = 0; i < Merged_Data.length; i += 24) {
+        baseStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
+                             x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
     }
     Base_Graph.innerHTML = baseStr;
 
@@ -79,7 +86,7 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     let x1 = 61;
     let x2 = 61 + horizontalWidthBetweenStrokes;
     for(let i = 0; i < Length_Without_Null; i++) {
-        let y = 600 - cost_data[i] * cost_ratio;
+        let y = base_y - cost_data[i] * cost_ratio;
         lineStr += `<line id="cost${cost_data[i]}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
         x1 += horizontalWidthBetweenStrokes;
         x2 += horizontalWidthBetweenStrokes;

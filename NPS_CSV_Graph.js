@@ -128,12 +128,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const offsetFromEnd = 70;   // Defines offset from SVG container end in pixels
             const endPosition = SVG_Width - offsetFromEnd; // Defines base graph horizontal graph end position
             const base_y = 275;
+            const base_x = 60;
             const graphHeigth = 200;
             
             // Coordinates for base graph vectors starts and ends
-            let baseGraphCoordinates = {
-                x: [60, 58, 60, 62, 60, 60, 60, endPosition+5, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
-                y: [50, 55, 50, 55, 50, base_y, base_y, base_y, base_y, 50, 50, 55, 50, 55, 50]
+            const baseGraphCoordinates = {
+                x: [base_x, 58, base_x, 62, base_x, base_x, base_x, endPosition+5, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
+                y: [50, 55, 50, 55, 50, base_y+5, base_y, base_y, base_y+5, 50, 50, 55, 50, 55, 50]
             };
 
             // Draw base graph
@@ -148,6 +149,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
+            for(let i = 0; i < Elering_Normalized_Data_length; i += 24) {
+                strokesStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
+                                     x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
+            }
             console.log(eDataEnd-eDataStart, "Elering");
             console.log(CSV_Normalized_Data_Length, "CSV");
             console.log(Merged_Data, "Merged");
@@ -159,7 +164,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
-                strokesStr += `<line x1="${60}" y1="${width}" x2="${55}" y2="${width}" />`;
+                strokesStr += `<line x1="${base_x}" y1="${width}" x2="${55}" y2="${width}" />`;
             }
 
             // Draws small strokes to base graph vertical line on the right side
