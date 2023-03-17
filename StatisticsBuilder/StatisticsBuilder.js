@@ -67,12 +67,16 @@ class StatisticsBuilder {
         this.averageConsmption = averageConsmption.toFixed(3);
         return this;
     }
-    calculateTotalConsumption(data) {
-        this.totalConsumption = totalConsumption;
-        return this;
-    }
-    calculateWeightedAveragePriceOfElectricity(data) {
-        this.weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity;
+    calculateWeightedAveragePriceOfElectricity(data, length) {
+        let weightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        for(let i = 0; i < length; i++) {
+            weightedTerms += data[i]["price"] * data[i]["consumption"];
+            totalOfTerms += data[i]["consumption"];
+        }
+        weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this.weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
         return this;
     }
     calculateAverageCostOfConsumption(data) {
@@ -91,7 +95,8 @@ class StatisticsBuilder {
             this.averagePriceOfElectricity,
             this.highestConsumption,
             this.lowestConsumption,
-            this.averageConsmption
+            this.averageConsmption,
+            this.weightedAveragePriceOfElectricity
             );
     }
 }

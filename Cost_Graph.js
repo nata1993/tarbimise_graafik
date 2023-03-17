@@ -1,5 +1,5 @@
 // Draw graph from CSV file
-function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
+function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Without_Null){
     // Get SVG container width
     const Cost_SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
@@ -18,7 +18,6 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     // Variables
     const Graph_Offset_From_End = 70; // Defines offset from SVG container end in pixels
     const Horizontal_Graph_End_Position = Cost_SVG_Width - Graph_Offset_From_End; // Defines how far the horisontal graph should go
-    const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
     const base_y = 600;
     const base_x = 60;
 
@@ -41,16 +40,6 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
                           x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
     }
     Base_Graph.innerHTML = baseStr;
-
-    // Weighted average cost
-    let weightedCost = 0;
-    let weightedTerms = 0;
-    let totalOfTerms = 0;
-    for(let i = 0; i < Length_Without_Null; i++) {
-        weightedTerms += Merged_Data[i]["price"] * Merged_Data[i]["consumption"];
-        totalOfTerms += Merged_Data[i]["consumption"];
-    }
-    weightedCost = ( weightedTerms / totalOfTerms ).toFixed(3);
 
     // Calculate cost for each hour of spending
     let cost_data = [];
@@ -98,23 +87,6 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     Graph_Title.innerHTML += `<text x="${(Cost_SVG_Width / 2) - 100}" y="640">Consumption cost graph</text>`;
 
     document.getElementById("averageCost").innerHTML = `${ averageCost } \u00A2`;
-    document.getElementById("weightedCost").innerHTML = `${ weightedCost } \u00A2/KWh`;
     document.getElementById("highestCost").innerHTML = `${ highestCost } \u00A2`;
     document.getElementById("whenCost").innerHTML = `Which was consumed on ${highest_consumption_date} with the electricity price of ${whatElectricityPrice.toFixed(3)} \u00A2/KWh. The consumed electricity was ${whatConsumption} KWh.`;
-}
-
-// Consumption data lacks data on last consumption hours if data taken in mid month so we need to filter that part out
-function dataLengthWithoutNull(data) {
-    let length = 0;
-    const l = data.length;
-    for(let i = 0; i < l; i++) {
-        if ( data[i]["consumption"] === null ) {
-            length = i;
-            break;
-        }
-        else {
-            length = i;
-        }
-    }
-    return length;
 }

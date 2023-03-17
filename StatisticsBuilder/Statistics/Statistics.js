@@ -5,7 +5,8 @@ class Statistics {
         averagePriceOfElectricity,
         highestConsumption,
         lowestConsumption,
-        averageConsmption
+        averageConsmption,
+        weightedAveragePriceOfElectricity
     ) {
         this.highestPriceOfElectricity = highestPriceOfElectricity;
         this.lowestPriceOfElectricity = lowestPriceOfElectricity;
@@ -13,5 +14,6 @@ class Statistics {
         this.highestConsumption = highestConsumption;
         this.lowestConsumption = lowestConsumption;
         this.averageConsmption = averageConsmption;
+        this.weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity;
     }
 }

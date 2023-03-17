@@ -96,7 +96,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Merging two datasets into one
             const Merged_Data = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
-
+            const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
             // Build statistics dataset
             const Statistics = new StatisticsBuilder();
             Statistics.calculateHighestPriceOfElectricity(Merged_Data);
@@ -105,6 +105,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Statistics.calculateHighestConsumption(Merged_Data);
             Statistics.calculateLowestConsumption(Merged_Data);
             Statistics.calculateAverageConsmption(Merged_Data);
+            Statistics.calculateWeightedAveragePriceOfElectricity(Merged_Data, Length_Without_Null);
             Statistics.buildStatistics();
 
             const Highest_Price_On_Graph = Math.ceil(Statistics.highestPriceOfElectricity);
@@ -272,10 +273,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestConsumption").innerHTML = `${Statistics.highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics.lowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${CSV_File_Data[5][4].replace(",", ".")} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`
+            document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`;
+            
+            document.getElementById("weightedCost").innerHTML = `${Statistics.weightedAveragePriceOfElectricity} \u00A2/KWh`;
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes);
+            drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Without_Null);
         })
         .catch(err => { throw err });
 }
@@ -424,4 +427,20 @@ function consumptionRatio(consum) {
     }
 
     return ratio;
+}
+
+// Consumption data lacks data on last consumption hours if data taken in mid month so we need to filter that part out
+function dataLengthWithoutNull(data) {
+    let length = 0;
+    const l = data.length;
+    for(let i = 0; i < l; i++) {
+        if ( data[i]["consumption"] === null ) {
+            length = i;
+            break;
+        }
+        else {
+            length = i;
+        }
+    }
+    return length;
 }
