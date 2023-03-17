@@ -33,12 +33,12 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes){
     let baseStr = "";
     for (let i = 0; i < length; i+=2) {
         baseStr += `<line x1="${Base_Graph_Coordinates.X[i]}" y1="${Base_Graph_Coordinates.Y[i]}"
-                    x2="${Base_Graph_Coordinates.X[i+1]}"y2="${Base_Graph_Coordinates.Y[i+1]}" />`;
+                          x2="${Base_Graph_Coordinates.X[i+1]}"y2="${Base_Graph_Coordinates.Y[i+1]}" />`;
     }
     // Strokes on horizontal verticle
     for(let i = 0; i < Merged_Data.length; i += 24) {
         baseStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
-                             x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
+                          x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
     }
     Base_Graph.innerHTML = baseStr;
 

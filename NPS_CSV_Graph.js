@@ -77,7 +77,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
     const date_end = date_span[19] + date_span[20] + date_span[21] + date_span[22]  + "-" + date_span[16] + date_span[17] + "-" + date_span[13] + date_span[14];
 
     const url = `https://dashboard.elering.ee/api/nps/price?start=${date_start}&end=${date_end}T23%3A59%3A59.999Z`;
-    fetch(url)
+    const foo = fetch(url)
         .then((response) => response.json())
         .then((res) => {
             // Get SVG parent container calculated width
@@ -96,19 +96,18 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Merging two datasets into one
             const Merged_Data = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
-            console.log(Merged_Data);
 
-            // Filter out highest and lowest consumption within given data sample
-            const Highest_Consumption = maxConsumption(Merged_Data);
-            const Lowest_Consumption = minConsumption(Merged_Data);
-            const Total_Consumption = CSV_File_Data[5][4].replace(",", ".");
-            const Average_Consumption = avgConsumption(Merged_Data);
-            
-            // Filter out highest and lowest price within given data sample
-            const Highest_Price = maxPrice(Merged_Data);
-            const Lowest_Price = minPrice(Merged_Data);
-            const Average_Price = avgPrice(Merged_Data);
-            const Highest_Price_On_Graph = Math.ceil(Highest_Price);
+            // Build statistics dataset
+            const Statistics = new StatisticsBuilder();
+            Statistics.calculateHighestPriceOfElectricity(Merged_Data);
+            Statistics.calculateLowestPriceOfElectricity(Merged_Data);
+            Statistics.calculateAveragePriceOfElectricity(Merged_Data);
+            Statistics.calculateHighestConsumption(Merged_Data);
+            Statistics.calculateLowestConsumption(Merged_Data);
+            Statistics.calculateAverageConsmption(Merged_Data);
+            Statistics.buildStatistics();
+
+            const Highest_Price_On_Graph = Math.ceil(Statistics.highestPriceOfElectricity);
 
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
@@ -160,7 +159,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = priceRatio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
-            const highestPriceLevel = Highest_Price / nRatio;
+            const highestPriceLevel = Statistics.highestPriceOfElectricity / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
@@ -182,7 +181,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const extremepricelevel = 100;
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = graphHeigth / Highest_Price; // Ratio between 150px of vertical graph length and highest price
+            const price_ratio = graphHeigth / Statistics.highestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = Merged_Data[i]["price"];
@@ -209,7 +208,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let lineStr = "";
-            const consumption_ratio = graphHeigth / Highest_Consumption;
+            const consumption_ratio = graphHeigth / Statistics.highestConsumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
@@ -254,7 +253,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Add consumption segments next to vertical graph on the right
             textY = base_y +2;
             count = graphHeigth / widthBetweenPoints;
-            const consumGraphRatio = Highest_Consumption / 8;
+            const consumGraphRatio = Statistics.highestConsumption / 8;
             for(let i = 0; i < count + 1; i++) {
                 textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;
                 textY -= widthBetweenPoints;
@@ -267,92 +266,18 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices asw ell as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
-            document.getElementById("highestPrice").innerHTML = `${Highest_Price} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${Lowest_Price} \u00A2/KWh`;
-            document.getElementById("averagePrice").innerHTML = `${Average_Price} \u00A2/KWh`
-            document.getElementById("highestConsumption").innerHTML = `${Highest_Consumption} KWh`;
-            document.getElementById("lowestConsumption").innerHTML = `${Lowest_Consumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `${Total_Consumption} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Average_Consumption} KWh`
+            document.getElementById("highestPrice").innerHTML = `${Statistics.highestPriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${Statistics.lowestPriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("averagePrice").innerHTML = `${Statistics.averagePriceOfElectricity} \u00A2/KWh`
+            document.getElementById("highestConsumption").innerHTML = `${Statistics.highestConsumption} KWh`;
+            document.getElementById("lowestConsumption").innerHTML = `${Statistics.lowestConsumption} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `${CSV_File_Data[5][4].replace(",", ".")} KWh`;
+            document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes);
         })
         .catch(err => { throw err });
-}
-
-// Helper function for filtering out max price within dataset with VAT
-function maxPrice(data) {
-    let max = 0;
-    const length = data.length;
-    for (let i = 0; i < length; i++) {
-        if (data[i].price > max) {
-            max = data[i]["price"];
-        }
-    }
-    return max.toFixed(3);
-}
-
-// Helper function for filtering out min price within dataset with VAT
-function minPrice(data) {
-    let min = data[0].price;
-    const length = data.length;
-    for (let i = 0; i < length; i++) {
-        if (data[i].price < min) {
-            min = data[i]["price"];
-        }
-    }
-    return min.toFixed(3);
-}
-
-// Helper function to find average price within data with VAT
-function avgPrice(data) {
-    let avg = 0;
-    const length = data.length;
-    for(let i = 0; i < length; i++) {
-        avg += data[i]["price"];
-    }
-    avg = avg / length;
-    return avg.toFixed(3);
-}
-
-// Helper function to find highest consumption within data
-function maxConsumption(data) {
-    let maxConsum = 0;
-    const length = data.length;
-    for (let i = 0; i < length; i++) {
-        let h = data[i]["consumption"];
-        if(h > maxConsum) {
-            maxConsum = h;
-        }
-    }
-    return maxConsum;
-}
-
-// Helper function to find lowest consumption within data
-function minConsumption(data) {
-    let minConsum = data[0]["consumption"];
-    const length = data.length;
-    for (let i = 0; i < length; i++) {
-        let m = data[i]["consumption"];
-        if( m != null ) {
-            if( m <= minConsum ) {
-                minConsum = m;
-            }
-        }
-    }
-    return minConsum;
-}
-
-// Helper function to find average consumption within data
-function avgConsumption(data) {
-    let avgConsum = 0;
-    const length = data.length;
-    for(let i = 0; i < length; i++){
-        avgConsum += data[i]["consumption"];
-    }
-    avgConsum = avgConsum / length;
-    return avgConsum.toFixed(3);
 }
 
 // Replaces comma with dot and then string to number
