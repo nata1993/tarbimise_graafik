@@ -97,6 +97,6 @@ class StatisticsBuilder {
             this.lowestConsumption,
             this.averageConsmption,
             this.weightedAveragePriceOfElectricity
-            );
+        );
     }
 }

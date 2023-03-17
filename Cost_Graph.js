@@ -24,7 +24,7 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Withou
     // X and Y coordinates for vertical and horizontal graph lines
     const Base_Graph_Coordinates = {
         X : [base_x, base_x, base_x, Horizontal_Graph_End_Position, base_x, 58, base_x, 62, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position, Horizontal_Graph_End_Position],
-        Y : [350, base_y, base_y, base_y, 350, 355, 350, 355, base_y, base_y, 350, base_y+5]
+        Y : [350, base_y, base_y, base_y, 350, 355, 350, 355, base_y, base_y, 350, base_y+7]
     };
 
     // For the sake of it, X and Y are pairs so X and Y arrays are the same length
@@ -37,7 +37,7 @@ function drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Withou
     // Strokes on horizontal verticle
     for(let i = 0; i < Merged_Data.length; i += 24) {
         baseStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
-                          x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
+                          x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+7}" />`;
     }
     Base_Graph.innerHTML = baseStr;
 

@@ -134,7 +134,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Coordinates for base graph vectors starts and ends
             const baseGraphCoordinates = {
                 x: [base_x, 58, base_x, 62, base_x, base_x, base_x, endPosition+5, endPosition, endPosition, endPosition, endPosition-2, endPosition, endPosition+2],
-                y: [50, 55, 50, 55, 50, base_y+5, base_y, base_y, base_y+5, 50, 50, 55, 50, 55, 50]
+                y: [50, 55, 50, 55, 50, base_y, base_y, base_y, base_y+7, 50, 50, 55, 50, 55, 50]
             };
 
             // Draw base graph
@@ -151,7 +151,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let strokesStr = "";
             for(let i = 0; i < Elering_Normalized_Data_length; i += 24) {
                 strokesStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
-                                     x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+5}" />`;
+                                     x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+7}" />`;
             }
             console.log(eDataEnd-eDataStart, "Elering");
             console.log(CSV_Normalized_Data_Length, "CSV");
@@ -164,14 +164,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
-                strokesStr += `<line x1="${base_x}" y1="${width}" x2="${55}" y2="${width}" />`;
+                strokesStr += `<line x1="${base_x}" y1="${width}" x2="${53}" y2="${width}" />`;
             }
 
             // Draws small strokes to base graph vertical line on the right side
             let widthBetweenPoints = graphHeigth / 8;
             let y = base_y - widthBetweenPoints;
             for (let i = 0; i < 8; i++) {
-                strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+5}" y2="${y}"/>`;
+                strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+7}" y2="${y}"/>`;
                 y -= widthBetweenPoints;
             }
             Base_Graph.innerHTML += strokesStr;
