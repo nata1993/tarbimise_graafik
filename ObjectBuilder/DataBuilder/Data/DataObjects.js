@@ -1,33 +1,33 @@
 class EleringData {
     constructor(
-        normalizedData, 
-        eleringDataLength
+        NormalizedData, 
+        EleringDataLength
         ) {
-        this.EleringData = normalizedData;
-        this.EleringDataLength = eleringDataLength;
+        this._EleringData = NormalizedData;
+        this._EleringDataLength = EleringDataLength;
     }
 }
 
 class ConsumptionData {
     constructor(
-        normalizedData, 
-        consumptionDataLength, 
-        consumptionDataPeriod,
-        consumptionDataTotalConsumption
+        NormalizedData, 
+        ConsumptionDataLength, 
+        ConsumptionDataPeriod,
+        ConsumptionDataTotalConsumption
         ) {
-        this.ConsumptionData = normalizedData;
-        this.ConsumptionDataLength = consumptionDataLength;
-        this.ConsumptionDataPeriod = consumptionDataPeriod;
-        this.ConsumptionDataTotalConsumption = consumptionDataTotalConsumption;
+        this._ConsumptionData = NormalizedData;
+        this._ConsumptionDataLength = ConsumptionDataLength;
+        this._ConsumptionDataPeriod = ConsumptionDataPeriod;
+        this._ConsumptionDataTotalConsumption = ConsumptionDataTotalConsumption;
     }
 }
 
 class MergedData {
     constructor(
-        mergedData,
-        mergedDataLength
+        MergedData,
+        MergedDataLength
     ) {
-        this.MergedData = mergedData,
-        this.MergedDataLength = mergedDataLength
+        this._MergedData = MergedData,
+        this._MergedDataLength = MergedDataLength
     }
 }

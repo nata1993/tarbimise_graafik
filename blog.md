@@ -526,3 +526,166 @@ for(let i = 0; i < array.length; i++) {
     return array[i] * array2[i];
 }
 ```
+
+## Thirtheenth hardship
+
+### Programming design pattern - Builder pattern
+
+Supposedly it is the most used pattern in software development. It simplifies object creation by eliminating
+all those confusing statements when assigning variables to the object.
+Here is how the usual object is created
+
+JavaScript
+
+```javascript
+class Object {
+    constructor(variable1, variable2){
+        this.foo = variable1,
+        this.bar = variable2
+    }
+
+    method() {
+        // Do some stuff
+    }
+}
+```
+
+And you use it like this:
+
+JavaScript
+
+```javascript
+Main(){
+    const obj = Object("Hello", "World!");
+    console.log(obj.foo, obj.bar)
+}
+```
+
+The problem is when you have a lot of variables to feed to Object when creating object. The problem is
+even bigger when you dont have XML style comments or any other easy and fast reference to know what
+variable goes exactly where. Same thing could easily be accidentally reversed. Lets see on this example:
+
+JavaScript
+
+```javascript
+class Object {
+    constructor(variable1, variable2){
+        this.gasoline = variable1,
+        this.withLPGdevice = variable2
+    }
+
+    method() {
+        // Do some stuff
+    }
+}
+
+Main(){
+    const obj = Object(true, false);
+    console.log(obj.gasoline, obj.withLPGdevice)
+}
+```
+
+Great! You have lets say a car, that is now running on gasoline and it has extra LPG fuel system
+to use alternative fuel. But then you make programming error:
+
+JavaScript
+
+```javascript
+class Object {
+    constructor(variable1, variable2){
+        this.gasoline = variable1,
+        this.withLPGdevice = variable2
+    }
+
+    method() {
+        // Do some stuff
+    }
+}
+
+Main(){
+    const obj = Object(false, true);
+    console.log(obj.gasoline, obj.withLPGdevice)
+}
+```
+
+You dont know exactly when using objects this way if the gasoline object variable is the first variable
+feeded and created during object construction. Behold the builder pattern that promises to solve this!
+We basically nest a class within a second class. It is becoming a little of an assembly line - take one
+wire and insert it to fast connector, second wire goes there to, etc and one all the wires are in place,
+we get finished product. Translate it to programming language:
+
+JavaScript
+
+```javascript
+// Still have our Object
+class FastConnector {
+    constructor(fastConnectorType, wireCount, wireType){
+        this.FastConnectorType = fastConnectorType,
+        this.WireCount = wireCount,
+        this.WireType = wireType
+    }
+}
+
+// Now we add object builder - the builder pattern emerges
+class FastConnectorBuilder {
+    SetFastConnectorType(fcType) {
+        this.FastConnectorType = fsType;
+        return this;
+    }
+    SetWireCount(count) {
+        this.WireCount = count;
+        return this;
+    }
+    SetWireType (type) {
+        this.WireType = type;
+        return this;
+    }
+    
+    BuildFastConnector() {
+        return new FastConnector(this.FastConnectorType, this.WireCount, this.WireType);
+    }
+}
+
+// Instead of working directly with the object we want to create, we delegate that work to
+// object building object. This way its more explicit about what we actually do with the object
+// we want to create
+Main(){
+    const fastConnector = FastConnectorBuilder();
+    fastConnector.SetFastConnectorType("male");
+    fastConnector.SetWireCount(10);
+    fastConnector.SetWireType("halogen free");
+    fastConnector.BuildFastConnector();
+}
+```
+
+And in theory its all great and good! Until I faced a challenge where for some reason accessing
+variable from created object did not work. Investigation lead to the deletion of object the
+builder class should have worked with. In builder pattern you have object and that object builder.
+In my investigation case I could not access object variable and was using all the time the object
+builder variables. After finding this out, I deleted object and left only object builder class.
+And it worked without any hickups! Now why is that?! How?! That left me puzzeling that maybe I am
+doing something wrong...
+And I was doing somerthing wrong. Instead of creating builder object and then working with the object
+I should have chained everything from builder object together into one single argument. Like this:
+
+JavaScript
+
+```javascript
+// Instead of working directly with the object we want to create, we delegate that work to
+// object building object. This way its more explicit about what we actually do with the object
+// we want to create.
+Main(){
+    const fastConnector = FastConnectorBuilder()
+    .SetFastConnectorType("male")
+    .SetWireCount(10)
+    .SetWireType("halogen free")
+    .BuildFastConnector();
+}
+```
+
+This way I finnaly was not seeing any builder variables with what I was initially working. This way
+I am getting real FastConnector object instead of FastConenctorBuilder object.
+Also variable naming is a tad bit pain when you have object and object builder already. Yet there is even
+director as an optional class for Builder pattern that will delegate what builder to use. The chain of
+command will look like this with Director class used: Director assigns builder work -> Builder chooses
+Object to work with -> Object.

@@ -9,25 +9,25 @@ class DataBuilder {
                 price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh
             });
         }
-        this.normalizedEleringData = normalizedEleringData;
-        this.normalizedEleringDataLength = length;
+        this._normalizedEleringData = normalizedEleringData;
+        this._normalizedEleringDataLength = length;
         return this;
     }
 
     BuildEleringData() {
         return new EleringData(
-            this.normalizedEleringData,
-            this.normalizedEleringDataLength
+            this._normalizedEleringData,
+            this._normalizedEleringDataLength
         );
     }
 
     // Consumption data building from CSV file data
     SetConsumptionDataPeriod(data) {
-        this.NormalizedConsumptionDataPeriod = data[2][1];
+        this._normalizedConsumptionDataPeriod = data[2][1];
         return this;
     }
     SetTotalConsumptionFromData(data) {
-        this.NormalizedConsumptionDataTotalConsumption = data[5][4].replace(",", ".");
+        this._normalizedConsumptionDataTotalConsumption = data[5][4].replace(",", ".");
         return this;
     }
     NormalizeCSVdata(data) {
@@ -39,17 +39,17 @@ class DataBuilder {
             normalizedCSVdata.push(Number(data[i][4].replace(",", ".")));
         }
         
-        this.NormalizedConsumptionData = normalizedCSVdata;
-        this.NormalizedConsumptionDataLength = normalizedCSVdataLength;
+        this._normalizedConsumptionData = normalizedCSVdata;
+        this._normalizedConsumptionDataLength = normalizedCSVdataLength;
         return this;
     }
 
     BuildConsumptionData() {
         return new ConsumptionData(
-            this.NormalizedConsumptionData,
-            this.NormalizedConsumptionDataLength,
-            this.NormalizedConsumptionDataPeriod,
-            this.NormalizedConsumptionDataTotalConsumption
+            this._normalizedConsumptionData,
+            this._normalizedConsumptionDataLength,
+            this._normalizedConsumptionDataPeriod,
+            this._normalizedConsumptionDataTotalConsumption
         );
     }
 
@@ -60,15 +60,15 @@ class DataBuilder {
 
         const dataLength = data1.length;
 
-        this.DataLength = dataLength;
-        this.MergedData = mergedData;
+        this._dataLength = dataLength;
+        this._mergedData = mergedData;
         return this;
     }
 
     BuildMergedData() {
         return new MergedData(
-            this.MergedData,
-            this.DataLength
+            this._mergedData,
+            this._dataLength
         ); 
     }
 }

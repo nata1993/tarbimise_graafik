@@ -85,20 +85,20 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Build CSV consumption data
             const CSV_File_Data = CSV_File_Results.data;
-            const ConsumptionData = new DataBuilder();
-            ConsumptionData.SetConsumptionDataPeriod(CSV_File_Data);
-            ConsumptionData.SetTotalConsumptionFromData(CSV_File_Data);
-            ConsumptionData.NormalizeCSVdata(CSV_File_Data);
-            ConsumptionData.BuildConsumptionData();
-            const CSV_Normalized_Data_Length = ConsumptionData.NormalizedConsumptionDataLength;
+            const ConsumptionData = new DataBuilder()
+            .SetConsumptionDataPeriod(CSV_File_Data)
+            .SetTotalConsumptionFromData(CSV_File_Data)
+            .NormalizeCSVdata(CSV_File_Data)
+            .BuildConsumptionData();
+            const CSV_Normalized_Data_Length = ConsumptionData._ConsumptionDataLength;
 
             // Build Elering dataset
-            const EleringData = new DataBuilder();
-            EleringData.NormalizeEleringData(res.data.ee);
-            EleringData.BuildEleringData();
+            const EleringData = new DataBuilder()
+            .NormalizeEleringData(res.data.ee)
+            .BuildEleringData();
 
             // Merging two datasets into one
-            const Merged_Data = FullDataNormalization(EleringData.normalizedEleringData, ConsumptionData.NormalizedConsumptionData);
+            const Merged_Data = FullDataNormalization(EleringData._EleringData, ConsumptionData._ConsumptionData);
             const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
             // Build statistics dataset
             const Statistics = new StatisticsBuilder();
@@ -148,11 +148,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws small strokes to base graph horisontal line - needs improvements
             const eDataStart = 0;
-            const eDataEnd = EleringData.normalizedEleringDataLength;
+            const eDataEnd = EleringData._EleringDataLength;
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
-            for(let i = 0; i < EleringData.normalizedEleringDataLength; i += 24) {
+            for(let i = 0; i < EleringData._EleringDataLength; i += 24) {
                 strokesStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
                                      x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+7}" />`;
             }
@@ -268,15 +268,15 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
 
             // Fill lowest and highest prices as well as consumption to HTML
-            document.getElementById("period").innerHTML = `Period: ${ConsumptionData.NormalizedConsumptionDataPeriod}`;
+            document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
             document.getElementById("highestPrice").innerHTML = `${Statistics.highestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Statistics.lowestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${Statistics.averagePriceOfElectricity} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Statistics.highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics.lowestConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `${ConsumptionData.NormalizedConsumptionDataTotalConsumption} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
             document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`;
-            
+
             document.getElementById("weightedCost").innerHTML = `${Statistics.weightedAveragePriceOfElectricity} \u00A2/KWh`;
         
             // Draw second graph - from Cost_Graph.js file
