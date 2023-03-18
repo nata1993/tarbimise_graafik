@@ -1,19 +1,19 @@
 class Statistics {
     constructor(
-        highestPriceOfElectricity, 
-        lowestPriceOfElectricity,
-        averagePriceOfElectricity,
-        highestConsumption,
-        lowestConsumption,
-        averageConsmption,
-        weightedAveragePriceOfElectricity
+        HighestPriceOfElectricity, 
+        LowestPriceOfElectricity,
+        AveragePriceOfElectricity,
+        HighestConsumption,
+        LowestConsumption,
+        AverageConsmption,
+        WeightedAveragePriceOfElectricity
     ) {
-        this.highestPriceOfElectricity = highestPriceOfElectricity;
-        this.lowestPriceOfElectricity = lowestPriceOfElectricity;
-        this.averagePriceOfElectricity = averagePriceOfElectricity;
-        this.highestConsumption = highestConsumption;
-        this.lowestConsumption = lowestConsumption;
-        this.averageConsmption = averageConsmption;
-        this.weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity;
+        this._HighestPriceOfElectricity = HighestPriceOfElectricity;
+        this._LowestPriceOfElectricity = LowestPriceOfElectricity;
+        this._AveragePriceOfElectricity = AveragePriceOfElectricity;
+        this._HighestConsumption = HighestConsumption;
+        this._LowestConsumption = LowestConsumption;
+        this._AverageConsmption = AverageConsmption;
+        this._WeightedAveragePriceOfElectricity = WeightedAveragePriceOfElectricity;
     }
 }

@@ -100,18 +100,19 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Merging two datasets into one
             const Merged_Data = FullDataNormalization(EleringData._EleringData, ConsumptionData._ConsumptionData);
             const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
-            // Build statistics dataset
-            const Statistics = new StatisticsBuilder();
-            Statistics.calculateHighestPriceOfElectricity(Merged_Data);
-            Statistics.calculateLowestPriceOfElectricity(Merged_Data);
-            Statistics.calculateAveragePriceOfElectricity(Merged_Data);
-            Statistics.calculateHighestConsumption(Merged_Data);
-            Statistics.calculateLowestConsumption(Merged_Data);
-            Statistics.calculateAverageConsmption(Merged_Data);
-            Statistics.calculateWeightedAveragePriceOfElectricity(Merged_Data, Length_Without_Null);
-            Statistics.buildStatistics();
 
-            const Highest_Price_On_Graph = Math.ceil(Statistics.highestPriceOfElectricity);
+            // Build statistics dataset
+            const Statistics = new StatisticsBuilder()
+            .calculateHighestPriceOfElectricity(Merged_Data)
+            .calculateLowestPriceOfElectricity(Merged_Data)
+            .calculateAveragePriceOfElectricity(Merged_Data)
+            .calculateHighestConsumption(Merged_Data)
+            .calculateLowestConsumption(Merged_Data)
+            .calculateAverageConsmption(Merged_Data)
+            .calculateWeightedAveragePriceOfElectricity(Merged_Data, Length_Without_Null)
+            .buildStatistics();
+
+            const Highest_Price_On_Graph = Math.ceil(Statistics._HighestPriceOfElectricity);
 
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
@@ -156,13 +157,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 strokesStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
                                      x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+7}" />`;
             }
-            console.log(eDataEnd-eDataStart, "Elering");
-            console.log(CSV_Normalized_Data_Length, "CSV");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = priceRatio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
-            const highestPriceLevel = Statistics.highestPriceOfElectricity / nRatio;
+            const highestPriceLevel = Statistics._HighestPriceOfElectricity / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
@@ -184,7 +183,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const extremepricelevel = 100;
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = graphHeigth / Statistics.highestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
+            const price_ratio = graphHeigth / Statistics._HighestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = Merged_Data[i]["price"];
@@ -211,7 +210,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let lineStr = "";
-            const consumption_ratio = graphHeigth / Statistics.highestConsumption;
+            const consumption_ratio = graphHeigth / Statistics._HighestConsumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
@@ -256,7 +255,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Add consumption segments next to vertical graph on the right
             textY = base_y +2;
             count = graphHeigth / widthBetweenPoints;
-            const consumGraphRatio = Statistics.highestConsumption / 8;
+            const consumGraphRatio = Statistics._HighestConsumption / 8;
             for(let i = 0; i < count + 1; i++) {
                 textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;
                 textY -= widthBetweenPoints;
@@ -269,15 +268,15 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices as well as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
-            document.getElementById("highestPrice").innerHTML = `${Statistics.highestPriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${Statistics.lowestPriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("averagePrice").innerHTML = `${Statistics.averagePriceOfElectricity} \u00A2/KWh`
-            document.getElementById("highestConsumption").innerHTML = `${Statistics.highestConsumption} KWh`;
-            document.getElementById("lowestConsumption").innerHTML = `${Statistics.lowestConsumption} KWh`;
+            document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`
+            document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
+            document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`;
+            document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
 
-            document.getElementById("weightedCost").innerHTML = `${Statistics.weightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Without_Null);

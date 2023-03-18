@@ -7,7 +7,7 @@ class StatisticsBuilder {
                 highestPriceOfElectricity = data[i]["price"];
             }
         }
-        this.highestPriceOfElectricity = highestPriceOfElectricity.toFixed(3);
+        this._highestPriceOfElectricity = highestPriceOfElectricity.toFixed(3);
         return this;
     }
     calculateLowestPriceOfElectricity(data) {
@@ -18,7 +18,7 @@ class StatisticsBuilder {
                 lowestPriceOfElectricity = data[i]["price"];
             }
         }
-        this.lowestPriceOfElectricity = lowestPriceOfElectricity.toFixed(3);;
+        this._lowestPriceOfElectricity = lowestPriceOfElectricity.toFixed(3);;
         return this;
     }
     calculateAveragePriceOfElectricity(data) {
@@ -28,7 +28,7 @@ class StatisticsBuilder {
             averagePriceOfElectricity += data[i]["price"];
         }
         averagePriceOfElectricity = averagePriceOfElectricity / length;
-        this.averagePriceOfElectricity = averagePriceOfElectricity.toFixed(3);;
+        this._averagePriceOfElectricity = averagePriceOfElectricity.toFixed(3);;
         return this;
     }
     calculateHighestConsumption(data) {
@@ -40,7 +40,7 @@ class StatisticsBuilder {
                 highestConsumption = h;
             }
         }
-        this.highestConsumption = highestConsumption;
+        this._highestConsumption = highestConsumption;
         return this;
     }
     calculateLowestConsumption(data) {
@@ -54,7 +54,7 @@ class StatisticsBuilder {
                 }
             }
         }
-        this.lowestConsumption = lowestConsumption;
+        this._lowestConsumption = lowestConsumption;
         return this;
     }
     calculateAverageConsmption(data) {
@@ -64,7 +64,7 @@ class StatisticsBuilder {
             averageConsmption += data[i]["consumption"];
         }
         averageConsmption = averageConsmption / length;
-        this.averageConsmption = averageConsmption.toFixed(3);
+        this._averageConsmption = averageConsmption.toFixed(3);
         return this;
     }
     calculateWeightedAveragePriceOfElectricity(data, length) {
@@ -76,27 +76,27 @@ class StatisticsBuilder {
             totalOfTerms += data[i]["consumption"];
         }
         weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this.weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
+        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
         return this;
     }
     calculateAverageCostOfConsumption(data) {
-        this.averageCostOfConsumption = averageCostOfConsumption;
+        this._averageCostOfConsumption = averageCostOfConsumption;
         return this;
     }
     calculateHighestCostOfConsumption(data) {
-        this.highestCostOfConsumption = highestCostOfConsumption;
+        this._highestCostOfConsumption = highestCostOfConsumption;
         return this;
     }
 
     buildStatistics() {
         return new Statistics(
-            this.highestPriceOfElectricity,
-            this.lowestPriceOfElectricity,
-            this.averagePriceOfElectricity,
-            this.highestConsumption,
-            this.lowestConsumption,
-            this.averageConsmption,
-            this.weightedAveragePriceOfElectricity
+            this._highestPriceOfElectricity,
+            this._lowestPriceOfElectricity,
+            this._averagePriceOfElectricity,
+            this._highestConsumption,
+            this._lowestConsumption,
+            this._averageConsmption,
+            this._weightedAveragePriceOfElectricity
         );
     }
 }
