@@ -1,4 +1,5 @@
 class DataBuilder {
+    // Elering electricity price data building
     NormalizeEleringData(data) {
         let normalizedEleringData = [];
         const length = data.length - 2;
@@ -20,6 +21,7 @@ class DataBuilder {
         );
     }
 
+    // Consumption data building from CSV file data
     SetConsumptionDataPeriod(data) {
         this.NormalizedConsumptionDataPeriod = data[2][1];
         return this;
@@ -49,5 +51,24 @@ class DataBuilder {
             this.NormalizedConsumptionDataPeriod,
             this.NormalizedConsumptionDataTotalConsumption
         );
+    }
+
+    // Building of merged data consisting of Elering electricity price data and consumption data
+    MergeData(data1, data2) {
+        
+        
+
+        const dataLength = data1.length;
+
+        this.DataLength = dataLength;
+        this.MergedData = mergedData;
+        return this;
+    }
+
+    BuildMergedData() {
+        return new MergedData(
+            this.MergedData,
+            this.DataLength
+        ); 
     }
 }

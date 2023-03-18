@@ -21,3 +21,13 @@ class ConsumptionData {
         this.ConsumptionDataTotalConsumption = consumptionDataTotalConsumption;
     }
 }
+
+class MergedData {
+    constructor(
+        mergedData,
+        mergedDataLength
+    ) {
+        this.MergedData = mergedData,
+        this.MergedDataLength = mergedDataLength
+    }
+}
