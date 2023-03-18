@@ -83,19 +83,22 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Get SVG parent container calculated width
             const SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
-            // CSV file variables
-            const CSV_File_Data_Length = CSV_File_Results.data.length; // Length of CSV data
-            const CSV_File_Data = CSV_File_Results.data; // CSV data itself
-            const CSV_File_Data_Results_To_Ignore = 11; // The first results are form headers in Elektrilevi CSV file
-            const CSV_Normalized_Data = CSVdataNormalization(CSV_File_Data_Results_To_Ignore, CSV_File_Data_Length, CSV_File_Data);  // Take only consumption data from file
-            const CSV_Normalized_Data_Length = CSV_Normalized_Data.length;
+            // Build CSV consumption data
+            const CSV_File_Data = CSV_File_Results.data;
+            const ConsumptionData = new DataBuilder();
+            ConsumptionData.SetConsumptionDataPeriod(CSV_File_Data);
+            ConsumptionData.SetTotalConsumptionFromData(CSV_File_Data);
+            ConsumptionData.NormalizeCSVdata(CSV_File_Data);
+            ConsumptionData.BuildConsumptionData();
+            const CSV_Normalized_Data_Length = ConsumptionData.NormalizedConsumptionDataLength;
 
-            // Elering variables
-            const Elering_Normalized_Data = EleringDataNormalization(res.data.ee);
-            const Elering_Normalized_Data_length = Elering_Normalized_Data.length;
+            // Build Elering dataset
+            const EleringData = new DataBuilder();
+            EleringData.NormalizeEleringData(res.data.ee);
+            EleringData.BuildEleringData();
 
             // Merging two datasets into one
-            const Merged_Data = FullDataNormalization(Elering_Normalized_Data, CSV_Normalized_Data);
+            const Merged_Data = FullDataNormalization(EleringData.normalizedEleringData, ConsumptionData.NormalizedConsumptionData);
             const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
             // Build statistics dataset
             const Statistics = new StatisticsBuilder();
@@ -145,17 +148,16 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Draws small strokes to base graph horisontal line - needs improvements
             const eDataStart = 0;
-            const eDataEnd = Elering_Normalized_Data_length;
+            const eDataEnd = EleringData.normalizedEleringDataLength;
             const countOfDataPoints = eDataEnd - eDataStart;
             const horizontalWidthBetweenStrokes = (endPosition - 61)/ countOfDataPoints;
             let strokesStr = "";
-            for(let i = 0; i < Elering_Normalized_Data_length; i += 24) {
+            for(let i = 0; i < EleringData.normalizedEleringDataLength; i += 24) {
                 strokesStr += `<line x1="${base_x + (horizontalWidthBetweenStrokes * i)}" y1="${base_y}"
                                      x2="${base_x + (horizontalWidthBetweenStrokes * i)}" y2="${base_y+7}" />`;
             }
             console.log(eDataEnd-eDataStart, "Elering");
             console.log(CSV_Normalized_Data_Length, "CSV");
-            console.log(Merged_Data, "Merged");
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
             let nRatio = priceRatio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
@@ -265,14 +267,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             Graph_Title.style.fontSize = "16px";
             Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
 
-            // Fill lowest and highest prices asw ell as consumption to HTML
-            document.getElementById("period").innerHTML = `Period: ${CSV_File_Data[2][1]}`;
+            // Fill lowest and highest prices as well as consumption to HTML
+            document.getElementById("period").innerHTML = `Period: ${ConsumptionData.NormalizedConsumptionDataPeriod}`;
             document.getElementById("highestPrice").innerHTML = `${Statistics.highestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Statistics.lowestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${Statistics.averagePriceOfElectricity} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Statistics.highestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics.lowestConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `${CSV_File_Data[5][4].replace(",", ".")} KWh`;
+            document.getElementById("totalConsumption").innerHTML = `${ConsumptionData.NormalizedConsumptionDataTotalConsumption} KWh`;
             document.getElementById("averageConsumption").innerHTML = `${Statistics.averageConsmption} KWh`;
             
             document.getElementById("weightedCost").innerHTML = `${Statistics.weightedAveragePriceOfElectricity} \u00A2/KWh`;
@@ -281,28 +283,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Without_Null);
         })
         .catch(err => { throw err });
-}
-
-// Replaces comma with dot and then string to number
-function CSVdataNormalization(ignoreBeginning, length, data) {
-    const normalizedData = [];
-    for (let i = ignoreBeginning; i < length; i++) {
-        normalizedData.push(Number(data[i][4].replace(",", ".")));
-    }
-    return normalizedData; 
-}
-
-// Adds 20% tax to elering prices
-function EleringDataNormalization(data) {
-    let normalizedData = [];
-    const length = data.length;
-    for(let i = 0; i < length - 2; i++) {
-        normalizedData.push({
-            timestamp : data[i]["timestamp"],
-            price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh
-        });
-    }
-    return normalizedData;
 }
 
 // Merges two datasets together
@@ -434,7 +414,7 @@ function dataLengthWithoutNull(data) {
     let length = 0;
     const l = data.length;
     for(let i = 0; i < l; i++) {
-        if ( data[i]["consumption"] === null ) {
+        if (data[i]["consumption"] === null) {
             length = i;
             break;
         }
