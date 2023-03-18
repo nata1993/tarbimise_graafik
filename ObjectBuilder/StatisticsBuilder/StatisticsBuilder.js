@@ -11,7 +11,7 @@ class StatisticsBuilder {
         return this;
     }
     calculateLowestPriceOfElectricity(data) {
-        let lowestPriceOfElectricity = data[0].price;
+        let lowestPriceOfElectricity = data[0]["price"];
         const length = data.length;
         for (let i = 0; i < length; i++) {
             if (data[i]["price"] < lowestPriceOfElectricity) {

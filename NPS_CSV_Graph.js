@@ -98,21 +98,20 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildEleringData();
 
             // Merging two datasets into one
-            const Merged_Data = FullDataNormalization(EleringData._EleringData, ConsumptionData._ConsumptionData);
-            const Length_Without_Null = dataLengthWithoutNull(Merged_Data);
+            const Merged_Data = new DataBuilder()
+            .MergeData(EleringData._EleringData, ConsumptionData._ConsumptionData)
+            .BuildMergedData();
 
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
-            .calculateHighestPriceOfElectricity(Merged_Data)
-            .calculateLowestPriceOfElectricity(Merged_Data)
-            .calculateAveragePriceOfElectricity(Merged_Data)
-            .calculateHighestConsumption(Merged_Data)
-            .calculateLowestConsumption(Merged_Data)
-            .calculateAverageConsmption(Merged_Data)
-            .calculateWeightedAveragePriceOfElectricity(Merged_Data, Length_Without_Null)
+            .calculateHighestPriceOfElectricity(Merged_Data._MergedData)
+            .calculateLowestPriceOfElectricity(Merged_Data._MergedData)
+            .calculateAveragePriceOfElectricity(Merged_Data._MergedData)
+            .calculateHighestConsumption(Merged_Data._MergedData)
+            .calculateLowestConsumption(Merged_Data._MergedData)
+            .calculateAverageConsmption(Merged_Data._MergedData)
+            .calculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .buildStatistics();
-
-            const Highest_Price_On_Graph = Math.ceil(Statistics._HighestPriceOfElectricity);
 
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
@@ -159,7 +158,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             }
             
             // Draws small strokes to base graph vertical line on the left side - also needs improvements to reduce those damn iffffffsssssss
-            let nRatio = priceRatio(Highest_Price_On_Graph); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
+            let nRatio = priceRatio(Math.ceil(Statistics._HighestPriceOfElectricity)); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
             const highestPriceLevel = Statistics._HighestPriceOfElectricity / nRatio;
             const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
@@ -186,7 +185,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const price_ratio = graphHeigth / Statistics._HighestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
-                const hourPrice = Merged_Data[i]["price"];
+                const hourPrice = Merged_Data._MergedData[i]["price"];
                 let y = base_y - hourPrice * price_ratio;
                 if (hourPrice <= pricelevel1) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
@@ -214,7 +213,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
-                let consumption = Merged_Data[i]["consumption"];
+                let consumption = Merged_Data._MergedData[i]["consumption"];
                 let y = base_y - consumption * consumption_ratio;
                 lineStr += `<line id="${consumption}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2" />`;
                 x1 += horizontalWidthBetweenStrokes;
@@ -279,33 +278,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
         
             // Draw second graph - from Cost_Graph.js file
-            drawCostGraph(Merged_Data, horizontalWidthBetweenStrokes, Length_Without_Null);
+            drawCostGraph(Merged_Data._MergedData, horizontalWidthBetweenStrokes, Merged_Data._MergedDataWithoutNull);
         })
         .catch(err => { throw err });
-}
-
-// Merges two datasets together
-function FullDataNormalization(data1, data2) {
-    let data = [];
-    const length = data1.length;
-    for(let i = 0; i < length; i++){
-        const timestamp = data1[i]["timestamp"]
-        const price = data1[i]["price"];
-        let consumption = data2[i];
-
-        if(typeof consumption === "undefined" || consumption === NaN )
-        {
-            consumption = null;
-        }
-
-        data.push({
-            timestamp : timestamp,
-            price : price,
-            consumption : consumption
-        });
-    }
-
-    return data;
 }
 
 function priceRatio (price) {
@@ -406,20 +381,4 @@ function consumptionRatio(consum) {
     }
 
     return ratio;
-}
-
-// Consumption data lacks data on last consumption hours if data taken in mid month so we need to filter that part out
-function dataLengthWithoutNull(data) {
-    let length = 0;
-    const l = data.length;
-    for(let i = 0; i < l; i++) {
-        if (data[i]["consumption"] === null) {
-            length = i;
-            break;
-        }
-        else {
-            length = i;
-        }
-    }
-    return length;
 }

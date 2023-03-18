@@ -25,9 +25,11 @@ class ConsumptionData {
 class MergedData {
     constructor(
         MergedData,
-        MergedDataLength
+        MergedDataLength,
+        MergedDataLengthWithoutNull
     ) {
         this._MergedData = MergedData,
-        this._MergedDataLength = MergedDataLength
+        this._MergedDataLength = MergedDataLength,
+        this._MergedDataWithoutNull = MergedDataLengthWithoutNull
     }
 }
