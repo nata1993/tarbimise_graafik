@@ -1,10 +1,18 @@
 class DataBuilder {
     // Consumption data building from CSV file data
-    SetConsumptionDataPeriod(data) {
+    GetConsumptionDataPeriod(data) {
         this._normalizedConsumptionDataPeriod = data[2][1];
         return this;
     }
-    SetTotalConsumptionFromData(data) {
+    GetDaytimeConsumptionFromData(data){
+        this._daytimeConsumptionData = data[6][2];
+        return this;
+    }
+    GetNightTimeConsumptionFromData(data){
+        this._nighttimeConsumptionData = data[7][2];
+        return this;
+    }
+    GetTotalConsumptionFromData(data) {
         this._normalizedConsumptionDataTotalConsumption = data[5][4].replace(",", ".");
         return this;
     }
@@ -27,6 +35,8 @@ class DataBuilder {
             this._normalizedConsumptionData,
             this._normalizedConsumptionDataLength,
             this._normalizedConsumptionDataPeriod,
+            this._daytimeConsumptionData,
+            this._nighttimeConsumptionData,
             this._normalizedConsumptionDataTotalConsumption
         );
     }

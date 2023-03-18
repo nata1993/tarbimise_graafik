@@ -86,8 +86,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Build CSV consumption data
             const CSV_File_Data = CSV_File_Results.data;
             const ConsumptionData = new DataBuilder()
-            .SetConsumptionDataPeriod(CSV_File_Data)
-            .SetTotalConsumptionFromData(CSV_File_Data)
+            .GetConsumptionDataPeriod(CSV_File_Data)
+            .GetDaytimeConsumptionFromData(CSV_File_Data)
+            .GetNightTimeConsumptionFromData(CSV_File_Data)
+            .GetTotalConsumptionFromData(CSV_File_Data)
             .NormalizeCSVdata(CSV_File_Data)
             .BuildConsumptionData();
             const CSV_Normalized_Data_Length = ConsumptionData._ConsumptionDataLength;
@@ -272,6 +274,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
+            document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
+            document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
             document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
 
