@@ -47,8 +47,8 @@
             <g id="costGraph" stroke="#000" stroke-width="1"></g>
             <g id="costText"></g>
         </svg>
-        <!-- Text -->
-        <div id="text">
+        <!-- Statistics -->
+        <div id="statistics">
             <div>
                 <div class="titleContainer" title="Highest price of electricity in a given period.">
                     <h4>Period highest price of electricity</h4>
@@ -107,15 +107,25 @@
         </div>
     </div>
 
+    <!-- Main -->
     <script src="./Cost_Graph.js"></script>
     <script src="./NPS_CSV_Graph.js"></script>
     
+    <!-- Data manipulation -->
     <script src="./ObjectBuilder/DataBuilder/Data/DataObjects.js"></script>
     <script src="./ObjectBuilder/DataBuilder/DataBuilder.js"></script>
 
+    <!-- Statistics creating out of manipulated data -->
     <script src="./ObjectBuilder/StatisticsBuilder/Statistics/Statistics.js"></script>
     <script src="./ObjectBuilder/StatisticsBuilder/StatisticsBuilder.js"></script>
-    
+
+    <!-- Creation of SVG graphs from manipulated data -->
+    <script src="./ObjectBuilder/GraphBuilder/Graph/Graph.js"></script>
+    <script src="./ObjectBuilder/GraphBuilder/Graph/GraphContainers.js"></script>
+    <script src="./ObjectBuilder/GraphBuilder/Graph/GraphsContainer.js"></script>
+    <script src="./ObjectBuilder/GraphBuilder/GraphBuilder.js"></script>
+
+    <!-- CSV file parser -->
     <script src="./PapaParse-5.0.2/papaparse.min.js"></script>
 </body>
 </html>

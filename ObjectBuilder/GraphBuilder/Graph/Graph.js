@@ -1,8 +1,11 @@
 class Graph {
-    // Graph container
-    #coordinates = null;
-    #width = null;
-    #heigth = null;
+
+
+/*
+    // Graph
+    #starting_coordinates = {x: 0, y: 0};
+    #width = 0;
+    #heigth = 0;
 
     // Graph container left and right vertical line decoration
     #strokingWidth = null;
@@ -10,19 +13,12 @@ class Graph {
 
     // Graph verticle itselt
     #graphWidth = null;
+*/
 
-
-
-    constructor(coordinates, width, heigth, strokingWidth, strokeLength, graphWidth) {
-        this.#coordinates = coordinates;
-        this.#width = width;
-        this.#heigth = heigth;
-        this.#strokingWidth = strokingWidth;
-        this.#strokeLength = strokeLength;
-        this.#graphWidth = graphWidth;
-    }
-
-    createBaseGraph() {
-        console.log("creating base graph");
+    constructor(
+        width, heigth
+    ) {
+        this._Width = width;
+        this._Heigth = heigth;
     }
 }

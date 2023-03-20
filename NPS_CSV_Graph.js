@@ -115,6 +115,35 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .calculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .buildStatistics();
 
+            // Create container where graphs will be placed
+            const GraphsContainer = new GraphBuilder()
+            .GetGraphsContainerWidthAndHeigthByID("NPS_CSV_Cost")
+            .SetGraphsContainerPadding(60, 20, 60, 20)
+            .CalculateGraphsContainerPosition()
+            .BuildGraphsContainer();
+            console.log("Graphs container in NPSCSV.js", GraphsContainer);
+
+            // Create container for the graph
+            const graphs_count = 2;
+            const GraphContainers = new GraphBuilder()
+            .CalculateGraphContainerPosition(
+                GraphsContainer._Container_internal_position_coordinates.xy,
+                GraphsContainer._Container_internal_position_coordinates.xy1,
+                GraphsContainer._Container_internal_position_coordinates.x1y,
+                GraphsContainer._Container_internal_position_coordinates.x1y1,
+                graphs_count
+            )
+            .BuildGraphContainer()
+
+            console.log("Built graph containers.", GraphContainers);
+
+            // Create Elering graph
+            const EleringGraph = new GraphBuilder()
+            .CalculateGraphStartAndEndPosition()
+            
+            .BuildEleringGraph();
+            // console.log("Elering graph", EleringGraph);
+
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
             const Verticle_Group = document.getElementById("npsPriceVector");
