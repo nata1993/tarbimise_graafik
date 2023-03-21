@@ -689,3 +689,12 @@ Also variable naming is a tad bit pain when you have object and object builder a
 director as an optional class for Builder pattern that will delegate what builder to use. The chain of
 command will look like this with Director class used: Director assigns builder work -> Builder chooses
 Object to work with -> Object.
+
+It lasted not realy long... The goodnes of builder pattern... It lasted just so long until I had to
+create one builder but more than one object to build. And then we suddenly had long chain of variables
+to feed to builder, inside builder and to the object itself. Even worse, the variables needed to be
+pretty much similar. So similar that using ususal upper-lower case variable naming was exhausted with
+_ symbol variable naming. Guess I'll have to resort to using # symbol also in naming of variables.
+Anyway, once I reached a moment, where one builder had to build much more than just one to three objects,
+I will finnaly need optional director class to delegate work to builders, otherwise lots of repetitive
+code writing. Lets try to keep it clean (never to be achieved...).
