@@ -43,6 +43,38 @@ class StatisticsBuilder {
         this._highestConsumption = highestConsumption;
         return this;
     }
+    calculateDailyHighestConsumption(data){
+        let highestDay = 0;
+        let temp = 0;
+        let counter = 0;
+        let array = [];
+        const length = data.length;
+
+        // calculate each day total consumption
+        for(let i = 0; i < length; i++) {
+            if (counter < 24) {
+                temp += data[i]["consumption"];
+                counter++;
+            }
+            else {
+                array.push(temp);
+                counter = 0;
+                temp = 0;
+            }
+        }
+        highestDay = array[0];
+
+        // find highest day
+        const arrayLength = array.length;
+        for(let i = 1; i < arrayLength; i++){
+            if(array[i] >= highestDay) {
+                highestDay = array[i];
+            }
+        }
+
+        this._highestDayConsumption = highestDay.toFixed(3);
+        return this;
+    }
     calculateLowestConsumption(data) {
         let lowestConsumption = data[0]["consumption"];
         const length = data.length;
@@ -94,6 +126,7 @@ class StatisticsBuilder {
             this._lowestPriceOfElectricity,
             this._averagePriceOfElectricity,
             this._highestConsumption,
+            this._highestDayConsumption,
             this._lowestConsumption,
             this._averageConsmption,
             this._weightedAveragePriceOfElectricity

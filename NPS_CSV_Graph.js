@@ -107,6 +107,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
             .calculateHighestPriceOfElectricity(Merged_Data._MergedData)
+            .calculateDailyHighestConsumption(Merged_Data._MergedData)
             .calculateLowestPriceOfElectricity(Merged_Data._MergedData)
             .calculateAveragePriceOfElectricity(Merged_Data._MergedData)
             .calculateHighestConsumption(Merged_Data._MergedData)
@@ -302,6 +303,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
+            document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
             document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
