@@ -118,14 +118,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
-            .GetGraphsContainerWidthAndHeigthByID("NPS_CSV_Cost")
+            .GetGraphsContainerWidthAndHeigthByID("test")
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
             .BuildGraphsContainer();
             console.log("Graphs container in NPSCSV.js", GraphsContainer);
 
             // Create container for the graph
-            const graphs_count = 2;
+            const graphs_count = 3;
             const GraphContainers = new GraphBuilder()
             .CalculateGraphContainerPosition(
                 GraphsContainer._Container_internal_position_coordinates.xy,
@@ -134,7 +134,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 GraphsContainer._Container_internal_position_coordinates.x1y1,
                 graphs_count
             )
-            .BuildGraphContainer()
+            .BuildGraphContainers();
 
             console.log("Built graph containers.", GraphContainers);
 

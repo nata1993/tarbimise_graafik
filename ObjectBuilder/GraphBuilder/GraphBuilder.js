@@ -44,7 +44,7 @@ class GraphBuilder {
         let graph_containers = [];
         let container_heigth = ( _xy1[1] - _xy[1] ) / graph_count;
     
-        // find graph one coordinates
+        // Find first graph coordinates
         let initial_xy = _xy;
         let initial_xy1 = [ _xy1[0], _xy1[1] = container_heigth];
         let initial_x1y = _x1y;
@@ -60,6 +60,7 @@ class GraphBuilder {
                 }
             ]);
 
+            // Calculate next graph coordinates
             let next_xy = [ initial_xy[0], initial_xy[1] + container_heigth];
             let next_xy1 = [ initial_xy1[0], initial_xy1[1] + container_heigth];
             let next_x1y = [ initial_x1y[0], initial_x1y[1] + container_heigth];
@@ -75,7 +76,7 @@ class GraphBuilder {
         return this;
     }
 
-    BuildGraphContainer() {
+    BuildGraphContainers() {
         return new GraphContainers(this.graph_containers);
     }
 
