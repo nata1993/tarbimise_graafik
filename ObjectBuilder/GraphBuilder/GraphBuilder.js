@@ -71,7 +71,6 @@ class GraphBuilder {
             initial_x1y1 = next_x1y1;
         }
 
-        console.log(`Graph container in GraphBuilder class.`, graph_containers);
         this.graph_containers = graph_containers;
         return this;
     }

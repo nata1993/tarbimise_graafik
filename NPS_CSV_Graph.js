@@ -122,7 +122,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
             .BuildGraphsContainer();
-            console.log("Graphs container in NPSCSV.js", GraphsContainer);
 
             // Create container for the graph
             const graphs_count = 3;
@@ -312,9 +311,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
-
-            document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
         
             // Draw second graph - from Cost_Graph.js file
             drawCostGraph(Merged_Data._MergedData, horizontalWidthBetweenStrokes, Merged_Data._MergedDataWithoutNull);
