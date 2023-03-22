@@ -51,7 +51,6 @@ class GraphBuilder {
         let initial_x1y1 = [ _x1y1[0], _x1y1[1] = container_heigth];
 
         for(let i = 0; i < graph_count; i++){
-            // push array of objects to the stack of graphs
             graph_containers.push([{
                     xy: initial_xy,
                     xy1: initial_xy1,
