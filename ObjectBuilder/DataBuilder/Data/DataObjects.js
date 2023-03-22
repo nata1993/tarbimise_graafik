@@ -19,10 +19,10 @@ class ConsumptionData {
 class EleringData {
     constructor(
         NormalizedData, 
-        EleringDataLength
+        NormalizedEleringDataLength
         ) {
         this._EleringData = NormalizedData;
-        this._EleringDataLength = EleringDataLength;
+        this._EleringDataLength = NormalizedEleringDataLength;
     }
 }
 
