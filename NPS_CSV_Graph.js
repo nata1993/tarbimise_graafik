@@ -107,7 +107,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
             .calculateHighestPriceOfElectricity(Merged_Data._MergedData)
-            .calculateDailyHighestConsumption(Merged_Data._MergedData)
+            .calculateDayHighestConsumption(Merged_Data._MergedData)
             .calculateLowestPriceOfElectricity(Merged_Data._MergedData)
             .calculateAveragePriceOfElectricity(Merged_Data._MergedData)
             .calculateHighestConsumption(Merged_Data._MergedData)
@@ -299,12 +299,16 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Fill lowest and highest prices as well as consumption to HTML
             document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
+
             document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`
+            document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
+
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
             document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
             document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
+            document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
             document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;

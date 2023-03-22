@@ -43,7 +43,7 @@ class StatisticsBuilder {
         this._highestConsumption = highestConsumption;
         return this;
     }
-    calculateDailyHighestConsumption(data){
+    calculateDayHighestConsumption(data){
         let highestDay = 0;
         let temp = 0;
         let counter = 0;

@@ -1,6 +1,6 @@
 class Statistics {
     constructor(
-        HighestPriceOfElectricity, 
+        HighestPriceOfElectricity,
         LowestPriceOfElectricity,
         AveragePriceOfElectricity,
         HighestConsumption,
