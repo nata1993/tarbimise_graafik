@@ -698,3 +698,86 @@ _ symbol variable naming. Guess I'll have to resort to using # symbol also in na
 Anyway, once I reached a moment, where one builder had to build much more than just one to three objects,
 I will finnaly need optional director class to delegate work to builders, otherwise lots of repetitive
 code writing. Lets try to keep it clean (never to be achieved...).
+
+## Fourteenth hardship
+
+### What comes first - a chicken or an egg?
+
+In the first design, when big pile of sphagetty code was created and of course it was working as intended,
+everything was fine. Well, besides enomurous "AI of ifffffs!" for calculating a ratio number.
+Such number was calculated using ifs where taking highest price of electricity it was evaluated and
+ratio number was returned. This ratio number was used then to create dynamic price segments for electricity
+price. Similar way was created for consumption and cost graphs but without "AI of iffffffs" of over 40 ifs.
+
+When it came to refactoring code to use Builder pattern, this finnaly bit me. Its easy to make if else
+statements, its repetetive to create 40-50 of them but okey, fine, happens when prototyping. But now
+I had to figure out maybe some formula to find out the ratio number with simple calculation.
+Which brought me to the allfamous chicken and egg problem - which came first?
+Here how it looked like:
+
+JavaScript
+
+```javascript
+function priceRatio (price) {
+    let ratio = 0;
+    if (price < 10) {
+        ratio = 5;
+    }
+    else if (price >= 10 && price < 30) {
+        ratio = 1;
+    }
+    else if (price >= 30 && price < 50) {
+        ratio = 2;
+    }
+    // and so on... 50 ifs.... Behold the AI of IFFFFFFFSSSSSS!
+
+    return ratio;
+}
+```
+
+In order to find ratio number I needed highest value or whatever: electricity, cost, consumption, you name it.
+That I had, this is our egg. But the chicken is the ratio number.
+In order to find out the price segments I need both highest price and ratio number. The division between them
+gave me the price segment number. For an example: if highest price was 30, then ratio number would be 3, then
+I would have three segments of price, each worth 10. The graph price segments then would be 0 -> 10 -> 20 -> 30.
+So simple! Yet I need the ratio number first before I can do such calculations. Here how it all looks like:
+
+JavaScript
+
+```javascript
+function main() {
+    const price = 30;
+    const ratio = priceRatio(price);
+    const price_segment_count = price / ratio;
+
+    for(let i = 0; i < price_segment_count; i++){
+        console.log(`draw price segment: ${ratio * i}`);
+    }
+}
+
+function priceRatio (price) {
+    let ratio = 0;
+    if (price < 10) {
+        ratio = 5; // even smaller segmentation in case price is below 10
+    }
+    else if (price >= 10 && price < 20) {
+        ratio = 2;
+    }
+    else if (price >= 20 && price < 30) {
+        ratio = 3;
+    }
+    // and so on... 50 ifs.... Behold the AI of IFFFFFFFSSSSSS!
+
+    return ratio;
+}
+```
+
+But same ratio number was used also for finding highest price level and the highest price level
+when was the highest point on the graph. From this highest point and the ratio number came the
+price segment point where a line was drawn. This ratio number must come before anything else
+but I cant find ratio number without anything else before, hence chicken and egg problem.
+
+Solution? Find some other method on how to ratio price segments based on highest value.
+
+
+## Fifteenth hardship
