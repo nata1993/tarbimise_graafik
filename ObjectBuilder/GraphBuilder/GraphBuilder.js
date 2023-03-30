@@ -33,7 +33,10 @@ class GraphBuilder {
         return this;
     }
 
-    BuildGraphsContainer() {
+    BuildGraphsContainer(graphs_container_ID) {
+        const Graphs_container = document.getElementById(graphs_container_ID);
+        Graphs_container.innerHTML = "";
+
         return new GraphsContainer(
             this._containerPositionCoordinates
         );
@@ -78,28 +81,88 @@ class GraphBuilder {
         return new GraphContainers(this.graph_containers);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     // The graphs themselves
-    CalculateGraphStartAndEndPosition() {
-        let x = 0;  // graph null point
-        let x1 = 0; // graph end point
-        let y = 0; // graph null point
-        let y1 = 0; // graph end point
+    PrepareGraphsForDrawing(heigth, usableHeigth) {
+        this.graph_heigth = heigth;
+        this.graph_usable_heigth = usableHeigth;
 
-        this.startAndEnd = {x: x, y: y, x1: x1, y1: y1};
         return this;
+    }
+    BuildBaseGraph(graph_coordinates, double_side_graph, element_id, hours_count, week_and_or_hours, segment_count) {
+        const Base_Graph = document.getElementById(element_id);
+        
+        this._BaseGraph(graph_coordinates, double_side_graph, Base_Graph);
+        this._BottomStrokes(graph_coordinates, hours_count, week_and_or_hours, Base_Graph);
+        this._SideStrokes(graph_coordinates, double_side_graph, segment_count, Base_Graph);
+    }
+    _BaseGraph(graph_coordinates, double_side_graph, element) {
+        let svg_str = "";
+        // arrows
+        svg_str += `<line x1="${graph_coordinates.xy[0]}" y1="${graph_coordinates.xy[1]}" x2="${graph_coordinates.xy[0]-2}" y2="${graph_coordinates.xy[1]+5}" />`;
+        svg_str += `<line x1="${graph_coordinates.xy[0]}" y1="${graph_coordinates.xy[1]}" x2="${graph_coordinates.xy[0]+2}" y2="${graph_coordinates.xy[1]+5}" />`;
+
+        if(double_side_graph) {
+            svg_str += `<line x1="${graph_coordinates.x1y[0]}" y1="${graph_coordinates.x1y[1]}" x2="${graph_coordinates.x1y[0]-2}" y2="${graph_coordinates.x1y[1]+5}" />`;
+            svg_str += `<line x1="${graph_coordinates.x1y[0]}" y1="${graph_coordinates.x1y[1]}" x2="${graph_coordinates.x1y[0]+2}" y2="${graph_coordinates.x1y[1]+5}" />`;
+        }
+        
+        // lines
+        svg_str += `<line x1="${graph_coordinates.xy[0]}" y1="${graph_coordinates.xy[1]}" x2="${graph_coordinates.xy1[0]}" y2="${graph_coordinates.xy1[1]+10}" />`;
+        svg_str += `<line x1="${graph_coordinates.xy1[0]}" y1="${graph_coordinates.xy1[1]}" x2="${graph_coordinates.x1y1[0]}" y2="${graph_coordinates.x1y1[1]}" />`;
+        svg_str += `<line x1="${graph_coordinates.x1y1[0]}" y1="${graph_coordinates.x1y1[1]+10}" x2="${graph_coordinates.x1y[0]}" y2="${graph_coordinates.x1y[1]}" />`;
+        
+        element.innerHTML += svg_str;
+    }
+    _BottomStrokes(graph_coordinates, hours_count, week_and_or_hours, element) {
+        let bottom_str = "";
+
+        const stroke_width = (graph_coordinates.x1y[0] - graph_coordinates.xy[0]) / hours_count;
+        let stroke_position = graph_coordinates.xy1[0];
+        const stroke_start_y = graph_coordinates.xy1[1];
+        const stroke_end_y_hours = graph_coordinates.xy1[1] + 5;
+        const stroke_end_y_week = graph_coordinates.xy1[1] + 10;
+        const hours = 24; 
+        const week = 24 * 7;
+
+        if(week_and_or_hours[0] == true) {
+            // draw line each 24 hours
+            const length1 = hours_count;
+            for(let i = 0; i < length1; i += hours) {
+                bottom_str += `<line x1="${stroke_position}" y1="${stroke_start_y}" x2="${stroke_position}" y2="${stroke_end_y_hours}" />`;
+                stroke_position += stroke_width * hours;
+            }
+
+            if(week_and_or_hours[1] == true) {
+                // draw line each week
+                stroke_position = graph_coordinates.xy1[0];
+                const length2 = hours_count;
+                for(let i = 0; i < length2; i += week) {
+                    bottom_str += `<line x1="${stroke_position}" y1="${stroke_start_y}" x2="${stroke_position}" y2="${stroke_end_y_week}" />`;
+                    stroke_position += stroke_width * week;
+                }
+            }
+        }
+        
+        element.innerHTML += bottom_str;
+    }
+    _SideStrokes(graph_coordinates, double_side_graph, segment_count, element) {
+        let sides_str = "";
+        const heigth_of_segment = this.graph_usable_heigth / segment_count;
+        // left side
+        for(let i = 0; i < segment_count; i++) {
+            let stroke_y_position = graph_coordinates.xy1[1] - (heigth_of_segment * i);
+            sides_str += `<line x1="${graph_coordinates.xy[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.xy[0]-7}" y2="${stroke_y_position}" />`;
+        }
+
+        // right side
+        if(double_side_graph) {
+            for(let i = 0; i < segment_count; i++) {
+                let stroke_y_position = graph_coordinates.x1y1[1] - (heigth_of_segment * i);
+                sides_str += `<line x1="${graph_coordinates.x1y[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.x1y[0]+7}" y2="${stroke_y_position}" />`;
+            }
+        }
+        
+        element.innerHTML += sides_str;
     }
 
     BuildEleringGraph() {
@@ -109,10 +172,14 @@ class GraphBuilder {
     }
 
     BuildConsumptionGraph() {
+        return new Graph(
 
+            );
     }
 
     BuildCostGraph() {
+        return new Graph(
 
+            );
     }
 }

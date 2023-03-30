@@ -121,7 +121,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .GetGraphsContainerWidthAndHeigthByID("test")
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
-            .BuildGraphsContainer();
+            .BuildGraphsContainer("test1");
 
             // Create container for the graph
             const graphs_count = 3;
@@ -135,14 +135,47 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             )
             .BuildGraphContainers();
 
-            console.log("Built graph containers.", GraphContainers);
+            console.log("Built graph containers. First container:", GraphContainers._Graph_containers[0]);
+
+            // Basic variables for the graph
+            const graph_Heigth = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
+            const graph_usable_heigth = graph_Heigth * 0.95;
 
             // Create Elering graph
             const EleringGraph = new GraphBuilder()
-            .CalculateGraphStartAndEndPosition()
-            
-            .BuildEleringGraph();
-            // console.log("Elering graph", EleringGraph);
+            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .BuildBaseGraph(
+                GraphContainers._Graph_containers[0][0], 
+                true, 
+                "test1", 
+                EleringData._EleringDataLength,
+                [true, true],
+                15
+            )
+
+            const ConsumptionGraph = new GraphBuilder()
+            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .BuildBaseGraph(
+                GraphContainers._Graph_containers[1][0], 
+                true, 
+                "test1", 
+                EleringData._EleringDataLength,
+                [true, true],
+                15
+            )
+
+            const CostGraph = new GraphBuilder()
+            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .BuildBaseGraph(
+                GraphContainers._Graph_containers[2][0], 
+                true, 
+                "test1", 
+                EleringData._EleringDataLength,
+                [true, true],
+                15
+            )
+            //.BuildEleringGraph();
+            //console.log("Elering graph", EleringGraph);
 
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
@@ -222,7 +255,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
                 }
                 else if (hourPrice > pricelevel1 && hourPrice <= pricelevel2) {
-                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FF0" stroke-width="3"/>`;
+                    graphStr += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FE0" stroke-width="3"/>`;
                 }
                 else if (hourPrice >= extremepricelevel) {
                     graphStr += `<circle cx="${x1}" cy="${y}" r="1.5" stroke="#F0F" fill="#F0F"/>`;
