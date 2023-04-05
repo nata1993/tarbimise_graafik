@@ -80,9 +80,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
     const foo = fetch(url)
         .then((response) => response.json())
         .then((res) => {
-            // Get SVG parent container calculated width
-            const SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
-
             // Build CSV consumption data
             const CSV_File_Data = CSV_File_Results.data;
             const ConsumptionData = new DataBuilder()
@@ -135,15 +132,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             )
             .BuildGraphContainers();
 
-            console.log("Built graph containers. First container:", GraphContainers._Graph_containers[0]);
-
             // Basic variables for the graph
-            const graph_Heigth = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
-            const graph_usable_heigth = graph_Heigth * 0.95;
+            const graph_heigth = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
+            const graph_usable_heigth = graph_heigth * 0.95;
 
             // Create Elering graph
             const EleringGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[0][0], 
                 true, 
@@ -154,7 +149,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             )
 
             const ConsumptionGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[1][0], 
                 true, 
@@ -165,7 +160,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             )
 
             const CostGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_Heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[2][0], 
                 true, 
@@ -174,8 +169,16 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 [true, true],
                 15
             )
-            //.BuildEleringGraph();
-            //console.log("Elering graph", EleringGraph);
+
+
+
+
+
+
+
+            
+            // Get SVG parent container calculated width
+            const SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 
             // Get SVG container base elements
             const Base_Graph = document.getElementById("npsBaseGraph");
