@@ -134,11 +134,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Basic variables for the graph
             const graph_heigth = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
-            const graph_usable_heigth = graph_heigth * 0.95;
+            const ratio_for_usable_graph_heigth = 0.95;
 
             // Create Elering graph
             const EleringGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[0][0], 
                 true, 
@@ -146,10 +146,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 EleringData._EleringDataLength,
                 [true, true],
                 15
-            )
+            );
 
             const ConsumptionGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[1][0], 
                 true, 
@@ -157,10 +157,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 EleringData._EleringDataLength,
                 [true, true],
                 15
-            )
+            );
 
             const CostGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, graph_usable_heigth)
+            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[2][0], 
                 true, 
@@ -168,7 +168,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 EleringData._EleringDataLength,
                 [true, true],
                 15
-            )
+            );
 
 
 
@@ -176,7 +176,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
 
 
-            
+
             // Get SVG parent container calculated width
             const SVG_Width = document.getElementById("NPS_CSV_Cost").getBoundingClientRect().width;
 

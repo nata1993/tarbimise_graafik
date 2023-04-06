@@ -82,9 +82,8 @@ class GraphBuilder {
     }
 
     // The graphs themselves
-    PrepareGraphsForDrawing(heigth, usableHeigth) {
-        this.graph_heigth = heigth;
-        this.graph_usable_heigth = usableHeigth;
+    PrepareGraphsForDrawing(heigth, ratioOfHeight) {
+        this.graph_usable_heigth = heigth * ratioOfHeight;
 
         return this;
     }
@@ -94,6 +93,8 @@ class GraphBuilder {
         this._BaseGraph(graph_coordinates, double_side_graph, Base_Graph);
         this._BottomStrokes(graph_coordinates, hours_count, week_and_or_hours, Base_Graph);
         this._SideStrokes(graph_coordinates, double_side_graph, segment_count, Base_Graph);
+
+        return this;
     }
     _BaseGraph(graph_coordinates, double_side_graph, element) {
         let svg_str = "";
@@ -165,6 +166,12 @@ class GraphBuilder {
         element.innerHTML += sides_str;
     }
 
+
+
+
+
+
+    
     BuildEleringGraph() {
         return new Graph(
 
