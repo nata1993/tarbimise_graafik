@@ -115,7 +115,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
-            .GetGraphsContainerWidthAndHeigthByID("test")
+            .GetGraphsContainerWidthAndheightByID("test")
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
             .BuildGraphsContainer("test1");
@@ -133,12 +133,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildGraphContainers();
 
             // Basic variables for the graph
-            const graph_heigth = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
-            const ratio_for_usable_graph_heigth = 0.95;
+            const graph_height = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
+            const ratio_for_usable_graph_height = 0.95;
 
             // Create Elering graph
             const EleringGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
+            .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[0][0], 
                 true, 
@@ -149,7 +149,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             );
 
             const ConsumptionGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
+            .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[1][0], 
                 true, 
@@ -160,7 +160,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             );
 
             const CostGraph = new GraphBuilder()
-            .PrepareGraphsForDrawing(graph_heigth, ratio_for_usable_graph_heigth)
+            .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[2][0], 
                 true, 
@@ -170,10 +170,32 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
+            EleringGraph.BuildEleringGraph(
+                [
+                    EleringGraph.graph_y1,
+                    EleringGraph.graph_y2,
+                    EleringGraph.graph_x1,
+                    EleringGraph.graph_x2
+                ]
+            );
 
+            ConsumptionGraph.BuildConsumptionGraph(
+                [
+                    ConsumptionGraph.graph_y1,
+                    ConsumptionGraph.graph_y2,
+                    ConsumptionGraph.graph_x1,
+                    ConsumptionGraph.graph_x2
+                ]
+            );
 
-
-
+            CostGraph.BuildCostGraph(
+                [
+                    CostGraph.graph_y1,
+                    CostGraph.graph_y2,
+                    CostGraph.graph_x1,
+                    CostGraph.graph_x2
+                ]
+            );
 
 
 
@@ -199,7 +221,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const endPosition = SVG_Width - offsetFromEnd; // Defines base graph horizontal graph end position
             const base_y = 275;
             const base_x = 60;
-            const graphHeigth = 200;
+            const graphheight = 200;
             
             // Coordinates for base graph vectors starts and ends
             const baseGraphCoordinates = {
@@ -228,14 +250,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             let nRatio = priceRatio(Math.ceil(Statistics._HighestPriceOfElectricity)); // Ratio number to display next to vertical graph. Essentially a graph segmentation ratio.
             let width = 0;
             const highestPriceLevel = Statistics._HighestPriceOfElectricity / nRatio;
-            const verticalWidthBetweenPoints = graphHeigth / highestPriceLevel;
+            const verticalWidthBetweenPoints = graphheight / highestPriceLevel;
             for (let i = 0; i < highestPriceLevel + 1; i++) {
                 width = base_y - (i * verticalWidthBetweenPoints);
                 strokesStr += `<line x1="${base_x}" y1="${width}" x2="${53}" y2="${width}" />`;
             }
 
             // Draws small strokes to base graph vertical line on the right side
-            let widthBetweenPoints = graphHeigth / 8;
+            let widthBetweenPoints = graphheight / 8;
             let y = base_y - widthBetweenPoints;
             for (let i = 0; i < 8; i++) {
                 strokesStr += `<line x1="${endPosition}" y1="${y}" x2="${endPosition+7}" y2="${y}"/>`;
@@ -249,7 +271,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const extremepricelevel = 100;
             let x1 = 61;
             let x2 = 61 + horizontalWidthBetweenStrokes;
-            const price_ratio = graphHeigth / Statistics._HighestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
+            const price_ratio = graphheight / Statistics._HighestPriceOfElectricity; // Ratio between 150px of vertical graph length and highest price
             let graphStr = "";
             for (let i = eDataStart; i < eDataEnd; i++) {
                 const hourPrice = Merged_Data._MergedData[i]["price"];
@@ -276,7 +298,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Adds CSV file datapoints to the graph in second group of SVG container;
             let lineStr = "";
-            const consumption_ratio = graphHeigth / Statistics._HighestConsumption;
+            const consumption_ratio = graphheight / Statistics._HighestConsumption;
             x1 = 61;
             x2 = 61 + horizontalWidthBetweenStrokes;
             for(let i = 0; i < CSV_Normalized_Data_Length; i++) {
@@ -312,7 +334,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Add price segments next to vertical graph on the left
             let textY = base_y + 2; // +2 is for centering text
-            let count = graphHeigth / verticalWidthBetweenPoints;
+            let count = graphheight / verticalWidthBetweenPoints;
             for (let i = 0; i < count+1; i += 2) {
                 textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
                 textY -= verticalWidthBetweenPoints * 2;
@@ -320,7 +342,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Add consumption segments next to vertical graph on the right
             textY = base_y +2;
-            count = graphHeigth / widthBetweenPoints;
+            count = graphheight / widthBetweenPoints;
             const consumGraphRatio = Statistics._HighestConsumption / 8;
             for(let i = 0; i < count + 1; i++) {
                 textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;

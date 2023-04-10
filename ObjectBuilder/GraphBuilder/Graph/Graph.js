@@ -1,9 +1,8 @@
 class Graph {
-
     constructor(
-        width, heigth
+        width, height
     ) {
         this._Width = width;
-        this._Heigth = heigth;
+        this._height = height;
     }
 }

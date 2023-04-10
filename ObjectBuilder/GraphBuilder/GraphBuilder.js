@@ -1,12 +1,12 @@
 class GraphBuilder {
 
     // Graphs container for the graphs
-    GetGraphsContainerWidthAndHeigthByID(element_id) {
+    GetGraphsContainerWidthAndheightByID(element_id) {
         const width = document.getElementById(element_id).getBoundingClientRect().width;
-        const heigth = document.getElementById(element_id).getBoundingClientRect().height;
+        const height = document.getElementById(element_id).getBoundingClientRect().height;
         this._SVG_container_dimensions = {
             SVG_container_parent_width: width, 
-            SVG_container_parent_heigth: heigth
+            SVG_container_parent_height: height
         };
         return this;
     }
@@ -23,7 +23,7 @@ class GraphBuilder {
         let padded_x = this._padding._padding_left;
         let padded_y = this._padding._padding_top;
         let padded_x1 = this._SVG_container_dimensions.SVG_container_parent_width - this._padding._padding_right;
-        let padded_y1 = this._SVG_container_dimensions.SVG_container_parent_heigth - this._padding._padding_bottom;
+        let padded_y1 = this._SVG_container_dimensions.SVG_container_parent_height - this._padding._padding_bottom;
         this._containerPositionCoordinates = {
             xy: [ padded_x, padded_y ], 
             xy1: [ padded_x, padded_y1 ], 
@@ -45,13 +45,13 @@ class GraphBuilder {
     // Graph container for the graph
     CalculateGraphContainerPosition(_xy, _xy1, _x1y, _x1y1, graph_count) {
         let graph_containers = [];
-        let container_heigth = ( _xy1[1] - _xy[1] ) / graph_count;
+        let container_height = ( _xy1[1] - _xy[1] ) / graph_count;
     
         // Find first graph coordinates
         let initial_xy = _xy;
-        let initial_xy1 = [ _xy1[0], _xy1[1] = container_heigth];
+        let initial_xy1 = [ _xy1[0], _xy1[1] = container_height];
         let initial_x1y = _x1y;
-        let initial_x1y1 = [ _x1y1[0], _x1y1[1] = container_heigth];
+        let initial_x1y1 = [ _x1y1[0], _x1y1[1] = container_height];
 
         for(let i = 0; i < graph_count; i++){
             graph_containers.push([{
@@ -63,10 +63,10 @@ class GraphBuilder {
             ]);
 
             // Calculate next graph coordinates
-            let next_xy = [ initial_xy[0], initial_xy[1] + container_heigth];
-            let next_xy1 = [ initial_xy1[0], initial_xy1[1] + container_heigth];
-            let next_x1y = [ initial_x1y[0], initial_x1y[1] + container_heigth];
-            let next_x1y1 = [ initial_x1y1[0], initial_x1y1[1] + container_heigth];
+            let next_xy = [ initial_xy[0], initial_xy[1] + container_height];
+            let next_xy1 = [ initial_xy1[0], initial_xy1[1] + container_height];
+            let next_x1y = [ initial_x1y[0], initial_x1y[1] + container_height];
+            let next_x1y1 = [ initial_x1y1[0], initial_x1y1[1] + container_height];
             initial_xy = next_xy;
             initial_xy1 = next_xy1;
             initial_x1y = next_x1y;
@@ -82,8 +82,8 @@ class GraphBuilder {
     }
 
     // The graphs themselves
-    PrepareGraphsForDrawing(heigth, ratioOfHeight) {
-        this.graph_usable_heigth = heigth * ratioOfHeight;
+    PrepareGraphsForDrawing(height, ratioOfHeight) {
+        this.graph_usable_height = height * ratioOfHeight;
 
         return this;
     }
@@ -93,6 +93,11 @@ class GraphBuilder {
         this._BaseGraph(graph_coordinates, double_side_graph, Base_Graph);
         this._BottomStrokes(graph_coordinates, hours_count, week_and_or_hours, Base_Graph);
         this._SideStrokes(graph_coordinates, double_side_graph, segment_count, Base_Graph);
+
+        this.graph_y1 = graph_coordinates.xy[1];
+        this.graph_y2 = graph_coordinates.xy1[1];
+        this.graph_x1 = graph_coordinates.xy1[0];
+        this.graph_x2 = graph_coordinates.x1y1[0];
 
         return this;
     }
@@ -148,17 +153,17 @@ class GraphBuilder {
     }
     _SideStrokes(graph_coordinates, double_side_graph, segment_count, element) {
         let sides_str = "";
-        const heigth_of_segment = this.graph_usable_heigth / segment_count;
+        const height_of_segment = this.graph_usable_height / segment_count;
         // left side
         for(let i = 0; i < segment_count; i++) {
-            let stroke_y_position = graph_coordinates.xy1[1] - (heigth_of_segment * i);
+            let stroke_y_position = graph_coordinates.xy1[1] - (height_of_segment * i);
             sides_str += `<line x1="${graph_coordinates.xy[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.xy[0]-7}" y2="${stroke_y_position}" />`;
         }
 
         // right side
         if(double_side_graph) {
             for(let i = 0; i < segment_count; i++) {
-                let stroke_y_position = graph_coordinates.x1y1[1] - (heigth_of_segment * i);
+                let stroke_y_position = graph_coordinates.x1y1[1] - (height_of_segment * i);
                 sides_str += `<line x1="${graph_coordinates.x1y[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.x1y[0]+7}" y2="${stroke_y_position}" />`;
             }
         }
@@ -172,21 +177,33 @@ class GraphBuilder {
 
 
     
-    BuildEleringGraph() {
-        return new Graph(
+    BuildEleringGraph(graph_mapping_coordinates) {
+        this._SpeficieDataGroups();
+        this._AddDataToGraph();
+        console.log(graph_mapping_coordinates);
 
-        );
     }
 
-    BuildConsumptionGraph() {
-        return new Graph(
-
-            );
+    BuildConsumptionGraph(graph_mapping_coordinates) {
+        this._AddDataToGraph();
+        this._SpeficieDataGroups();
+        console.log(graph_mapping_coordinates);
     }
 
-    BuildCostGraph() {
-        return new Graph(
+    BuildCostGraph(graph_mapping_coordinates) {
+        this._AddDataToGraph();
+        this._SpeficieDataGroups();
+        console.log(graph_mapping_coordinates);
+    }
 
-            );
+    _SpeficieDataGroups() {
+
+    }
+    _AddDataToGraph() {
+        // calculate vertical position of the stroke
+        // calculate horizontal position of the stroke
+        // map stroke according to position
+        // add price/cost/consumption data to the graph sides
+
     }
 }
