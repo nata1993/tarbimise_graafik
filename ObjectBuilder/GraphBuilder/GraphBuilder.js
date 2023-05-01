@@ -1,6 +1,5 @@
 class GraphBuilder {
-
-    // Graphs container for the graphs
+    // Graphs container
     GetGraphsContainerWidthAndheightByID(element_id) {
         const width = document.getElementById(element_id).getBoundingClientRect().width;
         const height = document.getElementById(element_id).getBoundingClientRect().height;
@@ -42,7 +41,7 @@ class GraphBuilder {
         );
     }
 
-    // Graph container for the graph
+    // Container for the graph
     CalculateGraphContainerPosition(_xy, _xy1, _x1y, _x1y1, graph_count) {
         let graph_containers = [];
         let container_height = ( _xy1[1] - _xy[1] ) / graph_count;
@@ -81,7 +80,7 @@ class GraphBuilder {
         return new GraphContainers(this.graph_containers);
     }
 
-    // The graphs themselves
+    // Base graph
     PrepareGraphsForDrawing(height, ratioOfHeight) {
         this.graph_usable_height = height * ratioOfHeight;
 
@@ -101,6 +100,7 @@ class GraphBuilder {
 
         return this;
     }
+
     _BaseGraph(graph_coordinates, double_side_graph, element) {
         let svg_str = "";
         // arrows
@@ -171,35 +171,71 @@ class GraphBuilder {
         element.innerHTML += sides_str;
     }
 
+    // Graphs themselves
+    BuildEleringGraph(graph_mapping_coordinates, data, highest_price, price_levels, element_id) {
+        // electricity price levels
+        const pricelevel1 = price_levels[0];
+        const pricelevel2 = price_levels[1];
+        const extremepricelevel = price_levels[2];
 
+        // element preparation
+        const element = document.getElementById(element_id);
+        let element_str = "";
 
+        // graph sizing
+        let graphheigth = graph_mapping_coordinates[1] - graph_mapping_coordinates[0];
+        graphheigth = graphheigth * 0.95;
+        let x1 = graph_mapping_coordinates[2];
+        let x2 = x1 + ((graph_mapping_coordinates[3] - graph_mapping_coordinates[2]) / data._MergedDataLength);
+        const width = x2 - x1;
 
+        // ratio for y coordinate
+        const price_ratio = graphheigth / highest_price;
+        
+        // generate continuos graph of lines
+        for(let i = 0; i < data._MergedDataLength; i++) {
+            const hourPrice = data._MergedData[i].price;
+            let y = graph_mapping_coordinates[1] - hourPrice * price_ratio;
+            if (hourPrice <= pricelevel1) {
+                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="3"/>`;
+            }
+            else if (hourPrice > pricelevel1 && hourPrice <= pricelevel2) {
+                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FE0" stroke-width="3"/>`;
+            }
+            else if (hourPrice >= extremepricelevel) {
+                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
+            }
+            else {
+                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#F00" stroke-width="3"/>`;
+            }
+            
+            x1 += width;
+            x2 += width;
+        }
 
+        element.innerHTML += element_str;
+    }
 
-    
-    BuildEleringGraph(graph_mapping_coordinates) {
-        this._SpeficieDataGroups();
+    BuildConsumptionGraph(graph_mapping_coordinates, data, element_id) {
+        this._SpecifieDataGroups();
         this._AddDataToGraph();
-        console.log(graph_mapping_coordinates);
-
     }
 
-    BuildConsumptionGraph(graph_mapping_coordinates) {
+    BuildCostGraph(graph_mapping_coordinates, data, element_id) {
+
+        this._SpecifieDataGroups();
         this._AddDataToGraph();
-        this._SpeficieDataGroups();
-        console.log(graph_mapping_coordinates);
     }
 
-    BuildCostGraph(graph_mapping_coordinates) {
-        this._AddDataToGraph();
-        this._SpeficieDataGroups();
-        console.log(graph_mapping_coordinates);
-    }
+    _SpecifieDataGroups(price_levels) {
+        
 
-    _SpeficieDataGroups() {
+        // consumption
+
+        // cost
 
     }
-    _AddDataToGraph() {
+    _AddDataToGraph(data) {
         // calculate vertical position of the stroke
         // calculate horizontal position of the stroke
         // map stroke according to position

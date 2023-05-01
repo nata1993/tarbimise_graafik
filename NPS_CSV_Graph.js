@@ -176,7 +176,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     EleringGraph.graph_y2,
                     EleringGraph.graph_x1,
                     EleringGraph.graph_x2
-                ]
+                ],
+                Merged_Data,
+                Statistics._HighestPriceOfElectricity,
+                [
+                    6, 12, 500
+                ],
+                "test1"
             );
 
             ConsumptionGraph.BuildConsumptionGraph(
@@ -185,7 +191,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     ConsumptionGraph.graph_y2,
                     ConsumptionGraph.graph_x1,
                     ConsumptionGraph.graph_x2
-                ]
+                ],
+                Merged_Data,
+                "test1"
             );
 
             CostGraph.BuildCostGraph(
@@ -194,7 +202,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     CostGraph.graph_y2,
                     CostGraph.graph_x1,
                     CostGraph.graph_x2
-                ]
+                ],
+                Merged_Data,
+                "test1"
             );
 
 
