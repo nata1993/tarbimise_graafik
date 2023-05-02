@@ -155,16 +155,18 @@ class GraphBuilder {
         let sides_str = "";
         const height_of_segment = this.graph_usable_height / segment_count;
         // left side
-        for(let i = 0; i < segment_count; i++) {
+        for(let i = 0; i < segment_count + 1; i++) {
             let stroke_y_position = graph_coordinates.xy1[1] - (height_of_segment * i);
-            sides_str += `<line x1="${graph_coordinates.xy[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.xy[0]-7}" y2="${stroke_y_position}" />`;
+            sides_str += `<line x1="${graph_coordinates.xy[0]}"     y1="${stroke_y_position}"
+                                x2="${graph_coordinates.xy[0]-7}"   y2="${stroke_y_position}" />`;
         }
 
         // right side
         if(double_side_graph) {
-            for(let i = 0; i < segment_count; i++) {
+            for(let i = 0; i < segment_count + 1; i++) {
                 let stroke_y_position = graph_coordinates.x1y1[1] - (height_of_segment * i);
-                sides_str += `<line x1="${graph_coordinates.x1y[0]}" y1="${stroke_y_position}" x2="${graph_coordinates.x1y[0]+7}" y2="${stroke_y_position}" />`;
+                sides_str += `<line x1="${graph_coordinates.x1y[0]}"    y1="${stroke_y_position}"
+                                    x2="${graph_coordinates.x1y[0]+7}"  y2="${stroke_y_position}" />`;
             }
         }
         
@@ -172,7 +174,7 @@ class GraphBuilder {
     }
 
     // Graphs themselves
-    BuildEleringGraph(graph_mapping_coordinates, data, highest_price, price_levels, element_id) {
+    BuildEleringGraph(graph_mapping_coordinates, data, highest_price, usable_heigth, price_levels, element_id) {
         // electricity price levels
         const pricelevel1 = price_levels[0];
         const pricelevel2 = price_levels[1];
@@ -182,15 +184,13 @@ class GraphBuilder {
         const element = document.getElementById(element_id);
         let element_str = "";
 
-        // graph sizing
-        let graphheigth = graph_mapping_coordinates[1] - graph_mapping_coordinates[0];
-        graphheigth = graphheigth * 0.95;
-        let x1 = graph_mapping_coordinates[2];
-        let x2 = x1 + ((graph_mapping_coordinates[3] - graph_mapping_coordinates[2]) / data._MergedDataLength);
+        // graph width sizing
+        let x1 = graph_mapping_coordinates[2] + 1;
+        let x2 = x1 + (((graph_mapping_coordinates[3] - 1) - (graph_mapping_coordinates[2] + 1)) / data._MergedDataLength);
         const width = x2 - x1;
 
         // ratio for y coordinate
-        const price_ratio = graphheigth / highest_price;
+        const price_ratio = usable_heigth / highest_price;
         
         // generate continuos graph of lines
         for(let i = 0; i < data._MergedDataLength; i++) {

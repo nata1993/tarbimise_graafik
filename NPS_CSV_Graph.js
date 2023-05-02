@@ -134,7 +134,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Basic variables for the graph
             const graph_height = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
-            const ratio_for_usable_graph_height = 0.95;
+            const ratio_for_usable_graph_height = 0.9;
 
             // Create Elering graph
             const EleringGraph = new GraphBuilder()
@@ -179,6 +179,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 ],
                 Merged_Data,
                 Statistics._HighestPriceOfElectricity,
+                EleringGraph.graph_usable_height,
                 [
                     6, 12, 500
                 ],
