@@ -194,6 +194,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     ConsumptionGraph.graph_x2
                 ],
                 Merged_Data,
+                Statistics._HighestConsumption,
+                EleringGraph.graph_usable_height,
                 "test1"
             );
 
