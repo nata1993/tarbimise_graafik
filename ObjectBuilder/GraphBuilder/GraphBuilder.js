@@ -221,8 +221,6 @@ class GraphBuilder {
         const element = document.getElementById(element_id);
         let element_str = "";
 
-        console.log(data);
-
         // graph width sizing
         let x1 = graph_mapping_coordinates[2] + 1;
         let x2 = x1 + (((graph_mapping_coordinates[3] - 1) - (graph_mapping_coordinates[2] + 1)) / data._MergedDataLength);
@@ -245,10 +243,31 @@ class GraphBuilder {
         element.innerHTML += element_str;
     }
 
-    BuildCostGraph(graph_mapping_coordinates, data, element_id) {
+    BuildCostGraph(graph_mapping_coordinates, data, highest_cost, usable_heigth, element_id) {
+        // element preparation
+        const element = document.getElementById(element_id);
+        let element_str = "";
 
-        this._SpecifieDataGroups();
-        this._AddDataToGraph();
+        // graph width sizing
+        let x1 = graph_mapping_coordinates[2] + 1;
+        let x2 = x1 + (((graph_mapping_coordinates[3] - 1) - (graph_mapping_coordinates[2] + 1)) / data._MergedDataLength);
+        const width = x2 - x1;
+
+        // ratio for y coordinate
+        const price_ratio = usable_heigth / highest_cost;
+        
+        // generate continuos graph of lines
+        for(let i = 0; i < data._MergedDataWithoutNull; i++) {
+            const hourConsumption = data._MergedData[i].consumption;
+            let y = graph_mapping_coordinates[1] - hourConsumption * price_ratio;
+            
+            element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2"/>`;
+            
+            x1 += width;
+            x2 += width;
+        }
+
+        element.innerHTML += element_str;
     }
 
     _SpecifieDataGroups(price_levels) {

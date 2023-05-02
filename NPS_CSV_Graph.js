@@ -111,6 +111,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .calculateLowestConsumption(Merged_Data._MergedData)
             .calculateAverageConsmption(Merged_Data._MergedData)
             .calculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .calculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .calculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .buildStatistics();
 
             // Create container where graphs will be placed
@@ -207,6 +209,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     CostGraph.graph_x2
                 ],
                 Merged_Data,
+                Statistics._HighestCostOfConsumption,
+                EleringGraph.graph_usable_height,
                 "test1"
             );
 
@@ -373,6 +377,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
+
+            document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
+            document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
             document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
 
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;

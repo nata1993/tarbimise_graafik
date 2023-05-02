@@ -111,12 +111,23 @@ class StatisticsBuilder {
         this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
         return this;
     }
-    calculateAverageCostOfConsumption(data) {
-        this._averageCostOfConsumption = averageCostOfConsumption;
+    calculateHighestCostOfConsumption(data, length) {
+        let highestCostOfConsumption = 0;
+        for(let i = 0; i < length; i++) {
+            if(data[i]["cost"] > highestCostOfConsumption) {
+                highestCostOfConsumption = data[i]["cost"];
+            }
+        }
+        this._highestCostOfConsumption = highestCostOfConsumption.toFixed(3);
         return this;
     }
-    calculateHighestCostOfConsumption(data) {
-        this._highestCostOfConsumption = highestCostOfConsumption;
+    calculateAverageCostOfConsumption(data, length) {
+        let sum = 0;
+        for(let i = 0; i < length; i++) {
+            sum += data[i]["cost"];
+        }
+        let averageCostOfConsumption = sum / length;
+        this._averageCostOfConsumption = averageCostOfConsumption.toFixed(3);
         return this;
     }
 
@@ -129,7 +140,9 @@ class StatisticsBuilder {
             this._highestDayConsumption,
             this._lowestConsumption,
             this._averageConsmption,
-            this._weightedAveragePriceOfElectricity
+            this._weightedAveragePriceOfElectricity,
+            this._highestCostOfConsumption,
+            this._averageCostOfConsumption
         );
     }
 }

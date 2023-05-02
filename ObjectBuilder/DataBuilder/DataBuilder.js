@@ -72,19 +72,21 @@ class DataBuilder {
             const timestamp = data1[i]["timestamp"]
             const price = data1[i]["price"];
             let consumption = data2[i];
+            let cost = null;
 
-            if(typeof consumption === "undefined" || consumption === NaN )
-            {
+            if(typeof consumption === "undefined" || consumption === NaN) {
                 consumption = null;
             }
             else {
+                cost = data1[i]["price"] * data2[i];
                 lengthWithoutNull++;
             }
 
             mergedData.push({
                 timestamp : timestamp,
                 price : price,
-                consumption : consumption
+                consumption : consumption,
+                cost: cost
             });
         }
 
