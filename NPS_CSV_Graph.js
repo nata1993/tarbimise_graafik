@@ -117,7 +117,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
-            .GetGraphsContainerWidthAndheightByID("test")
+            .GetGraphsContainerWidthAndheightByID("graph_main_container")
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
             .BuildGraphsContainer("test1");
