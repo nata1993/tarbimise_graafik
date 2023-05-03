@@ -258,10 +258,10 @@ class GraphBuilder {
         
         // generate continuos graph of lines
         for(let i = 0; i < data._MergedDataWithoutNull; i++) {
-            const hourConsumption = data._MergedData[i].consumption;
-            let y = graph_mapping_coordinates[1] - hourConsumption * price_ratio;
+            const hourCost = data._MergedData[i].cost;
+            let y = graph_mapping_coordinates[1] - hourCost * price_ratio;
             
-            element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2"/>`;
+            element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#f77d40" stroke-width="2"/>`;
             
             x1 += width;
             x2 += width;
