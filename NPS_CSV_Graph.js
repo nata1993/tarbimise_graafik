@@ -120,7 +120,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .GetGraphsContainerWidthAndheightByID("graph_main_container")
             .SetGraphsContainerPadding(60, 20, 60, 20)
             .CalculateGraphsContainerPosition()
-            .BuildGraphsContainer("test1");
+            .BuildGraphsContainer("graphs_container");
 
             // Create container for the graph
             const graphs_count = 3;
@@ -144,7 +144,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[0][0], 
                 true, 
-                "test1", 
+                "elering_graph", 
                 EleringData._EleringDataLength,
                 [true, true],
                 15
@@ -155,7 +155,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[1][0], 
                 true, 
-                "test1", 
+                "consumption_graph", 
                 EleringData._EleringDataLength,
                 [true, true],
                 15
@@ -166,7 +166,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildBaseGraph(
                 GraphContainers._Graph_containers[2][0], 
                 true, 
-                "test1", 
+                "cost_graph", 
                 EleringData._EleringDataLength,
                 [true, true],
                 15
@@ -185,7 +185,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 [
                     6, 12, 500
                 ],
-                "test1"
+                "elering_graph"
             );
 
             ConsumptionGraph.BuildConsumptionGraph(
@@ -198,7 +198,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 Merged_Data,
                 Statistics._HighestConsumption,
                 EleringGraph.graph_usable_height,
-                "test1"
+                "consumption_graph"
             );
 
             CostGraph.BuildCostGraph(
@@ -211,7 +211,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 Merged_Data,
                 Statistics._HighestCostOfConsumption,
                 EleringGraph.graph_usable_height,
-                "test1"
+                "cost_graph"
             );
 
             // Add text to graph
@@ -281,104 +281,4 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
         })
         .catch(err => { throw err });
-}
-
-function priceRatio (price) {
-    let ratio = 0;
-    if (price < 10) {
-        ratio = 5;
-    }
-    else if (price >= 10 && price < 30) {
-        ratio = 1;
-    }
-    else if (price >= 30 && price < 50) {
-        ratio = 2;
-    }
-    else if (price >= 50 && price < 70) {
-        ratio = 3;
-    }
-    else if (price >= 70 && price < 90) {
-        ratio = 4;
-    }
-    else if (price >= 90 && price < 110) {
-        ratio = 5;
-    }
-    else if (price >= 110 && price < 130) {
-        ratio = 6;
-    }
-    else if (price >= 130 && price < 150) {
-        ratio = 7;
-    }
-    else if (price >= 150 && price < 170) {
-        ratio = 8;
-    }
-    else if (price >= 170 && price < 190) {
-        ratio = 9;
-    }
-    else if (price >= 190 && price < 210) {
-        ratio = 10;
-    }
-    else if (price >= 210 && price < 230) {
-        ratio = 11;
-    }
-    else if (price >= 230 && price < 250) {
-        ratio = 12;
-    }
-    else if (price >= 250 && price < 270) {
-        ratio = 13;
-    }
-    else if (price >= 270 && price < 290) {
-        ratio = 14;
-    }
-    else if (price >= 290 && price < 310) {
-        ratio = 15;
-    }
-    else if (price >= 310 && price < 330) {
-        ratio = 16;
-    }
-    else if (price >= 330 && price < 350) {
-        ratio = 17;
-    }
-    else if (price >= 350 && price < 370) {
-        ratio = 18;
-    }
-    else if (price >= 370 && price < 390) {
-        ratio = 19;
-    }
-    else if (price >= 390 && price < 410) {
-        ratio = 20;
-    }
-    else if (price >= 410 && price < 430) {
-        ratio = 21;
-    }
-    else if (price >= 430 && price < 450) {
-        ratio = 22;
-    }
-    else if (price >= 450 && price < 470) {
-        ratio = 23;
-    }
-    else if (price >= 470 && price < 490) {
-        ratio = 24;
-    }
-    else if (price >= 490 && price < 510) {
-        ratio = 25;
-    }
-
-
-    return ratio;
-}
-
-function consumptionRatio(consum) {
-    let ratio = 0;
-    if(consum < 1) {
-        ratio = 8;
-    }
-    else if (consum < 2) {
-        ratio = 16;
-    }
-    else if (consum < 3) {
-        ratio = 24;
-    }
-
-    return ratio;
 }
