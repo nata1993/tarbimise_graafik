@@ -88,6 +88,7 @@ class GraphBuilder {
     }
     BuildBaseGraph(graph_coordinates, double_side_graph, element_id, hours_count, week_and_or_hours, segment_count) {
         const Base_Graph = document.getElementById(element_id);
+        Base_Graph.innerHTML = "";
         
         this._BaseGraph(graph_coordinates, double_side_graph, Base_Graph);
         this._BottomStrokes(graph_coordinates, hours_count, week_and_or_hours, Base_Graph);
