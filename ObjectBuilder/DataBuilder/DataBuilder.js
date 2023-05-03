@@ -5,11 +5,25 @@ class DataBuilder {
         return this;
     }
     GetDaytimeConsumptionFromData(data){
-        this._daytimeConsumptionData = data[6][2].replace(",", ".");
+        let number;
+        if (data[6][2] === "" || data[6][2] == null) {
+            number = 0;
+        }
+        else {
+            number = data[6][2].replace(",", ".");
+        }
+        this._daytimeConsumptionData = number;
         return this;
     }
     GetNightTimeConsumptionFromData(data){
-        this._nighttimeConsumptionData = data[7][2].replace(",", ".");
+        let number;
+        if (data[7][2] === "" || data[7][2] == null) {
+            number = 0;
+        }
+        else {
+            number = data[7][2].replace(",", ".");
+        }
+        this._nighttimeConsumptionData = number;
         return this;
     }
     GetTotalConsumptionFromData(data) {
