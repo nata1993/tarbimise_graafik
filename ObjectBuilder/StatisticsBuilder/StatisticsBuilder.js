@@ -111,6 +111,38 @@ class StatisticsBuilder {
         this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
         return this;
     }
+    calculateWeightedDaytimeAveragePriceOfElectricity(data, length) {
+        let daytimeWeightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        let counter = 0;
+        for(let i = 0; i < length; i++) {
+            if (data[i]["consumption_time"] == "Päev") {
+                weightedTerms += data[i]["price"] * data[i]["consumption"];
+                totalOfTerms += data[i]["consumption"];
+                counter++;
+            }
+        }
+        daytimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(3);
+        return this;
+    }
+    calculateWeightedNighttimeAveragePriceOfElectricity(data, length) {
+        let nighttimeWeightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        let counter = 0;
+        for(let i = 0; i < length; i++) {
+            if (data[i]["consumption_time"] == "Öö") {
+                weightedTerms += data[i]["price"] * data[i]["consumption"];
+                totalOfTerms += data[i]["consumption"];
+                counter++;
+            }
+        }
+        nighttimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(3);
+        return this; 
+    }
     calculateHighestCostOfConsumption(data, length) {
         let highestCostOfConsumption = 0;
         for(let i = 0; i < length; i++) {
@@ -141,6 +173,8 @@ class StatisticsBuilder {
             this._lowestConsumption,
             this._averageConsmption,
             this._weightedAveragePriceOfElectricity,
+            this._daytimeWeightedAveragePriceOfElectricity,
+            this._nighttimeWeightedAveragePriceOfElectricity,
             this._highestCostOfConsumption,
             this._averageCostOfConsumption
         );

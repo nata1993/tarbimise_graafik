@@ -8,6 +8,8 @@ class Statistics {
         LowestConsumption,
         AverageConsmption,
         WeightedAveragePriceOfElectricity,
+        DaytimeWeightedAveragePriceOfElectricity,
+        NighttimeWeightedAveragePriceOfElectricity,
         HighestCostOfConsumption,
         AverageCostOfConsumption
     ) {
@@ -19,6 +21,8 @@ class Statistics {
         this._LowestConsumption = LowestConsumption;
         this._AverageConsmption = AverageConsmption;
         this._WeightedAveragePriceOfElectricity = WeightedAveragePriceOfElectricity;
+        this._DaytimeWeightedAveragePriceOfElectricity = DaytimeWeightedAveragePriceOfElectricity,
+        this._NighttimeWeightedAveragePriceOfElectricity = NighttimeWeightedAveragePriceOfElectricity,
         this._HighestCostOfConsumption = HighestCostOfConsumption;
         this._AverageCostOfConsumption = AverageCostOfConsumption;
     }

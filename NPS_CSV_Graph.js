@@ -272,6 +272,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
             document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
             document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedDaytimeCost").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedNighttimeCost").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
 
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
             document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
