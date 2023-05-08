@@ -89,7 +89,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .GetTotalConsumptionFromData(CSV_File_Data)
             .NormalizeCSVdata(CSV_File_Data)
             .BuildConsumptionData();
-            const CSV_Normalized_Data_Length = ConsumptionData._ConsumptionDataLength;
 
             // Build Elering dataset
             const EleringData = new DataBuilder()
