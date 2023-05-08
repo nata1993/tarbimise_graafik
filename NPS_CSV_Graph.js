@@ -111,6 +111,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .calculateLowestConsumption(Merged_Data._MergedData)
             .calculateAverageConsmption(Merged_Data._MergedData)
             .calculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .calculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .calculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .calculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .calculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .buildStatistics();
