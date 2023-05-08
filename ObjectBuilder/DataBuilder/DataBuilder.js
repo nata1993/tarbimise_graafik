@@ -36,7 +36,12 @@ class DataBuilder {
         let normalizedCSVdata = [];
         const length = data.length;
         for (let i = ignoreDataBeginning; i < length; i++) {
-            normalizedCSVdata.push(Number(data[i][4].replace(",", ".")));
+            const field1 = Number(data[i][4].replace(",", "."));
+            const field2 = data[i][2];
+            normalizedCSVdata.push({
+                consumption : field1,
+                consumption_time : field2
+            });
         }
         
         this._normalizedConsumptionData = normalizedCSVdata;
@@ -85,21 +90,30 @@ class DataBuilder {
         for(let i = 0; i < data1Length; i++){
             const timestamp = data1[i]["timestamp"]
             const price = data1[i]["price"];
-            let consumption = data2[i];
+            let consumption = 0;
+            let consumption_time = "";
             let cost = null;
 
-            if(typeof consumption === "undefined" || consumption === NaN) {
+            // Fill null for consumption and consumed time after the consumption data ended since
+            // electricity prices are day-ahead and consumption is lacking behind in real time data.
+            // Since consumption and consumption are a pair of data at all times, consider it as one
+            // hence no need for double check for type.
+            if(typeof data2[i] === "undefined" || data2[i] === NaN) {
                 consumption = null;
+                consumption_time = null;
             }
             else {
-                cost = data1[i]["price"] * data2[i];
+                consumption = data2[i].consumption;
+                cost = data1[i]["price"] * data2[i]["consumption"];
+                consumption_time = data2[i]["consumption_time"];
                 lengthWithoutNull++;
             }
-
+            
             mergedData.push({
                 timestamp : timestamp,
                 price : price,
                 consumption : consumption,
+                consumption_time : consumption_time,
                 cost: cost
             });
         }
