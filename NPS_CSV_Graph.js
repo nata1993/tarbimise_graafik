@@ -215,53 +215,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 "cost_graph"
             );
 
-            // Add text to graph
-            /*
-            let textOffsetBelowGraph = base_y + 25;
-            let textStr = "";
-            Text_Group.style.fontFamily = "arial";
-            Text_Group.style.fontSize = "10px";
-            textStr += `<text x="10" y="25">NPS price</text>`;
-            textStr += `<text x="10" y="35">\u00A2/KWh</text>`;
-            textStr += `<text x="10" y="45">Inc. 20%</text>`;
-            textStr += `<text x="${(SVG_Width/2) - 15}" y="${textOffsetBelowGraph}">Hours</text>`;
-            textStr += `<circle cx="${endPosition - 100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
-            textStr += `<text x="${endPosition - 90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
-            textStr += `<text x="${endPosition + 4}" y="35">Consumption</text>`;
-            textStr += `<text x="${endPosition + 4}" y="45">KWh</text>`;
-            textStr += `<line x1="75" y1="${textOffsetBelowGraph}" x2="90" y2="${textOffsetBelowGraph}" stroke="#F00" stroke-width="2" />`;
-            textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over ${pricelevel2} \u00A2/KWh</text>`;
-            textStr += `<line x1="190" y1="${textOffsetBelowGraph}" x2="205" y2="${textOffsetBelowGraph}" stroke="#FF0" stroke-width="2" />`;
-            textStr += `<text x="215" y="${textOffsetBelowGraph + 3}">Between ${pricelevel1} and ${pricelevel2} \u00A2/KWh</text>`;
-            textStr += `<line x1="350" y1="${textOffsetBelowGraph}" x2="365" y2="${textOffsetBelowGraph}" stroke="#0A0" stroke-width="2" />`;
-            textStr += `<text x="375" y="${textOffsetBelowGraph + 3}">Below ${pricelevel1} \u00A2/KWh</text>`;
-            textStr += `<line x1="${(SVG_Width / 2) + 235}" y1="${textOffsetBelowGraph}" x2="${(SVG_Width / 2) + 250}" y2="${textOffsetBelowGraph}" stroke="#000" stroke-width="2" />`;
-            textStr += `<text x="${(SVG_Width / 2) + 260}" y="${textOffsetBelowGraph + 3}">Consumption</text>`;
-
-            // Add price segments next to vertical graph on the left
-            let textY = base_y + 2; // +2 is for centering text
-            let count = graphheight / verticalWidthBetweenPoints;
-            for (let i = 0; i < count+1; i += 2) {
-                textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
-                textY -= verticalWidthBetweenPoints * 2;
-            }
-
-            // Add consumption segments next to vertical graph on the right
-            textY = base_y +2;
-            count = graphheight / widthBetweenPoints;
-            const consumGraphRatio = Statistics._HighestConsumption / 8;
-            for(let i = 0; i < count + 1; i++) {
-                textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;
-                textY -= widthBetweenPoints;
-            }
-
-            Text_Group.innerHTML += textStr;
-
-            Graph_Title.style.fontSize = "16px";
-            Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
-
-            */
-
             // Fill data statistics to HTML
             document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
 
@@ -282,6 +235,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
+    
         })
         .catch(err => { throw err });
 }
