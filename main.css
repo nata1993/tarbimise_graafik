@@ -41,6 +41,10 @@ body {
     margin: 5px;
 }
 
+.archiveButton button {
+    height: 100%;
+}
+
 /* Body part of the page  */
 .body {
     width: auto;

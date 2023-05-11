@@ -81,6 +81,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .MergeData(EleringData._EleringData, ConsumptionData._ConsumptionData)
             .BuildMergedData();
 
+            // Save data to session cookie for later use if data will be downloaded
+            sessionStorage.setItem("Merged_data", JSON.stringify(Merged_Data._MergedData));
+
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
             .calculateHighestPriceOfElectricity(Merged_Data._MergedData)

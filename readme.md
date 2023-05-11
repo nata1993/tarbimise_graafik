@@ -20,6 +20,9 @@ NB! CSV file data wont contain 100% consumed electricity data because latest con
 is usually not present since Elektrilevi has not read the metering device for data. Data is updated many times
 a day but latest data is needed to be waited for, hence no the latest data in CSV file data.
 
+The tool has an option to download the raw data for archival purposes within limits of the API for electricity
+prices.
+
 ## Dependencies
 
 Papa Parse - for CSV file data parsing.
@@ -27,6 +30,8 @@ Papa Parse - for CSV file data parsing.
 ## Privacy
 
 Application does not store, analyze nor send your data anywhere. Its all localhost.
+Application uses Session Storage for the purpose if user wants to download data for archival
+purpose. Closing the tab will clear all cookies.
 
 ## Limitations
 
