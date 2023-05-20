@@ -221,6 +221,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
             document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
+            document.getElementById("whenCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
 
         })
         .catch(err => { throw err });

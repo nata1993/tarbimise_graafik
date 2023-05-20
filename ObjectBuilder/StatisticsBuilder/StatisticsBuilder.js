@@ -145,12 +145,26 @@ class StatisticsBuilder {
     }
     calculateHighestCostOfConsumption(data, length) {
         let highestCostOfConsumption = 0;
+        let when = null;
         for(let i = 0; i < length; i++) {
             if(data[i]["cost"] > highestCostOfConsumption) {
                 highestCostOfConsumption = data[i]["cost"];
+                when = data[i]["timestamp"];
             }
         }
+
+        const date = new Date(when * 1000);
+        const year = date.getFullYear();
+        const month = ("0" + (date.getMonth() + 1)).substr(-2);
+        const day = ("0" + date.getDate()).substr(-2);
+        const hour = ("0" + date.getHours()).substr(-2);
+        const minutes = ("0" + date.getMinutes()).substr(-2);
+        const seconds = ("0" + date.getSeconds()).substr(-2);
+        const d = day + "." + month + "." + year;
+        const t = hour + ":" + minutes + ":" + seconds;
+
         this._highestCostOfConsumption = highestCostOfConsumption.toFixed(3);
+        this._whenHighestCostOfConsumption = d + " " + t;
         return this;
     }
     calculateAverageCostOfConsumption(data, length) {
@@ -185,6 +199,7 @@ class StatisticsBuilder {
             this._daytimeWeightedAveragePriceOfElectricity,
             this._nighttimeWeightedAveragePriceOfElectricity,
             this._highestCostOfConsumption,
+            this._whenHighestCostOfConsumption,
             this._averageCostOfConsumption,
             this._totalCostOfConsumption
         );
