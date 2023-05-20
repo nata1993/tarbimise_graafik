@@ -162,6 +162,15 @@ class StatisticsBuilder {
         this._averageCostOfConsumption = averageCostOfConsumption.toFixed(3);
         return this;
     }
+    calculateTotalCostOfConsumption(data, length) {
+        let totalCostOfConsumption = 0;
+        for(let i = 0; i < length; i++) {
+            totalCostOfConsumption += data[i]["cost"];
+        }
+        totalCostOfConsumption = totalCostOfConsumption / 100; // Convert cents into euro
+        this._totalCostOfConsumption = totalCostOfConsumption.toFixed(3);
+        return this;
+    }
 
     buildStatistics() {
         return new Statistics(
@@ -176,7 +185,8 @@ class StatisticsBuilder {
             this._daytimeWeightedAveragePriceOfElectricity,
             this._nighttimeWeightedAveragePriceOfElectricity,
             this._highestCostOfConsumption,
-            this._averageCostOfConsumption
+            this._averageCostOfConsumption,
+            this._totalCostOfConsumption
         );
     }
 }
