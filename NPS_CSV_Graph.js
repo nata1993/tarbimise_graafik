@@ -206,12 +206,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
             document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
-
-            document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
-            document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
-            document.getElementById("weightedCost").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("weightedDaytimeCost").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("weightedNighttimeCost").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+            document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
 
             document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
             document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
@@ -220,8 +217,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
             document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
             document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
+
             document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
-            document.getElementById("whenCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
+            document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
+            document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
+            document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 
         })
         .catch(err => { throw err });
