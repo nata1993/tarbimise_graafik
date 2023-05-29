@@ -224,5 +224,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 
         })
-        .catch(err => { throw err });
+        .catch(err => {
+            ErrorBuilder
+            //.SetupErrorText("arial", "14px", "error")
+            //.DisplayFeatureNotImplemented("arial", "20px", "error");
+            .DisplayError("arial", "20px", "error");
+            //throw err;
+        });
 }
