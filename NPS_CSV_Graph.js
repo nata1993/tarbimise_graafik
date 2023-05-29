@@ -61,6 +61,15 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
     const foo = fetch(url)
         .then((response) => response.json())
         .then((res) => {
+            // Clear contents of the graph area
+            ClearDataWindow ([
+                "graphs_container",
+                "elering_graph",
+                "consumption_graph",
+                "cost_graph",
+                "error"
+            ]);
+            
             // Build CSV consumption data
             const CSV_File_Data = CSV_File_Results.data;
             const ConsumptionData = new DataBuilder()
@@ -229,6 +238,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             //.SetupErrorText("arial", "14px", "error")
             //.DisplayFeatureNotImplemented("arial", "20px", "error");
             .DisplayError("arial", "20px", "error");
-            //throw err;
+            // throw err;
         });
+}
+
+function ClearDataWindow (id) {
+    for(let i = 0; i < id.length; i++) {
+        document.getElementById(id[i]).innerHTML = "";
+    }
 }
