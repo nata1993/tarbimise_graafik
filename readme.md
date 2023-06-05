@@ -1,7 +1,7 @@
 
 # Deployment
 
-<a href="https://nata1993.github.io/tarbimise_graafik/" target="_blank">Tarbimise graafik</a>
+[Tarbimise graafik](https://nata1993.github.io/tarbimise_graafik/)
 
 # A web application for comparing and reading your electricity consumption data
 
