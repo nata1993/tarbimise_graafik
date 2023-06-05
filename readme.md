@@ -1,9 +1,8 @@
 
 # A web application for comparing and reading your electricity consumption data
 
-Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values.
-They only give on how much you have consumed (kwh). For getting to know how much you used electricity in a
-monetary value, this web application has been created.
+Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values. Pretty sure other electricity providers also do not share such data.
+They only give you how much you have consumed (kwh). In order to know how much you used electricity in a monetary value, this web application has been created.
 
 Application takes CSV file filled with data either from Eesti Gaas or from Elektrilevi. You have to export
 the CSV file from either of these service providers by yourself since they dont give an API for such procedure.
@@ -18,7 +17,7 @@ added VAT of 20% and excise in order to calculate exact cost of electricity usag
 hours.
 NB! CSV file data wont contain 100% consumed electricity data because latest consumtion data (around 5-12 hours)
 is usually not present since Elektrilevi has not read the metering device for data. Data is updated many times
-a day but latest data is needed to be waited for, hence no the latest data in CSV file data.
+a day but latest data is needed to be waited for, hence no latest data in the CSV file.
 
 The tool has an option to download the raw data for archival purposes within limits of the API for electricity
 prices.
