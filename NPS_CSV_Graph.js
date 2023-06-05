@@ -67,6 +67,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 "elering_graph",
                 "consumption_graph",
                 "cost_graph",
+                "text",
                 "error"
             ]);
             
@@ -209,6 +210,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 "cost_graph"
             );
 
+            // Add text to the graphs
+            TextBuilder.AddElectricityGraphText("text");
+            // TextBuilder.AddConsumptionGraphText("text");
+            // TextBuilder.AddCostGraphText("text");
+
             // Fill data statistics to HTML
             document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
 
@@ -235,10 +241,9 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
         })
         .catch(err => {
             ErrorBuilder
-            //.SetupErrorText("arial", "14px", "error")
             //.DisplayFeatureNotImplemented("arial", "20px", "error");
             .DisplayError("arial", "20px", "error");
-            // throw err;
+            throw err;
         });
 }
 
