@@ -1,4 +1,8 @@
 
+# Deployment
+
+[Tarbimise graafik](https://nata1993.github.io/tarbimise_graafik/)
+
 # A web application for comparing and reading your electricity consumption data
 
 Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values. Pretty sure other electricity providers also do not share such data.
