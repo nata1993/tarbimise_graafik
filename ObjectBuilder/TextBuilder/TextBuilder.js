@@ -1,5 +1,5 @@
 class TextBuilder {
-    static AddElectricityGraphText (id) {
+    static AddEleringGraphText (id) {
         const element = document.getElementById(id);
         element.style.fontFamily = "Arial";
         element.style.fontSize = 8;

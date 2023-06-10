@@ -210,11 +210,6 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 "cost_graph"
             );
 
-            // Add text to the graphs
-            TextBuilder.AddElectricityGraphText("text");
-            // TextBuilder.AddConsumptionGraphText("text");
-            // TextBuilder.AddCostGraphText("text");
-
             // Fill data statistics to HTML
             document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
 

@@ -211,6 +211,9 @@ class GraphBuilder {
         }
 
         element.innerHTML += element_str;
+
+        // Add text to the graph
+        TextBuilder.AddEleringGraphText("text");
     }
 
     BuildConsumptionGraph(graph_mapping_coordinates, data, highest_consumption, usable_heigth, element_id) {
@@ -238,6 +241,9 @@ class GraphBuilder {
         }
 
         element.innerHTML += element_str;
+
+        // Add text to the graph
+        // TextBuilder.AddConsumptionGraphText("text");
     }
 
     BuildCostGraph(graph_mapping_coordinates, data, highest_cost, usable_heigth, element_id) {
@@ -265,6 +271,9 @@ class GraphBuilder {
         }
 
         element.innerHTML += element_str;
+
+        // Add text to the graph
+        // TextBuilder.AddCostGraphText("text");
     }
 
     _SpecifieDataGroups(price_levels) {
