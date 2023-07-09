@@ -214,9 +214,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             );
 
             // Build text for the graphs
-            TextBuilder.AddEleringGraphText("text", 25, 25);
-
-
+            TextBuilder.SetTextVariablesAndBuildText("text", 10, [10, 100, 200], "Aria", "12px", 0.5);
 
             // Fill data statistics to HTML
             StatisticsText(Statistics, ConsumptionData);
