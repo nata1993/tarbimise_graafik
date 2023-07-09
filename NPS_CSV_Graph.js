@@ -134,7 +134,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const graph_height = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
             const ratio_for_usable_graph_height = 0.9;
 
-            // Create Elering graph
+            // Create Elering electricity prices graph
             const EleringGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -146,6 +146,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
+            // Create consumption graph
             const ConsumptionGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -157,6 +158,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
+            // Create cost graph
             const CostGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -168,6 +170,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
+            // Build the graphs
             EleringGraph.BuildEleringGraph(
                 [
                     EleringGraph.graph_y1,
@@ -210,28 +213,13 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 "cost_graph"
             );
 
+            // Build text for the graphs
+            TextBuilder.AddEleringGraphText("text", 25, 25);
+
+
+
             // Fill data statistics to HTML
-            document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
-
-            document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
-            document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
-
-            document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
-            document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
-            document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
-            document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
-            document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
-            document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
-            document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
-
-            document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
-            document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
-            document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
-            document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
+            StatisticsText(Statistics, ConsumptionData);
 
         })
         .catch(err => {
@@ -246,4 +234,28 @@ function ClearDataWindow (id) {
     for(let i = 0; i < id.length; i++) {
         document.getElementById(id[i]).innerHTML = "";
     }
+}
+
+function StatisticsText(Statistics, ConsumptionData) {
+    document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
+
+    document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+
+    document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
+    document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
+    document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
+    document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
+    document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
+    document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
+    document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
+
+    document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
+    document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
+    document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
+    document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 }
