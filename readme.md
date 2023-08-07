@@ -38,4 +38,4 @@ purpose. Closing the tab will clear all cookies.
 
 ## Limitations
 
-Application uses JavaScript! Without enabling JavaScript in your browser, only HTML will be loaded.
+Application uses JavaScript! Without enabling JavaScript in your browser, only HTML and CSS will be loaded.
