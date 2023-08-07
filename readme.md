@@ -28,7 +28,7 @@ prices.
 
 ## Dependencies
 
-Papa Parse - for CSV file data parsing.
+[Papa Parse](https://www.papaparse.com/) - for CSV file data parsing.
 
 ## Privacy
 
