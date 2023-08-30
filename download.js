@@ -1,13 +1,13 @@
 
 // Downloading electricity price, consumption and the cost data to file
-const downloadData = (fileName) => {
+const downloadData = () => {
     const heading = document.getElementById("period").innerText;
     if(heading !== "Periood: -") {
         const dataObjToWrite = sessionStorage.getItem("Merged_data");
         const blob = new Blob([JSON.stringify(dataObjToWrite)], { type: "text/json" });
         const link = document.createElement("a");
 
-        link.download = `${fileName}.json`;
+        link.download = `${heading}.json`;
         link.href = window.URL.createObjectURL(blob);
         link.dataset.downloadurl = ["text/json", link.download, link.href].join(":");
 
