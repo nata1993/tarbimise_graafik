@@ -20,4 +20,7 @@ const downloadData = () => {
         link.dispatchEvent(evt);
         link.remove()
     }
+    else {
+        alert("There is no data to archive! Please provide data.");
+    } 
 };
