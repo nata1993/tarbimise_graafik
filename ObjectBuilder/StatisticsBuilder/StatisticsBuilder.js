@@ -1,4 +1,5 @@
 class StatisticsBuilder {
+    // Electricity price statistics
     calculateHighestPriceOfElectricity(data) {
         let highestPriceOfElectricity = 0;
         const length = data.length;
@@ -31,6 +32,52 @@ class StatisticsBuilder {
         this._averagePriceOfElectricity = averagePriceOfElectricity.toFixed(3);;
         return this;
     }
+    calculateWeightedAveragePriceOfElectricity(data, length) {
+        let weightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        for(let i = 0; i < length; i++) {
+            weightedTerms += data[i]["price"] * data[i]["consumption"];
+            totalOfTerms += data[i]["consumption"];
+        }
+        weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
+        return this;
+    }
+    calculateWeightedDaytimeAveragePriceOfElectricity(data, length) {
+        let daytimeWeightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        let counter = 0;
+        for(let i = 0; i < length; i++) {
+            if (data[i]["consumption_time"] == "Päev") {
+                weightedTerms += data[i]["price"] * data[i]["consumption"];
+                totalOfTerms += data[i]["consumption"];
+                counter++;
+            }
+        }
+        daytimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(3);
+        return this;
+    }
+    calculateWeightedNighttimeAveragePriceOfElectricity(data, length) {
+        let nighttimeWeightedAveragePriceOfElectricity = 0;
+        let weightedTerms = 0;
+        let totalOfTerms = 0;
+        let counter = 0;
+        for(let i = 0; i < length; i++) {
+            if (data[i]["consumption_time"] == "Öö") {
+                weightedTerms += data[i]["price"] * data[i]["consumption"];
+                totalOfTerms += data[i]["consumption"];
+                counter++;
+            }
+        }
+        nighttimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
+        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(3);
+        return this; 
+    }
+
+    // Electricity consumtion statistics
     calculateHighestConsumption(data) {
         let highestConsumption = 0;
         const length = data.length;
@@ -99,50 +146,8 @@ class StatisticsBuilder {
         this._averageConsmption = averageConsmption.toFixed(3);
         return this;
     }
-    calculateWeightedAveragePriceOfElectricity(data, length) {
-        let weightedAveragePriceOfElectricity = 0;
-        let weightedTerms = 0;
-        let totalOfTerms = 0;
-        for(let i = 0; i < length; i++) {
-            weightedTerms += data[i]["price"] * data[i]["consumption"];
-            totalOfTerms += data[i]["consumption"];
-        }
-        weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
-        return this;
-    }
-    calculateWeightedDaytimeAveragePriceOfElectricity(data, length) {
-        let daytimeWeightedAveragePriceOfElectricity = 0;
-        let weightedTerms = 0;
-        let totalOfTerms = 0;
-        let counter = 0;
-        for(let i = 0; i < length; i++) {
-            if (data[i]["consumption_time"] == "Päev") {
-                weightedTerms += data[i]["price"] * data[i]["consumption"];
-                totalOfTerms += data[i]["consumption"];
-                counter++;
-            }
-        }
-        daytimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(3);
-        return this;
-    }
-    calculateWeightedNighttimeAveragePriceOfElectricity(data, length) {
-        let nighttimeWeightedAveragePriceOfElectricity = 0;
-        let weightedTerms = 0;
-        let totalOfTerms = 0;
-        let counter = 0;
-        for(let i = 0; i < length; i++) {
-            if (data[i]["consumption_time"] == "Öö") {
-                weightedTerms += data[i]["price"] * data[i]["consumption"];
-                totalOfTerms += data[i]["consumption"];
-                counter++;
-            }
-        }
-        nighttimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(3);
-        return this; 
-    }
+    
+    // Electricity cost consumption statistics
     calculateHighestCostOfConsumption(data, length) {
         let highestCostOfConsumption = 0;
         let when = null;
@@ -186,6 +191,19 @@ class StatisticsBuilder {
         return this;
     }
 
+    // Network fees statistics
+    calculateTotalNetworkFee () {
+
+    }
+    calculateDaytimeNetworkFee () {
+
+    }
+    calculateNighttimeNetworkFee () {
+
+    }
+
+
+    // Build all of the statistics
     buildStatistics() {
         return new Statistics(
             this._highestPriceOfElectricity,
