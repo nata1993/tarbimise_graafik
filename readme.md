@@ -17,7 +17,7 @@ statistics also: highest cost; highest price; highest consumption; e.t.c.
 NB! This web application is only for stock market priced electricity. Fixed price services or 50/50 services
 are not usable by this web application, for now that is.
 Application will take Nord Pool Spot prices data from Elering AS by their means of API. To such price will be
-added VAT of 20% and excise in order to calculate exact cost of electricity usage at any hour consumed in previous
+added VAT of 20% and excise (excise not yet implemented) in order to calculate exact cost of electricity usage at any hour consumed in previous
 hours.
 NB! CSV file data wont contain 100% consumed electricity data because latest consumtion data (around 5-12 hours)
 is usually not present since Elektrilevi has not read the metering device for data. Data is updated many times
