@@ -35,6 +35,8 @@ prices.
 Application does not store, analyze nor send your data anywhere. Its all localhost.
 Application uses Session Storage for the purpose if user wants to download data for archival
 purpose. Closing the tab will clear all cookies.
+Application uses Local Storage for the purpose of storing Network Fees input values for future
+usage of application. Network Fees input cookie will expire in 3 months.
 
 ## Limitations
 
