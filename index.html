@@ -24,11 +24,15 @@
                 <label>Select CSV file:</label>
                 <label>Graph start date:</label>
                 <label>Graph end date:</label>
+                <label>Network charges (s/kwh, day):</label>
+                <label>Network charges (s/kwh, night):</label>
             </div>
             <div>
                 <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" />
                 <input type="date" id="date_start" />
                 <input type="date" id="date_end" />
+                <input type="number" id="network_fee_day" min="0" step="any" />
+                <input type="number" id="network_fee_night" min="0" step="any" /> 
             </div>
             <div class="archiveButton">
                 <button onclick="downloadData()">Archive data</button>
