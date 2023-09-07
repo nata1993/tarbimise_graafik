@@ -67,7 +67,7 @@ class DataBuilder {
         for(let i = 0; i < length; i++) {
             normalizedEleringData.push({
                 timestamp : data[i]["timestamp"],
-                price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh
+                price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh, 20% tax
             });
         }
         this._normalizedEleringData = normalizedEleringData;
