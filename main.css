@@ -40,6 +40,9 @@ body {
 .buttons input, .buttons label{
     margin: 5px;
 }
+.buttonsColumn :nth-child(1) {
+    text-align: right;
+}
 
 .archiveButton button {
     height: 100%;
@@ -53,7 +56,6 @@ body {
 }
 
 /* SVG styling */
-
 #NPS_CSV_Cost {
     width: 100%;
     height: 650px;
