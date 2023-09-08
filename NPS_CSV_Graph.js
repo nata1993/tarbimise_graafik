@@ -61,7 +61,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
         .then((response) => response.json())
         .then((res) => {
             // Clear contents of the graph area
-            ClearDataWindow ([
+            ClearSVGWindow ([
                 "graphs_container",
                 "elering_graph",
                 "consumption_graph",
@@ -227,7 +227,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
         });
 }
 
-function ClearDataWindow (element_id) {
+function ClearSVGWindow (element_id) {
     const length = element_id.length;
     for(let i = 0; i < length; i++) {
         document.getElementById(element_id[i]).innerHTML = "";
