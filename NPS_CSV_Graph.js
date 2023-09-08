@@ -37,7 +37,6 @@ function drawGraphs() {
         transform: undefined,
         delimitersToGuess: [',', '\t', '|', ';', Papa.RECORD_SEP, Papa.UNIT_SEP]
     });
-    
 }
 
 // Use user set date range for retrieving Nord Pool Spot electricity prices
