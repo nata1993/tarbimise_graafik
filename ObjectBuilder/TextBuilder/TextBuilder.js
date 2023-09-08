@@ -44,24 +44,24 @@ class TextBuilder {
 
     static _AddEleringGraphText (x1, y1, x2, y2, max_value) {
         const y3 = ((y1-y2) * 0.9) + y2 + 3;
-        let _text = `<text x="${x1+10}" y="${y1+3}">NPS price</text>`;
-        _text += `<text x="${x1+10}" y="${y1+16}">\u00A2/kWh</text>`;
+        let _text = `<text x="${x1+10}" y="${y1+5}">NPS price + 20% VAT</text>`;
+        _text += `<text x="${x1+10}" y="${y1+18}">\u00A2/kWh</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;
     }
     static _AddConsumptionGraphText (x1, y1, x2, y2, max_value) {
         const y3 = ((y1-y2) * 0.9) + y2 + 3;
-        let _text = `<text x="${x1+10}" y="${y1+3}">Consumption</text>`;
-        _text += `<text x="${x1+10}" y="${y1+16}">kWh</text>`;
+        let _text = `<text x="${x1+10}" y="${y1+5}">Consumption</text>`;
+        _text += `<text x="${x1+10}" y="${y1+18}">kWh</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;
     }
     static _AddCostGraphText (x1, y1, x2, y2, max_value) {
         const y3 = ((y1-y2) * 0.9) + y2 + 3;
-        let _text = `<text x="${x1+10}" y="${y1+3}">Cost</text>`;
-        _text += `<text x="${x1+10}" y="${y1+16}">\u00A2</text>`;
+        let _text = `<text x="${x1+10}" y="${y1+5}">Cost</text>`;
+        _text += `<text x="${x1+10}" y="${y1+18}">\u00A2</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
         _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;

@@ -289,23 +289,14 @@ class GraphBuilder {
 
     }
 
-    // Text to the graphs
-
     // Add text to graph
     /*
     
     let textOffsetBelowGraph = base_y + 25;
-    let textStr = "";
-    Text_Group.style.fontFamily = "arial";
-    Text_Group.style.fontSize = "10px";
-    textStr += `<text x="10" y="25">NPS price</text>`;
-    textStr += `<text x="10" y="35">\u00A2/KWh</text>`;
     textStr += `<text x="10" y="45">Inc. 20%</text>`;
     textStr += `<text x="${(SVG_Width/2) - 15}" y="${textOffsetBelowGraph}">Hours</text>`;
     textStr += `<circle cx="${endPosition - 100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
     textStr += `<text x="${endPosition - 90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
-    textStr += `<text x="${endPosition + 4}" y="35">Consumption</text>`;
-    textStr += `<text x="${endPosition + 4}" y="45">KWh</text>`;
     textStr += `<line x1="75" y1="${textOffsetBelowGraph}" x2="90" y2="${textOffsetBelowGraph}" stroke="#F00" stroke-width="2" />`;
     textStr += `<text x="100" y="${textOffsetBelowGraph + 3}">Over ${pricelevel2} \u00A2/KWh</text>`;
     textStr += `<line x1="190" y1="${textOffsetBelowGraph}" x2="205" y2="${textOffsetBelowGraph}" stroke="#FF0" stroke-width="2" />`;
