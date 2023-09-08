@@ -1,7 +1,7 @@
 class CookieHandler {
     // Session Storage of cookies
     static SetSessionCookie(id_of_cookie, value_to_store) {
-        sessionStorage.setItem(id, value);
+        sessionStorage.setItem(id_of_cookie, value_to_store);
     }
     static GetSessionCookie(id_of_cookie) {
         sessionStorage.getItem(id_of_cookie);
