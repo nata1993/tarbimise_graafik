@@ -92,7 +92,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildMergedData();
 
             // Save data to session cookie for later use if data will be downloaded
-            sessionStorage.setItem("Merged_data", JSON.stringify(Merged_Data._MergedData));
+            CookieHandler.SetSessionCookie("Merged_data", JSON.stringify(Merged_Data._MergedData));
 
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
