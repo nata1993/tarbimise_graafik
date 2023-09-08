@@ -1,6 +1,6 @@
 class TextBuilder {
-    static SetTextVariablesAndBuildText(id, graph_coordinates, font, fontSize, opacity, max_values) {
-        const element = document.getElementById(id);
+    static SetTextVariablesAndBuildText(svg_id, graph_coordinates, font, fontSize, opacity, graph_max_values) {
+        const element = document.getElementById(svg_id);
         element.style.fontFamily = font;
         element.style.fontSize = fontSize;
         element.style.opacity = opacity;
@@ -15,7 +15,7 @@ class TextBuilder {
         let text_x2 = graph_x2;
         let text_y2 = graph_y2;
 
-        text += this._AddEleringGraphText(text_x1, text_y1, text_x2, text_y2, max_values[0]);
+        text += this._AddEleringGraphText(text_x1, text_y1, text_x2, text_y2, graph_max_values[0]);
 
         graph_x1 = graph_coordinates[1].xy1[0];
         graph_x2 = graph_coordinates[1].x1y1[0];
@@ -26,7 +26,7 @@ class TextBuilder {
         text_x2 = graph_x2;
         text_y2 = graph_y2;
 
-        text += this._AddConsumptionGraphText(text_x1, text_y1, text_x2, text_y2, max_values[1]);
+        text += this._AddConsumptionGraphText(text_x1, text_y1, text_x2, text_y2, graph_max_values[1]);
 
         graph_x1 = graph_coordinates[2].xy1[0];
         graph_x2 = graph_coordinates[2].x1y1[0];
@@ -37,7 +37,7 @@ class TextBuilder {
         text_x2 = graph_x2;
         text_y2 = graph_y2;
 
-        text += this._AddCostGraphText(text_x1, text_y1, text_x2, text_y2, max_values[2]);
+        text += this._AddCostGraphText(text_x1, text_y1, text_x2, text_y2, graph_max_values[2]);
 
         element.innerHTML += text;
     }
