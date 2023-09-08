@@ -1,5 +1,5 @@
 class TextBuilder {
-    static SetTextVariablesAndBuildText(id, graph_coordinates, font, fontSize, opacity) {
+    static SetTextVariablesAndBuildText(id, graph_coordinates, font, fontSize, opacity, max_value) {
         const element = document.getElementById(id);
         element.style.fontFamily = font;
         element.style.fontSize = fontSize;
@@ -15,7 +15,7 @@ class TextBuilder {
         let text_x2 = graph_x2;
         let text_y2 = graph_y2;
 
-        text += this._AddEleringGraphText(text_x1, text_y1, text_x2, text_y2);
+        text += this._AddEleringGraphText(text_x1, text_y1, text_x2, text_y2, max_value);
 
         graph_x1 = graph_coordinates[1].xy1[0];
         graph_x2 = graph_coordinates[1].x1y1[0];
@@ -26,7 +26,7 @@ class TextBuilder {
         text_x2 = graph_x2;
         text_y2 = graph_y2;
 
-        text += this._AddConsumptionGraphText(text_x1, text_y1, text_x2, text_y2);
+        text += this._AddConsumptionGraphText(text_x1, text_y1, text_x2, text_y2, max_value);
 
         graph_x1 = graph_coordinates[2].xy1[0];
         graph_x2 = graph_coordinates[2].x1y1[0];
@@ -37,30 +37,33 @@ class TextBuilder {
         text_x2 = graph_x2;
         text_y2 = graph_y2;
 
-        text += this._AddCostGraphText(text_x1, text_y1, text_x2, text_y2);
+        text += this._AddCostGraphText(text_x1, text_y1, text_x2, text_y2, max_value);
 
         element.innerHTML += text;
     }
 
-    static _AddEleringGraphText (x1, y1, x2, y2) {
+    static _AddEleringGraphText (x1, y1, x2, y2, max_value) {
+        const y3 = ((y1-y2) * 0.9) + y2 + 3;
         let _text = `<text x="${x1+10}" y="${y1+3}">NPS price</text>`;
         _text += `<text x="${x1+10}" y="${y1+16}">€/kWh</text>`;
-        _text += `<text x="${x1-15}" y="${y2+4}">0</text>`;
-        _text += `<text x="${x1}" y="${y1+100}">insert max price</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;
     }
-    static _AddConsumptionGraphText (x1, y1, x2, y2) {
+    static _AddConsumptionGraphText (x1, y1, x2, y2, max_value) {
+        const y3 = ((y1-y2) * 0.9) + y2 + 3;
         let _text = `<text x="${x1+10}" y="${y1+3}">Consumption</text>`;
         _text += `<text x="${x1+10}" y="${y1+16}">kWh</text>`;
-        _text += `<text x="${x1-15}" y="${y2+4}">0</text>`;
-        _text += `<text x="${x1}" y="${y1+100}">insert max consumption</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;
     }
-    static _AddCostGraphText (x1, y1, x2, y2) {
+    static _AddCostGraphText (x1, y1, x2, y2, max_value) {
+        const y3 = ((y1-y2) * 0.9) + y2 + 3;
         let _text = `<text x="${x1+10}" y="${y1+3}">Cost</text>`;
         _text += `<text x="${x1+10}" y="${y1+16}">€</text>`;
-        _text += `<text x="${x1-15}" y="${y2+4}">0</text>`;
-        _text += `<text x="${x1}" y="${y1+100}">insert max cost</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y2+4}">0</text>`;
+        _text += `<text text-anchor="end" x="${x1-10}" y="${y3}">${max_value}</text>`;
         return _text;
     }
 }
