@@ -4,7 +4,7 @@ class CookieHandler {
         sessionStorage.setItem(id_of_cookie, value_to_store);
     }
     static GetSessionCookie(id_of_cookie) {
-        sessionStorage.getItem(id_of_cookie);
+        return sessionStorage.getItem(id_of_cookie);
     }
 
     // Local Storage of cookies
@@ -12,6 +12,7 @@ class CookieHandler {
 
     }
     static GetLocalCookie(id_of_cookie) {
-
+        
+        return;
     }
 }
