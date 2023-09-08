@@ -96,20 +96,20 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
 
             // Build statistics dataset
             const Statistics = new StatisticsBuilder()
-            .calculateHighestPriceOfElectricity(Merged_Data._MergedData)
-            .calculateDayHighestConsumption(Merged_Data._MergedData)
-            .calculateLowestPriceOfElectricity(Merged_Data._MergedData)
-            .calculateAveragePriceOfElectricity(Merged_Data._MergedData)
-            .calculateHighestConsumption(Merged_Data._MergedData)
-            .calculateLowestConsumption(Merged_Data._MergedData)
-            .calculateAverageConsmption(Merged_Data._MergedData)
-            .calculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .calculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .calculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .calculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .calculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .calculateTotalCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
-            .buildStatistics();
+            .CalculateHighestPriceOfElectricity(Merged_Data._MergedData)
+            .CalculateDayHighestConsumption(Merged_Data._MergedData)
+            .CalculateLowestPriceOfElectricity(Merged_Data._MergedData)
+            .CalculateAveragePriceOfElectricity(Merged_Data._MergedData)
+            .CalculateHighestConsumption(Merged_Data._MergedData)
+            .CalculateLowestConsumption(Merged_Data._MergedData)
+            .CalculateAverageConsmption(Merged_Data._MergedData)
+            .CalculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateTotalCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .BuildStatistics();
 
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
