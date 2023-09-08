@@ -228,9 +228,10 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
         });
 }
 
-function ClearDataWindow (id) {
-    for(let i = 0; i < id.length; i++) {
-        document.getElementById(id[i]).innerHTML = "";
+function ClearDataWindow (element_id) {
+    const length = element_id.length;
+    for(let i = 0; i < length; i++) {
+        document.getElementById(element_id[i]).innerHTML = "";
     }
 }
 
