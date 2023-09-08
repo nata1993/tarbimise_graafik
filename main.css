@@ -4,6 +4,11 @@ body {
     font-size: 20px;
 }
 
+h1 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 /* Header part of the page */
 .head {
     display: flex;
@@ -68,16 +73,16 @@ body {
 }
 
 /* Statistical text below SVG */
-#statistics {
+#electricity_statistics, #network_statistics, #total_statistics {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-#statistics div {
+#electricity_statistics div, #network_statistics div, #total_statistics div {
     padding: 15px;
     flex: 1;
 }
-.titleContainer p, .titleContainer h4{
+.titleContainer p, .titleContainer h4 {
     margin: 5px;
 }
 
