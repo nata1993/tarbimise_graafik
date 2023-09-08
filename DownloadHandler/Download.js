@@ -4,7 +4,7 @@ const downloadData = () => {
     const heading = document.getElementById("period").innerText;
     if(heading !== "Periood: -") {
         const dataObjToWrite = CookieHandler.GetSessionCookie("Merged_data");
-        const blob = new Blob([JSON.stringify(dataObjToWrite)], { type: "text/json" });
+        const blob = new Blob([dataObjToWrite], { type: "text/json" });
         const link = document.createElement("a");
 
         link.download = `${heading}.json`;
