@@ -293,7 +293,6 @@ class GraphBuilder {
     /*
     
     let textOffsetBelowGraph = base_y + 25;
-    textStr += `<text x="10" y="45">Inc. 20%</text>`;
     textStr += `<text x="${(SVG_Width/2) - 15}" y="${textOffsetBelowGraph}">Hours</text>`;
     textStr += `<circle cx="${endPosition - 100}" cy="${textOffsetBelowGraph - 2}" r="2" stroke="#F0F" fill="#F0F"/>`;
     textStr += `<text x="${endPosition - 90}" y="${textOffsetBelowGraph}">Extreme price(s)</text>`;
@@ -313,20 +312,5 @@ class GraphBuilder {
         textStr += `<text x="30" y="${textY}">${nRatio * i}</text>`;
         textY -= verticalWidthBetweenPoints * 2;
     }
-
-    // Add consumption segments next to vertical graph on the right
-    textY = base_y +2;
-    count = graphheight / widthBetweenPoints;
-    const consumGraphRatio = Statistics._HighestConsumption / 8;
-    for(let i = 0; i < count + 1; i++) {
-        textStr += `<text x="${endPosition + 15}" y="${textY}">${(consumGraphRatio * i).toFixed(3)}</text>`;
-        textY -= widthBetweenPoints;
-    }
-
-    Text_Group.innerHTML += textStr;
-
-    Graph_Title.style.fontSize = "16px";
-    Graph_Title.innerHTML += `<text x="${(SVG_Width/2) - 135}" y="${textOffsetBelowGraph + 25}">NPS price and electricity consumption</text>`;;
-
     */
 }
