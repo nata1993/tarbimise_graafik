@@ -231,6 +231,12 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Fill data statistics to HTML
             StatisticsText(Statistics, ConsumptionData);
 
+            // Horizontal line over graph when mouse is moving over the graph
+            const element = document.getElementById("graph_main_container");
+            element.addEventListener("mousemove", function graphHorizontalLineAnimation(event) {
+                GraphHorizontalLineAnimation(event);
+            });
+
         })
         .catch(err => {
             ErrorBuilder
@@ -269,4 +275,11 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
     document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
+}
+
+function GraphHorizontalLineAnimation (evt) {
+    let el = document.getElementById("horizontal_line");
+    el.innerHTML = "";
+    el.innerHTML += `<line x1="${evt.offsetX - 20}" y1="${evt.offsetY}" x2="${evt.offsetX + 20}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
+    el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY - 20}" x2="${evt.offsetX}" y2="${evt.offsetY + 20}" stroke="#555" stroke-width="1" />`;
 }
