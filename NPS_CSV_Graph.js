@@ -234,7 +234,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Horizontal line over graph when mouse is moving over the graph
             const element = document.getElementById("graph_main_container");
             element.addEventListener("mousemove", function graphHorizontalLineAnimation(event) {
-                GraphHorizontalLineAnimation(event);
+                GraphHorizontalLineAnimation(event, [GraphContainers._Graph_containers[0][0], GraphContainers._Graph_containers[1][0], GraphContainers._Graph_containers[2][0]]);
             });
 
         })
@@ -277,9 +277,15 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 }
 
-function GraphHorizontalLineAnimation (evt) {
-    let el = document.getElementById("horizontal_line");
+function GraphHorizontalLineAnimation (evt, graph_coordinates) {
+    const x1 = graph_coordinates[0].xy[0];
+    const y1 = graph_coordinates[0].xy[1];
+    const x2 = graph_coordinates[0].x1y1[0];
+    const y2 = graph_coordinates[0].x1y1[1];
+    let el = document.getElementById("nav_line");
     el.innerHTML = "";
-    el.innerHTML += `<line x1="${evt.offsetX - 20}" y1="${evt.offsetY}" x2="${evt.offsetX + 20}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
-    el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY - 20}" x2="${evt.offsetX}" y2="${evt.offsetY + 20}" stroke="#555" stroke-width="1" />`;
+    el.innerHTML += `<line x1="${x1}" y1="${evt.offsetY}" x2="${evt.offsetX}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
+    el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY}" x2="${x2}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
+    el.innerHTML += `<line x1="${evt.offsetX}" y1="${y1}" x2="${evt.offsetX}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
+    el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY}" x2="${evt.offsetX}" y2="${y2}" stroke="#555" stroke-width="1" />`;
 }
