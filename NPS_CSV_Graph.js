@@ -275,9 +275,10 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
     document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
-}
+}   
 
 function GraphHorizontalLineAnimation (evt, graph_coordinates) {
+    // Electricity price graph boundaries
     const x1 = graph_coordinates[0].xy[0];
     const y1 = graph_coordinates[0].xy[1];
     const x2 = graph_coordinates[0].x1y1[0];
@@ -288,4 +289,9 @@ function GraphHorizontalLineAnimation (evt, graph_coordinates) {
     el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY}" x2="${x2}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
     el.innerHTML += `<line x1="${evt.offsetX}" y1="${y1}" x2="${evt.offsetX}" y2="${evt.offsetY}" stroke="#555" stroke-width="1" />`;
     el.innerHTML += `<line x1="${evt.offsetX}" y1="${evt.offsetY}" x2="${evt.offsetX}" y2="${y2}" stroke="#555" stroke-width="1" />`;
+    // Delete horizontal line if outside of graph bounds.
+    if( evt.offsetX > x2 || evt.offsetX < x1 ||
+        evt.offsetY > y2 || evt.offsetY < y1 ) {
+            el.innerHTML = "";
+    }
 }
