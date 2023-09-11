@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         CookieHandler.SetLocalCookie("network_fee_night", elem2.value);
     });
 
-
     elem1.value = CookieHandler.GetLocalCookie("network_fee_day");
     elem2.value = CookieHandler.GetLocalCookie("network_fee_night");
 });
