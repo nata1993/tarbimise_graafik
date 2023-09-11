@@ -8,11 +8,10 @@ class CookieHandler {
     }
 
     // Local Storage of cookies
-    static SetLocalCookie(id_of_cookie, value_to_store, cookie_expiration_time) {
-        localStorage.setItem(id_of_cookie, value_to_store, cookie_expiration_time);
+    static SetLocalCookie(id_of_cookie, value_to_store) {
+        localStorage.setItem(id_of_cookie, value_to_store);
     }
     static GetLocalCookie(id_of_cookie) {
-        localStorage.getItem(id_of_cookie);
-        return;
+        return localStorage.getItem(id_of_cookie);
     }
 }

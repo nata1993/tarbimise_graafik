@@ -1,3 +1,19 @@
+// Apply cookies when page has loaded
+document.addEventListener("DOMContentLoaded", (event) => {
+    const elem1 = document.getElementById("network_fee_day");
+    const elem2 = document.getElementById("network_fee_night");
+
+    elem1.addEventListener("change", (event) => {
+        CookieHandler.SetLocalCookie("network_fee_day", elem1.value);
+    });
+    elem2.addEventListener("change", (event) => {
+        CookieHandler.SetLocalCookie("network_fee_night", elem2.value);
+    });
+
+
+    elem1.value = CookieHandler.GetLocalCookie("network_fee_day");
+    elem2.value = CookieHandler.GetLocalCookie("network_fee_night");
+});
 
 // Draw Nord Pool Spot prices based on user selected date range
 function drawGraphs() {
