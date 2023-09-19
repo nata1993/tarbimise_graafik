@@ -206,16 +206,19 @@ class StatisticsBuilder {
     // Build all of the statistics
     BuildStatistics() {
         return new Statistics(
+            // Electricity
             this._highestPriceOfElectricity,
             this._lowestPriceOfElectricity,
             this._averagePriceOfElectricity,
+            this._weightedAveragePriceOfElectricity,
+            this._daytimeWeightedAveragePriceOfElectricity,
+            this._nighttimeWeightedAveragePriceOfElectricity,
+            // Consumption
             this._highestConsumption,
             this._highestDayConsumption,
             this._lowestConsumption,
             this._averageConsmption,
-            this._weightedAveragePriceOfElectricity,
-            this._daytimeWeightedAveragePriceOfElectricity,
-            this._nighttimeWeightedAveragePriceOfElectricity,
+            // Cost
             this._highestCostOfConsumption,
             this._whenHighestCostOfConsumption,
             this._averageCostOfConsumption,
