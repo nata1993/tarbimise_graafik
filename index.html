@@ -53,123 +53,129 @@
             <g id="nav_line"></g>
         </svg>
         <!-- Statistics -->
-        <h3>Electricity statistics</h3>
-        <div id="electricity_statistics">
-            <div>
-                <div class="titleContainer" title="Highest NPS market price of electricity in a given period.">
-                    <h4>Period highest price of electricity</h4>
-                    <p id="highestPrice">-</p>
+        <div class="statistics">
+            <h3>Electricity statistics</h3>
+            <div id="electricity_statistics">
+                <div>
+                    <div class="titleContainer" title="Highest NPS market price of electricity in a given period.">
+                        <h4>Period highest price of electricity</h4>
+                        <p id="highestPrice">-</p>
+                    </div>
+                    <div class="titleContainer" title="Lowest NPS market price of electricity in a given period.">
+                        <h4>Period lowest price of electricity</h4>
+                        <p id="lowestPrice">-</p>
+                    </div>
+                    <div class="titleContainer" title="Average NPS market price of electricity in a given period. Consists of sum of all period prices divided by their count.">
+                        <h4>Period average price of electricity</h4>
+                        <p id="averagePrice">-</p>
+                    </div>
+                    <div class="titleContainer" title="Weighted average of electricity price of consumed electricity in a given period.">
+                        <h4>Period weighted average price of electricity</h4>
+                        <p id="weightedPrice">-</p>
+                    </div>
+                    <div class="titleContainer" title="Weighted average of electricity price of consumed electricity during daytime in a given period.">
+                        <h4>Period weighted average price of electricity (daytime)</h4>
+                        <p id="weightedDaytimePrice">-</p>
+                    </div>
+                    <div class="titleContainer" title="Weighted average of electricity price of consumed electricity during nighttime in a given period.">
+                        <h4>Period weighted average price of electricity (nighttime)</h4>
+                        <p id="weightedNighttimePrice">-</p>
+                    </div>
                 </div>
-                <div class="titleContainer" title="Lowest NPS market price of electricity in a given period.">
-                    <h4>Period lowest price of electricity</h4>
-                    <p id="lowestPrice">-</p>
+                <div>
+                    <div class="titleContainer" title="Highest consumption of electricity in a hour during given period.">
+                        <h4>Period highest hourly consumption</h4>
+                        <p id="highestConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Period highest day consumption of electricity.">
+                        <h4>Period daily highest consumption</h4>
+                        <p id="highestDailyConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Lowest consumption of electricity in a given period.">
+                        <h4>Period lowest consumption</h4>
+                        <p id="lowestConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Average hourly consumption of electricity in a given period.">
+                        <h4>Period average consumption</h4>
+                        <p id="averageConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Consumption that happened during the day hours.">
+                        <h4>Daytime consumption</h4>
+                        <p id="dayTimeConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Consumption that happened during the night hours.">
+                        <h4>Nighttime consumption</h4>
+                        <p id="nightTimeConsumption">-</p>
+                    </div>
+                    <div class="titleContainer" title="Total consumption of electricity in a given period.">
+                        <h4>Period total consumption</h4>
+                        <p id="totalConsumption">-</p>
+                    </div>
                 </div>
-                <div class="titleContainer" title="Average NPS market price of electricity in a given period. Consists of sum of all period prices divided by their count.">
-                    <h4>Period average price of electricity</h4>
-                    <p id="averagePrice">-</p>
-                </div>
-                <div class="titleContainer" title="Weighted average of electricity price of consumed electricity in a given period.">
-                    <h4>Period weighted average price of electricity</h4>
-                    <p id="weightedPrice">-</p>
-                </div>
-                <div class="titleContainer" title="Weighted average of electricity price of consumed electricity during daytime in a given period.">
-                    <h4>Period weighted average price of electricity (daytime)</h4>
-                    <p id="weightedDaytimePrice">-</p>
-                </div>
-                <div class="titleContainer" title="Weighted average of electricity price of consumed electricity during nighttime in a given period.">
-                    <h4>Period weighted average price of electricity (nighttime)</h4>
-                    <p id="weightedNighttimePrice">-</p>
-                </div>
-            </div>
-            <div>
-                <div class="titleContainer" title="Highest consumption of electricity in a hour during given period.">
-                    <h4>Period highest hourly consumption</h4>
-                    <p id="highestConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Period highest day consumption of electricity.">
-                    <h4>Period daily highest consumption</h4>
-                    <p id="highestDailyConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Lowest consumption of electricity in a given period.">
-                    <h4>Period lowest consumption</h4>
-                    <p id="lowestConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Average hourly consumption of electricity in a given period.">
-                    <h4>Period average consumption</h4>
-                    <p id="averageConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Consumption that happened during the day hours.">
-                    <h4>Daytime consumption</h4>
-                    <p id="dayTimeConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Consumption that happened during the night hours.">
-                    <h4>Nighttime consumption</h4>
-                    <p id="nightTimeConsumption">-</p>
-                </div>
-                <div class="titleContainer" title="Total consumption of electricity in a given period.">
-                    <h4>Period total consumption</h4>
-                    <p id="totalConsumption">-</p>
-                </div>
-            </div>
-            <div>
-                <div class="titleContainer" title="Highest cost of consumed electricity in a given period. Essentially at what day in a given hour was the most expensive cost of using electricity.">
-                    <h4>Period highest cost of consumption</h4>
-                    <p id="highestCost">-</p>
-                    <p class="wordWrap" id="whenHighestCost"></p>
-                </div>
-                <div class="titleContainer" title="The usual average cost of consumption in a given period. Essentially sum of all hourly consumptions divided by hours count in a given period.">
-                    <h4>Period arithmetic mean cost of consumption</h4>
-                    <p id="averageCost">-</p>
-                </div>
-                <div class="titleContainer" title="The total cost of consumed electricity in a given period.">
-                    <h4>Period total cost of consumption</h4>
-                    <p id="totalCost">-</p>
+                <div>
+                    <div class="titleContainer" title="Highest cost of consumed electricity in a given period. Essentially at what day in a given hour was the most expensive cost of using electricity.">
+                        <h4>Period highest cost of consumption</h4>
+                        <p id="highestCost">-</p>
+                        <p class="wordWrap" id="whenHighestCost"></p>
+                    </div>
+                    <div class="titleContainer" title="The usual average cost of consumption in a given period. Essentially sum of all hourly consumptions divided by hours count in a given period.">
+                        <h4>Period arithmetic mean cost of consumption</h4>
+                        <p id="averageCost">-</p>
+                    </div>
+                    <div class="titleContainer" title="The total cost of consumed electricity in a given period.">
+                        <h4>Period total cost of consumption</h4>
+                        <p id="totalCost">-</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <h3>Network charges statistics</h3>
-        <div id="network_statistics">
-            <div>
-                <div class="titleContainer">
-                    <h4>Daytime network fee for kwh</h4>
-                    <p>-</p>
+        <div class="statistics">
+            <h3>Grid charges statistics</h3>
+            <div id="network_statistics">
+                <div>
+                    <div class="titleContainer">
+                        <h4>Daytime grid fee for kwh</h4>
+                        <p id="daytime_grid_tariff">-</p>
+                    </div>
+                    <div class="titleContainer">
+                        <h4>Nighttime grid fee for kwh</h4>
+                        <p id="nighttime_grid_tariff">-</p>
+                    </div>
                 </div>
-                <div class="titleContainer">
-                    <h4>Nighttime network fee for kwh</h4>
-                    <p>-</p>
+                <div>
+                    <div class="titleContainer">
+                        <h4>Total grid charges</h4>
+                        <p id="total_grid_fee">-</p>
+                    </div>
+                    <div class="titleContainer">
+                        <h4>Total daytime grid charges</h4>
+                        <p id="total_daytime_grid_fee">-</p>
+                    </div>
+                    <div class="titleContainer">
+                        <h4>Total nighttime grid charges</h4>
+                        <p id="total_nighttime_grid_fee">-</p>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div class="titleContainer">
-                    <h4>Total network charges</h4>
-                    <p>-</p>
-                </div>
-                <div class="titleContainer">
-                    <h4>Total daytime network charges</h4>
-                    <p>-</p>
-                </div>
-                <div class="titleContainer">
-                    <h4>Total nighttime network charges</h4>
-                    <p>-</p>
-                </div>
-            </div>
-            <div>
+                <div>
 
+                </div>
             </div>
         </div>
-        <h3>Total fee statistics</h3>
-        <div id="total_statistics">
-            <div>
-                <div class="titleContainer">
-                    <h4>Total fees</h4>
-                    <p>-</p>
+        <div class="statistics">
+            <h3>Total fee statistics</h3>
+            <div id="total_statistics">
+                <div>
+                    <div class="titleContainer">
+                        <h4>Total fees</h4>
+                        <p>-</p>
+                    </div>
                 </div>
-            </div>
-            <div>
-                
-            </div>
-            <div>
+                <div>
+                    
+                </div>
+                <div>
 
+                </div>
             </div>
         </div>
         <hr>

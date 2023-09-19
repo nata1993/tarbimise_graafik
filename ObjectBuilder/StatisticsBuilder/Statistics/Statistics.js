@@ -16,15 +16,19 @@ class Statistics {
         HighestCostOfConsumption,
         WhenHighestCostOfConsumption,
         AverageCostOfConsumption,
-        TotalCostOfConsumption
+        TotalCostOfConsumption,
+        // Grid fees
+        TotalGridFee,
+        TotalDaytimeGridFee,
+        TotalNighttimeGridFee
     ) {
         // Electricity
         this._HighestPriceOfElectricity = HighestPriceOfElectricity;
         this._LowestPriceOfElectricity = LowestPriceOfElectricity;
         this._AveragePriceOfElectricity = AveragePriceOfElectricity;
         this._WeightedAveragePriceOfElectricity = WeightedAveragePriceOfElectricity;
-        this._DaytimeWeightedAveragePriceOfElectricity = DaytimeWeightedAveragePriceOfElectricity,
-        this._NighttimeWeightedAveragePriceOfElectricity = NighttimeWeightedAveragePriceOfElectricity,
+        this._DaytimeWeightedAveragePriceOfElectricity = DaytimeWeightedAveragePriceOfElectricity;
+        this._NighttimeWeightedAveragePriceOfElectricity = NighttimeWeightedAveragePriceOfElectricity;
         // Consumption
         this._HighestConsumption = HighestConsumption;
         this._HighestDayConsumption = HighestDayConsumption;
@@ -35,5 +39,9 @@ class Statistics {
         this._WhenHighestCostOfConsumption = WhenHighestCostOfConsumption;
         this._AverageCostOfConsumption = AverageCostOfConsumption;
         this._TotalCostOfConsumption = TotalCostOfConsumption;
+        // Grid fees
+        this._TotalGridFee = TotalGridFee;
+        this._TotalDaytimeGridFee = TotalDaytimeGridFee;
+        this._TotalNighttimeGridFee = TotalNighttimeGridFee;
     }
 }

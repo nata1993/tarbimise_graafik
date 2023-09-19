@@ -8,6 +8,11 @@ h1 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.statistics {
+    background-color: rgb(172, 221, 249);
+    margin: 20px;
+    padding: 20px;
+}
 
 /* Header part of the page */
 .head {

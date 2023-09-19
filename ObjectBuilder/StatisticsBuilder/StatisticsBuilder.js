@@ -192,14 +192,44 @@ class StatisticsBuilder {
     }
 
     // Network fees statistics
-    CalculateTotalNetworkFee () {
+    CalculateTotalNetworkFee(data, length, tarrifs) {
+        let totalNetworkFee = 0;
 
+        for(let i = 0; i < length; i++) {
+            if(data[i]["consumption_time"] == "Päev") {
+                totalNetworkFee += data[i]["consumption"] * tarrifs[0];
+            }
+            else {
+                totalNetworkFee += data[i]["consumption"] * tarrifs[1];
+            }
+        }
+
+        this._totalNetworkFee = (totalNetworkFee / 100).toFixed(3);
+        return this;
     }
-    CalculateDaytimeNetworkFee () {
+    CalculateDaytimeNetworkFee(data, length, tarrifs) {
+        let totalDaytimeNetworkFee = 0;
 
+        for(let i = 0; i < length; i++) {
+            if(data[i]["consumption_time"] == "Päev") {
+                totalDaytimeNetworkFee += data[i]["consumption"] * tarrifs[0];
+            }
+        }
+
+        this._totalDaytimeNetworkFee = (totalDaytimeNetworkFee / 100).toFixed(3);
+        return this;
     }
-    CalculateNighttimeNetworkFee () {
+    CalculateNighttimeNetworkFee(data, length, tarrifs) {
+        let totalNighttimeNetworkFee = 0;
 
+        for(let i = 0; i < length; i++) {
+            if(data[i]["consumption_time"] == "Öö") {
+                totalNighttimeNetworkFee += data[i]["consumption"] * tarrifs[1];
+            }
+        }
+
+        this._totalNightimeNetworkFee = (totalNighttimeNetworkFee / 100).toFixed(3);
+        return this;
     }
 
 
@@ -222,7 +252,11 @@ class StatisticsBuilder {
             this._highestCostOfConsumption,
             this._whenHighestCostOfConsumption,
             this._averageCostOfConsumption,
-            this._totalCostOfConsumption
+            this._totalCostOfConsumption,
+            // Network fees
+            this._totalNetworkFee,
+            this._totalDaytimeNetworkFee,
+            this._totalNightimeNetworkFee
         );
     }
 }
