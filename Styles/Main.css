@@ -88,7 +88,7 @@ h1 {
     flex: 1;
 }
 .titleContainer:hover {
-    background-color: rgb(143, 205, 244);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 .titleContainer p, .titleContainer h4 {
     margin: 5px;
