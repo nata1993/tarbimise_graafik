@@ -271,6 +271,7 @@ function ClearSVGWindow (element_id) {
 function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
 
+    // Electricity
     document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
     document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
     document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
@@ -278,6 +279,7 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
     document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
 
+    // Consumption
     document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
     document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
     document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
@@ -286,6 +288,7 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
     document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
 
+    // Cost
     document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
     document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
     document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
