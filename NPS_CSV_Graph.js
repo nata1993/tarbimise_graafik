@@ -282,21 +282,21 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("period").innerHTML = `Period: ${ConsumptionData._ConsumptionDataPeriod}`;
 
     // Electricity
-    document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/KWh`;
-    document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/KWh`;
-    document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/KWh`;
-    document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/KWh`;
-    document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
-    document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/KWh`;
+    document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
 
     // Consumption
-    document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} KWh`;
-    document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} KWh`;
-    document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} KWh`;
-    document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} KWh`;
-    document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} KWh`;
-    document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} KWh`;
-    document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} KWh`;
+    document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} kWh`;
+    document.getElementById("highestDailyConsumption").innerHTML = `${Statistics._HighestDayConsumption} kWh`;
+    document.getElementById("lowestConsumption").innerHTML = `${Statistics._LowestConsumption} kWh`;
+    document.getElementById("averageConsumption").innerHTML = `${Statistics._AverageConsmption} kWh`;
+    document.getElementById("dayTimeConsumption").innerHTML = `${ConsumptionData._DayTimeConsumption} kWh`;
+    document.getElementById("nightTimeConsumption").innerHTML = `${ConsumptionData._NightTimeConsumption} kWh`;
+    document.getElementById("totalConsumption").innerHTML = `${ConsumptionData._ConsumptionDataTotalConsumption} kWh`;
 
     // Cost
     document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
