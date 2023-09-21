@@ -2,6 +2,8 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const elem1 = document.getElementById("network_fee_day");
     const elem2 = document.getElementById("network_fee_night");
+    const elem3 = document.getElementById("excise");
+    const elem4 = document.getElementById("renew_fee");
 
     elem1.addEventListener("change", (event) => {
         CookieHandler.SetLocalCookie("network_fee_day", elem1.value);
@@ -9,9 +11,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
     elem2.addEventListener("change", (event) => {
         CookieHandler.SetLocalCookie("network_fee_night", elem2.value);
     });
+    elem3.addEventListener("change", (event) => {
+        CookieHandler.SetLocalCookie("excise", elem3.value);
+    });
+    elem4.addEventListener("change", (event) => {
+        CookieHandler.SetLocalCookie("renew_fee", elem4.value);
+    });
 
     elem1.value = CookieHandler.GetLocalCookie("network_fee_day");
     elem2.value = CookieHandler.GetLocalCookie("network_fee_night");
+    elem3.value = CookieHandler.GetLocalCookie("excise");
+    elem4.value = CookieHandler.GetLocalCookie("renew_fee");
 });
 
 // Draw Nord Pool Spot prices based on user selected date range
