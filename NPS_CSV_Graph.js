@@ -133,6 +133,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateTotalNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateDaytimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateNighttimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
+            // Total fees
+            .CalculateTotalFees()
             .BuildStatistics();
 
             // Create container where graphs will be placed
@@ -310,6 +312,9 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("total_grid_fee").innerHTML = `${Statistics._TotalGridFee} €`;
     document.getElementById("total_daytime_grid_fee").innerHTML = `${Statistics._TotalDaytimeGridFee} €`;
     document.getElementById("total_nighttime_grid_fee").innerHTML = `${Statistics._TotalNighttimeGridFee} €`;
+
+    // Total fees
+    document.getElementById("total_fees").innerHTML = `${Statistics._TotalFees} €`;
 }   
 
 function GraphHorizontalLineAnimation (evt, graph_coordinates) {

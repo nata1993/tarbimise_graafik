@@ -20,7 +20,9 @@ class Statistics {
         // Grid fees
         TotalGridFee,
         TotalDaytimeGridFee,
-        TotalNighttimeGridFee
+        TotalNighttimeGridFee,
+        // Total fees
+        TotalFees
     ) {
         // Electricity
         this._HighestPriceOfElectricity = HighestPriceOfElectricity;
@@ -43,5 +45,7 @@ class Statistics {
         this._TotalGridFee = TotalGridFee;
         this._TotalDaytimeGridFee = TotalDaytimeGridFee;
         this._TotalNighttimeGridFee = TotalNighttimeGridFee;
+        // Total fees
+        this._TotalFees = TotalFees;
     }
 }

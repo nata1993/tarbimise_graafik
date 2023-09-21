@@ -187,7 +187,7 @@ class StatisticsBuilder {
             totalCostOfConsumption += data[i]["cost"];
         }
         totalCostOfConsumption = totalCostOfConsumption / 100; // Convert cents into euro
-        this._totalCostOfConsumption = totalCostOfConsumption.toFixed(3);
+        this._totalCostOfConsumption = Number(totalCostOfConsumption.toFixed(3));
         return this;
     }
 
@@ -204,7 +204,7 @@ class StatisticsBuilder {
             }
         }
 
-        this._totalNetworkFee = (totalNetworkFee / 100).toFixed(3);
+        this._totalNetworkFee = Number((totalNetworkFee / 100).toFixed(3));
         return this;
     }
     CalculateDaytimeNetworkFee(data, length, tarrifs) {
@@ -232,6 +232,13 @@ class StatisticsBuilder {
         return this;
     }
 
+    // Total fees
+    CalculateTotalFees() {
+        const value = this._totalNetworkFee + this._totalCostOfConsumption;
+        this._totalFees = value.toFixed(2);
+        return this;
+    }
+
 
     // Build all of the statistics
     BuildStatistics() {
@@ -256,7 +263,9 @@ class StatisticsBuilder {
             // Network fees
             this._totalNetworkFee,
             this._totalDaytimeNetworkFee,
-            this._totalNightimeNetworkFee
+            this._totalNightimeNetworkFee,
+            // Total fees
+            this._totalFees
         );
     }
 }

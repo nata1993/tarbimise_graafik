@@ -67,7 +67,7 @@ class DataBuilder {
         for(let i = 0; i < length; i++) {
             normalizedEleringData.push({
                 timestamp : data[i]["timestamp"],
-                price : ((data[i]["price"] * 1.2) / 10) // Divide by 10 because MWh -> KWh, 20% tax
+                price : Number(((data[i]["price"]) / 10).toFixed(2)) // Divide by 10 because MWh -> KWh, 20% tax
             });
         }
         this._normalizedEleringData = normalizedEleringData;
@@ -118,6 +118,7 @@ class DataBuilder {
             });
         }
 
+        console.log(mergedData);
         this._mergedDataWithoutNull = lengthWithoutNull;
         this._dataLength = data1Length;
         this._mergedData = mergedData;
