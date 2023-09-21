@@ -118,7 +118,6 @@ class DataBuilder {
             });
         }
 
-        console.log(mergedData);
         this._mergedDataWithoutNull = lengthWithoutNull;
         this._dataLength = data1Length;
         this._mergedData = mergedData;
