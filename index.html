@@ -24,15 +24,19 @@
                 <label>Select CSV file:</label>
                 <label>Graph start date:</label>
                 <label>Graph end date:</label>
-                <label>Daytime network charges (s/kwh):</label>
-                <label>Nighttime network charges (s/kwh):</label>
+                <label>Daytime network fee (s/kwh):</label>
+                <label>Nighttime network fee (s/kwh):</label>
+                <label>Excise (s/kwh):</label>
+                <label>Renewble enery fee (s/kwh):</label>
             </div>
             <div>
                 <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" />
                 <input type="date" id="date_start" />
                 <input type="date" id="date_end" />
                 <input type="number" id="network_fee_day" min="0" step="any" />
-                <input type="number" id="network_fee_night" min="0" step="any" /> 
+                <input type="number" id="network_fee_night" min="0" step="any" />
+                <input type="number" id="excise" min="0" step="any" />
+                <input type="number" id="renew_fee" min="0" step="any" />
             </div>
             <div class="archiveButton">
                 <button onclick="downloadData()">Archive data</button>
@@ -87,8 +91,8 @@
                         <h4>Period highest hourly consumption</h4>
                         <p id="highestConsumption">-</p>
                     </div>
-                    <div class="titleContainer" title="Period highest day consumption of electricity.">
-                        <h4>Period daily highest consumption</h4>
+                    <div class="titleContainer" title="Highest one day consumption of electricity in a given period.">
+                        <h4>Period highest day consumption</h4>
                         <p id="highestDailyConsumption">-</p>
                     </div>
                     <div class="titleContainer" title="Lowest consumption of electricity in a given period.">
@@ -141,12 +145,16 @@
                         <h4>Nighttime grid tariff</h4>
                         <p id="nighttime_grid_tariff">-</p>
                     </div>
+                    <div class="titleContainer">
+                        <h4>Excise tariff</h4>
+                        <p id="daytime_grid_tariff">-</p>
+                    </div>
+                    <div class="titleContainer">
+                        <h4>Renewable energy tariff</h4>
+                        <p id="nighttime_grid_tariff">-</p>
+                    </div>
                 </div>
                 <div>
-                    <div class="titleContainer">
-                        <h4>Total grid charges</h4>
-                        <p id="total_grid_fee">-</p>
-                    </div>
                     <div class="titleContainer">
                         <h4>Total daytime grid charges</h4>
                         <p id="total_daytime_grid_fee">-</p>
@@ -155,9 +163,20 @@
                         <h4>Total nighttime grid charges</h4>
                         <p id="total_nighttime_grid_fee">-</p>
                     </div>
+                    <div class="titleContainer">
+                        <h4>Total grid charges</h4>
+                        <p id="total_grid_fee">-</p>
+                    </div>
                 </div>
                 <div>
-
+                    <div class="titleContainer">
+                        <h4>Total excise</h4>
+                        <p id="total_daytime_grid_fee">-</p>
+                    </div>
+                    <div class="titleContainer">
+                        <h4>Total renewable energi fee</h4>
+                        <p id="total_nighttime_grid_fee">-</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,7 +186,7 @@
                 <div>
                     <div class="titleContainer">
                         <h4>Total fees</h4>
-                        <p>-</p>
+                        <p id="total_fees">-</p>
                     </div>
                 </div>
                 <div>
