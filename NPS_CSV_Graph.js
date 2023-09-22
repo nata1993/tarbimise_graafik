@@ -2,8 +2,8 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const elem1 = document.getElementById("network_fee_day");
     const elem2 = document.getElementById("network_fee_night");
-    const elem3 = document.getElementById("excise");
-    const elem4 = document.getElementById("renew_fee");
+    const elem3 = document.getElementById("excise_tariff");
+    const elem4 = document.getElementById("renew_tariff");
 
     elem1.addEventListener("change", (event) => {
         CookieHandler.SetLocalCookie("network_fee_day", elem1.value);
@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
         CookieHandler.SetLocalCookie("excise", elem3.value);
     });
     elem4.addEventListener("change", (event) => {
-        CookieHandler.SetLocalCookie("renew_fee", elem4.value);
+        CookieHandler.SetLocalCookie("renewable_energy", elem4.value);
     });
 
     elem1.value = CookieHandler.GetLocalCookie("network_fee_day");
     elem2.value = CookieHandler.GetLocalCookie("network_fee_night");
     elem3.value = CookieHandler.GetLocalCookie("excise");
-    elem4.value = CookieHandler.GetLocalCookie("renew_fee");
+    elem4.value = CookieHandler.GetLocalCookie("renewable_energy");
 });
 
 // Draw Nord Pool Spot prices based on user selected date range
@@ -322,6 +322,12 @@ function StatisticsText(Statistics, ConsumptionData) {
     }
     if(CookieHandler.GetLocalCookie("network_fee_night") !== null && CookieHandler.GetLocalCookie("network_fee_night") !== "") {
         document.getElementById("nighttime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_night")} \u00A2/kWh`;
+    }
+    if(CookieHandler.GetLocalCookie("excise") !== null && CookieHandler.GetLocalCookie("excise") !== "") {
+        document.getElementById("excise").innerHTML = `${CookieHandler.GetLocalCookie("excise")} \u00A2/kWh`;
+    }
+    if(CookieHandler.GetLocalCookie("renewable_energy") !== null && CookieHandler.GetLocalCookie("renewable_energy") !== "") {
+        document.getElementById("renewable_energy").innerHTML = `${CookieHandler.GetLocalCookie("renewable_energy")} \u00A2/kWh`;
     }
 
     document.getElementById("total_grid_fee").innerHTML = `${Statistics._TotalGridFee} €`;

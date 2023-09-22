@@ -35,8 +35,8 @@
                 <input type="date" id="date_end" />
                 <input type="number" id="network_fee_day" min="0" step="any" />
                 <input type="number" id="network_fee_night" min="0" step="any" />
-                <input type="number" id="excise" min="0" step="any" />
-                <input type="number" id="renew_fee" min="0" step="any" />
+                <input type="number" id="excise_tariff" min="0" step="any" />
+                <input type="number" id="renew_tariff" min="0" step="any" />
             </div>
             <div class="archiveButton">
                 <button onclick="downloadData()">Archive data</button>
@@ -147,11 +147,11 @@
                     </div>
                     <div class="titleContainer">
                         <h4>Excise tariff</h4>
-                        <p id="daytime_grid_tariff">-</p>
+                        <p id="excise">-</p>
                     </div>
                     <div class="titleContainer">
                         <h4>Renewable energy tariff</h4>
-                        <p id="nighttime_grid_tariff">-</p>
+                        <p id="renewable_energy">-</p>
                     </div>
                 </div>
                 <div>
@@ -171,11 +171,11 @@
                 <div>
                     <div class="titleContainer">
                         <h4>Total excise</h4>
-                        <p id="total_daytime_grid_fee">-</p>
+                        <p id="total_excise">-</p>
                     </div>
                     <div class="titleContainer">
                         <h4>Total renewable energi fee</h4>
-                        <p id="total_nighttime_grid_fee">-</p>
+                        <p id="total_renew_fee">-</p>
                     </div>
                 </div>
             </div>
