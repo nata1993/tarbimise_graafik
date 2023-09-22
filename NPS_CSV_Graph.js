@@ -317,8 +317,13 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 
     // Network fees
-    document.getElementById("daytime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_day")} \u00A2/kWh`;
-    document.getElementById("nighttime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_night")} \u00A2/kWh`;
+    if(CookieHandler.GetLocalCookie("network_fee_day") !== null && CookieHandler.GetLocalCookie("network_fee_day") !== "") {
+        document.getElementById("daytime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_day")} \u00A2/kWh`;
+    }
+    if(CookieHandler.GetLocalCookie("network_fee_night") !== null && CookieHandler.GetLocalCookie("network_fee_night") !== "") {
+        document.getElementById("nighttime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_night")} \u00A2/kWh`;
+    }
+
     document.getElementById("total_grid_fee").innerHTML = `${Statistics._TotalGridFee} €`;
     document.getElementById("total_daytime_grid_fee").innerHTML = `${Statistics._TotalDaytimeGridFee} €`;
     document.getElementById("total_nighttime_grid_fee").innerHTML = `${Statistics._TotalNighttimeGridFee} €`;
