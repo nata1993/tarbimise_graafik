@@ -8,7 +8,7 @@
 ~~Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values.
 Pretty sure other electricity providers also do not share such data. They only give you how much you have
 consumed (kwh). In order to know how much you used electricity in a monetary value, this web application has
-been created.~~
+been created.~~  
 Elering AS have finnaly option to read your consumption also in monetary values! However, they lack on tools
 and statistics to compile much more detailed data for you. Hence this tool has been created.
 
