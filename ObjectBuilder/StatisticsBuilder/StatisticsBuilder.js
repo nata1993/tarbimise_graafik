@@ -237,7 +237,7 @@ class StatisticsBuilder {
             totalExcise += data[i]["consumption"] * tarrifs[2];
         }
 
-        this._totalExcise = totalExcise.toFixed(3);
+        this._totalExcise = Number(totalExcise.toFixed(3));
         return this;
     }
     CalculateTotalRenewableEnergyFee(data, length, tarrifs) {
@@ -246,14 +246,14 @@ class StatisticsBuilder {
             totalRenewableEnergyFee += data[i]["consumption"] * tarrifs[3];
         }
 
-        this._totalRenewableEnergyFee = (totalRenewableEnergyFee / 100).toFixed(3);
+        this._totalRenewableEnergyFee = Number((totalRenewableEnergyFee / 100).toFixed(3));
         return this;
     }
 
     // Total fees
     CalculateTotalFees() {
-        const value = this._totalNetworkFee + this._totalCostOfConsumption;
-        this._totalFees = value.toFixed(2);
+        const value = (this._totalNetworkFee + this._totalCostOfConsumption + this._totalExcise + this._totalRenewableEnergyFee).toFixed(2);
+        this._totalFees = value;
         return this;
     }
 
