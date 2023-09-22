@@ -5,8 +5,12 @@
 
 # A web application for comparing and reading your electricity consumption data
 
-Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values. Pretty sure other electricity providers also do not share such data.
-They only give you how much you have consumed (kwh). In order to know how much you used electricity in a monetary value, this web application has been created.
+~~Eesti Gaas nor Elektrilevi does not give you a reading on how much you used electricity in monetary values.
+Pretty sure other electricity providers also do not share such data. They only give you how much you have
+consumed (kwh). In order to know how much you used electricity in a monetary value, this web application has
+been created.~~
+Elering AS have finnaly option to read your consumption also in monetary values! However, they lack on tools
+and statistics to compile much more detailed data for you. Hence this tool has been created.
 
 Application takes CSV file filled with data either from Eesti Gaas or from Elektrilevi. You have to export
 the CSV file from either of these service providers by yourself since they dont give an API for such procedure.
