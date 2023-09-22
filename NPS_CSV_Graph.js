@@ -121,7 +121,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Build statistics dataset
             const grid_tarrif_day = Number(CookieHandler.GetLocalCookie("network_fee_day"));
             const grid_tarrif_night = Number(CookieHandler.GetLocalCookie("network_fee_night"));
-            const grid_tarrifs = [grid_tarrif_day, grid_tarrif_night];
+            const excise = Number(CookieHandler.GetLocalCookie("excise"));
+            const grid_tarrifs = [grid_tarrif_day, grid_tarrif_night, excise];
             const Statistics = new StatisticsBuilder()
             // Electricity
             .CalculateHighestPriceOfElectricity(Merged_Data._MergedData)
@@ -143,6 +144,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateTotalNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateDaytimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateNighttimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
+            .CalculateTotalExcise(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             // Total fees
             .CalculateTotalFees()
             .BuildStatistics();
@@ -333,6 +335,7 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("total_grid_fee").innerHTML = `${Statistics._TotalGridFee} €`;
     document.getElementById("total_daytime_grid_fee").innerHTML = `${Statistics._TotalDaytimeGridFee} €`;
     document.getElementById("total_nighttime_grid_fee").innerHTML = `${Statistics._TotalNighttimeGridFee} €`;
+    document.getElementById("total_excise").innerHTML = `${Statistics._TotalExcise} €`;
 
     // Total fees
     document.getElementById("total_fees").innerHTML = `${Statistics._TotalFees} €`;

@@ -231,6 +231,15 @@ class StatisticsBuilder {
         this._totalNightimeNetworkFee = (totalNighttimeNetworkFee / 100).toFixed(3);
         return this;
     }
+    CalculateTotalExcise(data, length, tarrifs) {
+        let totalExcise = 0;
+        for(let i = 0; i < length; i++) {
+            totalExcise += data[i]["consumption"] * tarrifs[2];
+        }
+
+        this._totalExcise = totalExcise;
+        return this;
+    }
 
     // Total fees
     CalculateTotalFees() {
@@ -264,6 +273,7 @@ class StatisticsBuilder {
             this._totalNetworkFee,
             this._totalDaytimeNetworkFee,
             this._totalNightimeNetworkFee,
+            this._totalExcise,
             // Total fees
             this._totalFees
         );

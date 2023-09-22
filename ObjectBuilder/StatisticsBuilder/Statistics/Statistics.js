@@ -21,6 +21,7 @@ class Statistics {
         TotalGridFee,
         TotalDaytimeGridFee,
         TotalNighttimeGridFee,
+        TotalExcise,
         // Total fees
         TotalFees
     ) {
@@ -45,6 +46,7 @@ class Statistics {
         this._TotalGridFee = TotalGridFee;
         this._TotalDaytimeGridFee = TotalDaytimeGridFee;
         this._TotalNighttimeGridFee = TotalNighttimeGridFee;
+        this._TotalExcise = TotalExcise;
         // Total fees
         this._TotalFees = TotalFees;
     }
