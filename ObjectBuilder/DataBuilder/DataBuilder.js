@@ -63,7 +63,7 @@ class DataBuilder {
     // Elering electricity price data building
     NormalizeEleringData(data) {
         let normalizedEleringData = [];
-        const length = data.length - 2;
+        const length = data.length - 3; // -2 is daylight savings time, -3 is summer
         for(let i = 0; i < length; i++) {
             normalizedEleringData.push({
                 timestamp : data[i]["timestamp"],
