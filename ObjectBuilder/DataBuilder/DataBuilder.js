@@ -63,8 +63,19 @@ class DataBuilder {
     // Elering electricity price data building
     NormalizeEleringData(data) {
         let normalizedEleringData = [];
-        const length = data.length - 3; // -2 is daylight savings time, -3 is summer
-        for(let i = 0; i < length; i++) {
+        let length;
+        let i;
+        const date = new Date();
+        // Check if current date has daylight savings or not - works only on months where transitition is not happening
+        if(date.getTimezoneOffset() == -180) {
+            length = data.length - 3;
+            i = 0;
+        }
+        else {
+            length = data.length - 2;
+            i = 1;
+        }
+        for(i; i < length; i++) {
             normalizedEleringData.push({
                 timestamp : data[i]["timestamp"],
                 price : Number(((data[i]["price"]) / 10).toFixed(2)) // Divide by 10 because MWh -> KWh, 20% tax
