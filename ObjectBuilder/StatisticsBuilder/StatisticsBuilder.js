@@ -235,7 +235,7 @@ class StatisticsBuilder {
         return this;
     }
     CalculateTotalNetworkFee() {
-        this._totalNetworkFee = (this._totalExcise + this._totalRenewableEnergyFee + this._totalDaytimeNetworkFee + this._totalNightimeNetworkFee).toFixed(2);
+        this._totalNetworkFee = Number((this._totalExcise + this._totalRenewableEnergyFee + this._totalDaytimeNetworkFee + this._totalNightimeNetworkFee).toFixed(2));
         return this;
     }
 
