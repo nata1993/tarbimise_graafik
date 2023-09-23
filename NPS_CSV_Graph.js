@@ -142,11 +142,11 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateTotalCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             // Network fees
-            .CalculateTotalNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateDaytimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateNighttimeNetworkFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateTotalExcise(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
             .CalculateTotalRenewableEnergyFee(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull, grid_tarrifs)
+            .CalculateTotalNetworkFee()
             // Total fees
             .CalculateTotalFees()
             .BuildStatistics();

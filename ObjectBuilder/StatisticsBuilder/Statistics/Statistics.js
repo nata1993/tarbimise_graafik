@@ -18,11 +18,11 @@ class Statistics {
         AverageCostOfConsumption,
         TotalCostOfConsumption,
         // Grid fees
-        TotalGridFee,
         TotalDaytimeGridFee,
         TotalNighttimeGridFee,
         TotalExcise,
         TotalRenewableEnergyFee,
+        TotalGridFee,
         // Total fees
         TotalFees
     ) {
@@ -44,11 +44,11 @@ class Statistics {
         this._AverageCostOfConsumption = AverageCostOfConsumption;
         this._TotalCostOfConsumption = TotalCostOfConsumption;
         // Grid fees
-        this._TotalGridFee = TotalGridFee;
         this._TotalDaytimeGridFee = TotalDaytimeGridFee;
         this._TotalNighttimeGridFee = TotalNighttimeGridFee;
         this._TotalExcise = TotalExcise;
         this._TotalRenewableEnergyFee = TotalRenewableEnergyFee;
+        this._TotalGridFee = TotalGridFee;
         // Total fees
         this._TotalFees = TotalFees;
     }

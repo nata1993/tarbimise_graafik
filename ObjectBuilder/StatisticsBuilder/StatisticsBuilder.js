@@ -192,21 +192,6 @@ class StatisticsBuilder {
     }
 
     // Network fees statistics
-    CalculateTotalNetworkFee(data, length, tarrifs) {
-        let totalNetworkFee = 0;
-
-        for(let i = 0; i < length; i++) {
-            if(data[i]["consumption_time"] == "Päev") {
-                totalNetworkFee += data[i]["consumption"] * tarrifs[0];
-            }
-            else {
-                totalNetworkFee += data[i]["consumption"] * tarrifs[1];
-            }
-        }
-
-        this._totalNetworkFee = Number((totalNetworkFee / 100).toFixed(3));
-        return this;
-    }
     CalculateDaytimeNetworkFee(data, length, tarrifs) {
         let totalDaytimeNetworkFee = 0;
 
@@ -216,7 +201,7 @@ class StatisticsBuilder {
             }
         }
 
-        this._totalDaytimeNetworkFee = (totalDaytimeNetworkFee / 100).toFixed(3);
+        this._totalDaytimeNetworkFee = Number((totalDaytimeNetworkFee / 100).toFixed(2));
         return this;
     }
     CalculateNighttimeNetworkFee(data, length, tarrifs) {
@@ -228,7 +213,7 @@ class StatisticsBuilder {
             }
         }
 
-        this._totalNightimeNetworkFee = (totalNighttimeNetworkFee / 100).toFixed(3);
+        this._totalNightimeNetworkFee = Number((totalNighttimeNetworkFee / 100).toFixed(2));
         return this;
     }
     CalculateTotalExcise(data, length, tarrifs) {
@@ -237,7 +222,7 @@ class StatisticsBuilder {
             totalExcise += data[i]["consumption"] * tarrifs[2];
         }
 
-        this._totalExcise = Number(totalExcise.toFixed(3));
+        this._totalExcise = Number((totalExcise / 100).toFixed(2));
         return this;
     }
     CalculateTotalRenewableEnergyFee(data, length, tarrifs) {
@@ -246,14 +231,17 @@ class StatisticsBuilder {
             totalRenewableEnergyFee += data[i]["consumption"] * tarrifs[3];
         }
 
-        this._totalRenewableEnergyFee = Number((totalRenewableEnergyFee / 100).toFixed(3));
+        this._totalRenewableEnergyFee = Number((totalRenewableEnergyFee / 100).toFixed(2));
+        return this;
+    }
+    CalculateTotalNetworkFee() {
+        this._totalNetworkFee = (this._totalExcise + this._totalRenewableEnergyFee + this._totalDaytimeNetworkFee + this._totalNightimeNetworkFee).toFixed(2);
         return this;
     }
 
     // Total fees
     CalculateTotalFees() {
-        const value = (this._totalNetworkFee + this._totalCostOfConsumption + this._totalExcise + this._totalRenewableEnergyFee).toFixed(2);
-        this._totalFees = value;
+        this._totalFees = this._totalNetworkFee + this._totalCostOfConsumption;
         return this;
     }
 
@@ -279,11 +267,11 @@ class StatisticsBuilder {
             this._averageCostOfConsumption,
             this._totalCostOfConsumption,
             // Network fees
-            this._totalNetworkFee,
             this._totalDaytimeNetworkFee,
             this._totalNightimeNetworkFee,
             this._totalExcise,
             this._totalRenewableEnergyFee,
+            this._totalNetworkFee,
             // Total fees
             this._totalFees
         );
