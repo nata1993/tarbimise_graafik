@@ -8,7 +8,7 @@ class StatisticsBuilder {
                 highestPriceOfElectricity = data[i]["price"];
             }
         }
-        this._highestPriceOfElectricity = highestPriceOfElectricity.toFixed(3);
+        this._highestPriceOfElectricity = highestPriceOfElectricity.toFixed(2);
         return this;
     }
     CalculateLowestPriceOfElectricity(data) {
@@ -19,7 +19,7 @@ class StatisticsBuilder {
                 lowestPriceOfElectricity = data[i]["price"];
             }
         }
-        this._lowestPriceOfElectricity = lowestPriceOfElectricity.toFixed(3);;
+        this._lowestPriceOfElectricity = lowestPriceOfElectricity.toFixed(2);
         return this;
     }
     CalculateAveragePriceOfElectricity(data) {
@@ -29,7 +29,7 @@ class StatisticsBuilder {
             averagePriceOfElectricity += data[i]["price"];
         }
         averagePriceOfElectricity = averagePriceOfElectricity / length;
-        this._averagePriceOfElectricity = averagePriceOfElectricity.toFixed(3);;
+        this._averagePriceOfElectricity = averagePriceOfElectricity.toFixed(2);;
         return this;
     }
     CalculateWeightedAveragePriceOfElectricity(data, length) {
@@ -41,7 +41,7 @@ class StatisticsBuilder {
             totalOfTerms += data[i]["consumption"];
         }
         weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(3);
+        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(2);
         return this;
     }
     CalculateWeightedDaytimeAveragePriceOfElectricity(data, length) {
@@ -57,7 +57,7 @@ class StatisticsBuilder {
             }
         }
         daytimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(3);
+        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(2);
         return this;
     }
     CalculateWeightedNighttimeAveragePriceOfElectricity(data, length) {
@@ -73,7 +73,7 @@ class StatisticsBuilder {
             }
         }
         nighttimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(3);
+        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(2);
         return this; 
     }
 
@@ -168,7 +168,7 @@ class StatisticsBuilder {
         const d = day + "." + month + "." + year;
         const t = hour + ":" + minutes + ":" + seconds;
 
-        this._highestCostOfConsumption = highestCostOfConsumption.toFixed(3);
+        this._highestCostOfConsumption = highestCostOfConsumption.toFixed(2);
         this._whenHighestCostOfConsumption = d + " " + t;
         return this;
     }
@@ -178,7 +178,7 @@ class StatisticsBuilder {
             sum += data[i]["cost"];
         }
         let averageCostOfConsumption = sum / length;
-        this._averageCostOfConsumption = averageCostOfConsumption.toFixed(3);
+        this._averageCostOfConsumption = averageCostOfConsumption.toFixed(2);
         return this;
     }
     CalculateTotalCostOfConsumption(data, length) {
@@ -187,7 +187,7 @@ class StatisticsBuilder {
             totalCostOfConsumption += data[i]["cost"];
         }
         totalCostOfConsumption = totalCostOfConsumption / 100; // Convert cents into euro
-        this._totalCostOfConsumption = Number(totalCostOfConsumption.toFixed(3));
+        this._totalCostOfConsumption = Number(totalCostOfConsumption.toFixed(2));
         return this;
     }
 
