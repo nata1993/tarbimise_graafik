@@ -1,6 +1,6 @@
 class StatisticsBuilder {
     // Electricity price statistics
-    CalculateHighestPriceOfElectricity(data) {
+    FindHighestPriceOfElectricity(data) {
         let highestPriceOfElectricity = 0;
         const length = data.length;
         for (let i = 0; i < length; i++) {
@@ -11,7 +11,7 @@ class StatisticsBuilder {
         this._highestPriceOfElectricity = highestPriceOfElectricity.toFixed(2);
         return this;
     }
-    CalculateLowestPriceOfElectricity(data) {
+    FindLowestPriceOfElectricity(data) {
         let lowestPriceOfElectricity = data[0]["price"];
         const length = data.length;
         for (let i = 0; i < length; i++) {
@@ -28,57 +28,46 @@ class StatisticsBuilder {
         for(let i = 0; i < length; i++) {
             averagePriceOfElectricity += data[i]["price"];
         }
-        averagePriceOfElectricity = averagePriceOfElectricity / length;
-        this._averagePriceOfElectricity = averagePriceOfElectricity.toFixed(2);;
+        this._averagePriceOfElectricity = (averagePriceOfElectricity / length).toFixed(2);
         return this;
     }
     CalculateWeightedAveragePriceOfElectricity(data, length) {
-        let weightedAveragePriceOfElectricity = 0;
         let weightedTerms = 0;
         let totalOfTerms = 0;
         for(let i = 0; i < length; i++) {
             weightedTerms += data[i]["price"] * data[i]["consumption"];
             totalOfTerms += data[i]["consumption"];
         }
-        weightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._weightedAveragePriceOfElectricity = weightedAveragePriceOfElectricity.toFixed(2);
+        this._weightedAveragePriceOfElectricity = (weightedTerms / totalOfTerms).toFixed(2);
         return this;
     }
     CalculateWeightedDaytimeAveragePriceOfElectricity(data, length) {
-        let daytimeWeightedAveragePriceOfElectricity = 0;
         let weightedTerms = 0;
         let totalOfTerms = 0;
-        let counter = 0;
         for(let i = 0; i < length; i++) {
             if (data[i]["consumption_time"] == "Päev") {
                 weightedTerms += data[i]["price"] * data[i]["consumption"];
                 totalOfTerms += data[i]["consumption"];
-                counter++;
             }
         }
-        daytimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._daytimeWeightedAveragePriceOfElectricity = daytimeWeightedAveragePriceOfElectricity.toFixed(2);
+        this._daytimeWeightedAveragePriceOfElectricity = (weightedTerms / totalOfTerms).toFixed(2);
         return this;
     }
     CalculateWeightedNighttimeAveragePriceOfElectricity(data, length) {
-        let nighttimeWeightedAveragePriceOfElectricity = 0;
         let weightedTerms = 0;
         let totalOfTerms = 0;
-        let counter = 0;
         for(let i = 0; i < length; i++) {
             if (data[i]["consumption_time"] == "Öö") {
                 weightedTerms += data[i]["price"] * data[i]["consumption"];
                 totalOfTerms += data[i]["consumption"];
-                counter++;
             }
         }
-        nighttimeWeightedAveragePriceOfElectricity = weightedTerms / totalOfTerms;
-        this._nighttimeWeightedAveragePriceOfElectricity = nighttimeWeightedAveragePriceOfElectricity.toFixed(2);
+        this._nighttimeWeightedAveragePriceOfElectricity = (weightedTerms / totalOfTerms).toFixed(2);
         return this; 
     }
 
     // Electricity consumtion statistics
-    CalculateHighestConsumption(data) {
+    FindHighestConsumption(data) {
         let highestConsumption = 0;
         const length = data.length;
         for (let i = 0; i < length; i++) {
@@ -122,7 +111,7 @@ class StatisticsBuilder {
         this._highestDayConsumption = highestDay.toFixed(3);
         return this;
     }
-    CalculateLowestConsumption(data) {
+    FindLowestConsumption(data) {
         let lowestConsumption = data[0]["consumption"];
         const length = data.length;
         for (let i = 0; i < length; i++) {

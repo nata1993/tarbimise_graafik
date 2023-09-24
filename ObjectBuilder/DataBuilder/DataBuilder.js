@@ -31,7 +31,7 @@ class DataBuilder {
         return this;
     }
     NormalizeCSVdata(data) {
-        const ignoreDataBeginning = 11;
+        const ignoreDataBeginning = 11; // CSV file beginning contains irrelevant data
         let normalizedCSVdataLength = data.length - ignoreDataBeginning;;
         let normalizedCSVdata = [];
         const length = data.length;
@@ -67,6 +67,7 @@ class DataBuilder {
         let i;
         const date = new Date();
         // Check if current date has daylight savings or not - works only on months where transitition is not happening
+        // NB! Temporary solution!
         if(date.getTimezoneOffset() == -180) {
             length = data.length - 3;
             i = 0;
@@ -75,6 +76,7 @@ class DataBuilder {
             length = data.length - 2;
             i = 1;
         }
+
         for(i; i < length; i++) {
             normalizedEleringData.push({
                 timestamp : data[i]["timestamp"],
@@ -107,7 +109,7 @@ class DataBuilder {
 
             // Fill null for consumption and consumed time after the consumption data ended since
             // electricity prices are day-ahead and consumption is lacking behind in real time data.
-            // Since consumption and consumption are a pair of data at all times, consider it as one
+            // Since electricity hour price and consumption  are a pair of data at all times, consider it as one
             // hence no need for double check for type.
             if(typeof data2[i] === "undefined" || data2[i] === NaN) {
                 consumption = null;

@@ -126,16 +126,16 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const grid_tarrifs = [grid_tarrif_day, grid_tarrif_night, excise, renew_tariff];
             const Statistics = new StatisticsBuilder()
             // Electricity
-            .CalculateHighestPriceOfElectricity(Merged_Data._MergedData)
-            .CalculateLowestPriceOfElectricity(Merged_Data._MergedData)
+            .FindHighestPriceOfElectricity(Merged_Data._MergedData)
+            .FindLowestPriceOfElectricity(Merged_Data._MergedData)
             .CalculateAveragePriceOfElectricity(Merged_Data._MergedData)
             .CalculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             // Consumption
-            .CalculateHighestConsumption(Merged_Data._MergedData)
+            .FindHighestConsumption(Merged_Data._MergedData)
             .CalculateDayHighestConsumption(Merged_Data._MergedData)
-            .CalculateLowestConsumption(Merged_Data._MergedData)
+            .FindLowestConsumption(Merged_Data._MergedData)
             .CalculateAverageConsmption(Merged_Data._MergedData)
             // Cost
             .CalculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
