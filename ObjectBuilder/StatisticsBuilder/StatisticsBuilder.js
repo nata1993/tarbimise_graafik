@@ -31,6 +31,32 @@ class StatisticsBuilder {
         this._averagePriceOfElectricity = (averagePriceOfElectricity / length).toFixed(2);
         return this;
     }
+    CalculateAverageDaytimePriceOfElectricity(data) {
+        let average = 0;
+        const length = data.length;
+        let count = 0;
+        for(let i = 0; i < length; i++) {
+            if(data[i]["consumption_time"] == "Päev") {
+                average += data[i]["price"];
+                count++;
+            }
+        }
+        this._averageDaytimePriceOfElectricity = (average / count).toFixed(2);
+        return this;
+    }
+    CalculateAverageNighttimePriceOfElectricity(data) {
+        let average = 0;
+        const length = data.length;
+        let count = 0;
+        for(let i = 0; i < length; i++) {
+            if(data[i]["consumption_time"] == "Öö") {
+                average += data[i]["price"];
+                count++;
+            }
+        }
+        this._averageNighttimePriceOfElectricity = (average / count).toFixed(2);
+        return this;
+    }
     CalculateWeightedAveragePriceOfElectricity(data, length) {
         let weightedTerms = 0;
         let totalOfTerms = 0;
@@ -242,6 +268,8 @@ class StatisticsBuilder {
             this._highestPriceOfElectricity,
             this._lowestPriceOfElectricity,
             this._averagePriceOfElectricity,
+            this._averageDaytimePriceOfElectricity,
+            this._averageNighttimePriceOfElectricity,
             this._weightedAveragePriceOfElectricity,
             this._daytimeWeightedAveragePriceOfElectricity,
             this._nighttimeWeightedAveragePriceOfElectricity,

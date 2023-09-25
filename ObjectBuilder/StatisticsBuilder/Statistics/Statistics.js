@@ -4,6 +4,8 @@ class Statistics {
         HighestPriceOfElectricity,
         LowestPriceOfElectricity,
         AveragePriceOfElectricity,
+        AverageDaytimePriceOfElectricity,
+        AverageNighttimePriceOfElectricity,
         WeightedAveragePriceOfElectricity,
         DaytimeWeightedAveragePriceOfElectricity,
         NighttimeWeightedAveragePriceOfElectricity,
@@ -30,6 +32,8 @@ class Statistics {
         this._HighestPriceOfElectricity = HighestPriceOfElectricity;
         this._LowestPriceOfElectricity = LowestPriceOfElectricity;
         this._AveragePriceOfElectricity = AveragePriceOfElectricity;
+        this._AverageDaytimePriceOfElectricity = AverageDaytimePriceOfElectricity;
+        this._AverageNighttimePriceOfElectricity = AverageNighttimePriceOfElectricity;
         this._WeightedAveragePriceOfElectricity = WeightedAveragePriceOfElectricity;
         this._DaytimeWeightedAveragePriceOfElectricity = DaytimeWeightedAveragePriceOfElectricity;
         this._NighttimeWeightedAveragePriceOfElectricity = NighttimeWeightedAveragePriceOfElectricity;

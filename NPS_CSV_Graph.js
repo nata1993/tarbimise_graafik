@@ -129,6 +129,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .FindHighestPriceOfElectricity(Merged_Data._MergedData)
             .FindLowestPriceOfElectricity(Merged_Data._MergedData)
             .CalculateAveragePriceOfElectricity(Merged_Data._MergedData)
+            .CalculateAverageDaytimePriceOfElectricity(Merged_Data._MergedData)
+            .CalculateAverageNighttimePriceOfElectricity(Merged_Data._MergedData)
             .CalculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
@@ -150,7 +152,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Total fees
             .CalculateTotalFees()
             .BuildStatistics();
-
+            
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
             .GetGraphsContainerWidthAndheightByID("graph_main_container")
@@ -301,6 +303,8 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("highestPrice").innerHTML = `${Statistics._HighestPriceOfElectricity} \u00A2/kWh`;
     document.getElementById("lowestPrice").innerHTML = `${Statistics._LowestPriceOfElectricity} \u00A2/kWh`;
     document.getElementById("averagePrice").innerHTML = `${Statistics._AveragePriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("averageDaytimePrice").innerHTML = `${Statistics._AverageDaytimePriceOfElectricity} \u00A2/kWh`;
+    document.getElementById("averageNighttimePrice").innerHTML = `${Statistics._AverageNighttimePriceOfElectricity} \u00A2/kWh`;
     document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/kWh`;
     document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
     document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
