@@ -99,6 +99,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const CSV_File_Data = CSV_File_Results.data;
             const ConsumptionData = new DataBuilder()
             .GetConsumptionDataPeriod(CSV_File_Data)
+            .GetConsumptionDataStartDate(CSV_File_Data)
+            .GetConsumptionDataEndDate(CSV_File_Data)
             .GetDaytimeConsumptionFromData(CSV_File_Data)
             .GetNightTimeConsumptionFromData(CSV_File_Data)
             .GetTotalConsumptionFromData(CSV_File_Data)
@@ -152,7 +154,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Total fees
             .CalculateTotalFees()
             .BuildStatistics();
-            
+
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
             .GetGraphsContainerWidthAndheightByID("graph_main_container")

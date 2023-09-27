@@ -4,6 +4,16 @@ class DataBuilder {
         this._normalizedConsumptionDataPeriod = data[2][1];
         return this;
     }
+    GetConsumptionDataStartDate(data) {
+        let start_date = data[2][1].slice(0, 10);
+        this._start_date = start_date;
+        return this;
+    }
+    GetConsumptionDataEndDate(data) {
+        let end_date = data[2][1].slice(13, 23);
+        this._end_date = end_date;
+        return this;
+    }
     GetDaytimeConsumptionFromData(data){
         let number;
         if (data[6][2] === "" || data[6][2] == null) {
