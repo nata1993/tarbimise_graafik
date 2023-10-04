@@ -260,7 +260,6 @@ class StatisticsBuilder {
         return this;
     }
 
-
     // Build all of the statistics
     BuildStatistics() {
         return new Statistics(
