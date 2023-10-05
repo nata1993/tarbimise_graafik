@@ -155,6 +155,14 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateTotalFees()
             .BuildStatistics();
 
+            const notification_bar = document.getElementById("no_grid_charges");
+            if(excise == 0 || renew_tariff == 0 || grid_tarrif_day == 0 || grid_tarrif_night == 0 ) {
+                notification_bar.style.display = "block";
+            }
+            else {
+                notification_bar.style.display = "none";
+            }
+
             // Create container where graphs will be placed
             const GraphsContainer = new GraphBuilder()
             .GetGraphsContainerWidthAndheightByID("graph_main_container")
@@ -323,7 +331,7 @@ function StatisticsText(Statistics, ConsumptionData) {
     // Cost
     document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
     document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
-    document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption}`;
+    document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption} hour.`;
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 
     // Network fees

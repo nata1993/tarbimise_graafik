@@ -105,3 +105,10 @@ h3 {
 .indent {
     padding: 10px;
 }
+
+.notification {
+    display: none;
+    background-color: #ff0303;
+    padding: 10px;
+    text-align: center;
+}
