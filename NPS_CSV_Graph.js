@@ -232,7 +232,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 ],
                 Merged_Data,
                 Statistics._HighestPriceOfElectricity,
-                EleringGraph.graph_usable_height,
+                Statistics._LowestPriceOfElectricity,
                 [
                     6, 12, 500
                 ],

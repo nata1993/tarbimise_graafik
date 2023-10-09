@@ -171,7 +171,7 @@ class GraphBuilder {
     }
 
     // Graphs themselves
-    BuildEleringGraph(graph_mapping_coordinates, data, highest_price, usable_heigth, price_levels, element_id) {
+    BuildEleringGraph(graph_mapping_coordinates, data, highest_price, lowest_price, price_levels, element_id) {
         // electricity price levels
         const pricelevel1 = price_levels[0];
         const pricelevel2 = price_levels[1];
@@ -186,13 +186,11 @@ class GraphBuilder {
         let x2 = x1 + (((graph_mapping_coordinates[3] - 1) - (graph_mapping_coordinates[2] + 1)) / data._MergedDataLength);
         const width = x2 - x1;
 
-        // ratio for y coordinate
-        const price_ratio = usable_heigth / highest_price;
-        
         // generate continuos graph of lines
         for(let i = 0; i < data._MergedDataLength; i++) {
             const hourPrice = data._MergedData[i].price;
-            let y = graph_mapping_coordinates[1] - hourPrice * price_ratio;
+            // scaling formula from https://writingjavascript.com/scaling-values-between-two-ranges
+            const y = (hourPrice - lowest_price) * ((graph_mapping_coordinates[0] + (this.graph_usable_height*0.1)) - graph_mapping_coordinates[1]) / (highest_price - lowest_price) + graph_mapping_coordinates[1];
             if (hourPrice <= pricelevel1) {
                 element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="2"/>`;
             }
