@@ -278,7 +278,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                     Statistics._HighestPriceOfElectricity,
                     Statistics._HighestConsumption,
                     Statistics._HighestCostOfConsumption
-                ]
+                ],
+                Statistics._LowestPriceOfElectricity
             );
 
             // Fill data statistics to HTML
