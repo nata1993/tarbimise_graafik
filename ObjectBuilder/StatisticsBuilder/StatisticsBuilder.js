@@ -194,6 +194,7 @@ class StatisticsBuilder {
             if(Number(data[i]["cost"]) < lowestCostOfConsumption) {
                 lowestCostOfConsumption = Number(data[i]["cost"]);
                 when = data[i]["timestamp"];
+                console.log("iffff: ", data[i]["cost"]);
             }
         }
 
@@ -304,7 +305,7 @@ class StatisticsBuilder {
             // Cost
             this._highestCostOfConsumption,
             this._whenHighestCostOfConsumption,
-            this._lowestConsumption,
+            this._lowestCostOfConsumption,
             this._whenLowestCostOfConsumption,
             this._averageCostOfConsumption,
             this._totalCostOfConsumption,
