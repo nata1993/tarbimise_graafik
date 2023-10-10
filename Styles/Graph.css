@@ -1,0 +1,26 @@
+#low_price {
+    stroke: #0A0;
+    stroke-width: 2;
+}
+#medium_price {
+    stroke: #FE0;
+    stroke-width: 2;
+}
+#extreme_price {
+    stroke: #F0F;
+    stroke-width: 2;
+}
+#high_price {
+    stroke: #F00;
+    stroke-width: 2;
+}
+
+#consumption {
+    stroke: #000;
+    stroke-width: 2;
+}
+
+#cost {
+    stroke: #f77d40;
+    stroke-width: 2;
+}

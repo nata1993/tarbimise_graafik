@@ -192,16 +192,16 @@ class GraphBuilder {
             // scaling formula from https://writingjavascript.com/scaling-values-between-two-ranges
             const y = (hourPrice - lowest_price) * ((graph_mapping_coordinates[0] + (this.graph_usable_height*0.1)) - graph_mapping_coordinates[1]) / (highest_price - lowest_price) + graph_mapping_coordinates[1];
             if (hourPrice <= pricelevel1) {
-                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#0A0" stroke-width="2"/>`;
+                element_str += `<line id="low_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
             else if (hourPrice > pricelevel1 && hourPrice <= pricelevel2) {
-                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#FE0" stroke-width="2"/>`;
+                element_str += `<line id="medium_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
             else if (hourPrice >= extremepricelevel) {
-                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#F0F" stroke-width="2" />`;
+                element_str += `<line id="extreme_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
             else {
-                element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#F00" stroke-width="2"/>`;
+                element_str += `<line id="high_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
             
             x1 += width;
@@ -229,7 +229,7 @@ class GraphBuilder {
             const hourConsumption = data._MergedData[i].consumption;
             let y = graph_mapping_coordinates[1] - hourConsumption * price_ratio;
             
-            element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#000" stroke-width="2"/>`;
+            element_str += `<line id="consumption" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             
             x1 += width;
             x2 += width;
@@ -259,7 +259,7 @@ class GraphBuilder {
             const hourCost = data._MergedData[i].cost;
             let y = graph_mapping_coordinates[1] - hourCost * price_ratio;
             
-            element_str += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#f77d40" stroke-width="2"/>`;
+            element_str += `<line id="cost" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             
             x1 += width;
             x2 += width;
