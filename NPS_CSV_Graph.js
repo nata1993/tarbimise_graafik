@@ -143,6 +143,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateAverageConsmption(Merged_Data._MergedData)
             // Cost
             .CalculateHighestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            .CalculateLowestCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateAverageCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateTotalCostOfConsumption(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             // Network fees
@@ -333,6 +334,8 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("totalCost").innerHTML = `${Statistics._TotalCostOfConsumption} €`;
     document.getElementById("highestCost").innerHTML = `${Statistics._HighestCostOfConsumption} \u00A2`;
     document.getElementById("whenHighestCost").innerHTML = `Which happened on ${Statistics._WhenHighestCostOfConsumption} hour.`;
+    document.getElementById("lowestCost").innerHTML = `${Statistics._LowestCostOfConsumption} \u00A2`;
+    document.getElementById("whenLowestCost").innerHTML = `Which happened on ${Statistics._WhenLowestCostOfConsumption} hour.`;
     document.getElementById("averageCost").innerHTML = `${Statistics._AverageCostOfConsumption} \u00A2`;
 
     // Network fees

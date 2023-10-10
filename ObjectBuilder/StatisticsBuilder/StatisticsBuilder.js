@@ -167,8 +167,8 @@ class StatisticsBuilder {
         let highestCostOfConsumption = 0;
         let when = null;
         for(let i = 0; i < length; i++) {
-            if(data[i]["cost"] > highestCostOfConsumption) {
-                highestCostOfConsumption = data[i]["cost"];
+            if(Number(data[i]["cost"]) > highestCostOfConsumption) {
+                highestCostOfConsumption = Number(data[i]["cost"]);
                 when = data[i]["timestamp"];
             }
         }
@@ -185,6 +185,30 @@ class StatisticsBuilder {
 
         this._highestCostOfConsumption = highestCostOfConsumption.toFixed(2);
         this._whenHighestCostOfConsumption = d + " " + t;
+        return this;
+    }
+    CalculateLowestCostOfConsumption(data, length) {
+        let lowestCostOfConsumption = Number(data[0]["cost"]);
+        let when = null;
+        for(let i = 0; i < length; i++) {
+            if(Number(data[i]["cost"]) < lowestCostOfConsumption) {
+                lowestCostOfConsumption = Number(data[i]["cost"]);
+                when = data[i]["timestamp"];
+            }
+        }
+
+        const date = new Date(when * 1000);
+        const year = date.getFullYear();
+        const month = ("0" + (date.getMonth() + 1)).substr(-2);
+        const day = ("0" + date.getDate()).substr(-2);
+        const hour = ("0" + date.getHours()).substr(-2);
+        const minutes = ("0" + date.getMinutes()).substr(-2);
+        const seconds = ("0" + date.getSeconds()).substr(-2);
+        const d = day + "." + month + "." + year;
+        const t = hour + ":" + minutes + ":" + seconds;
+
+        this._lowestCostOfConsumption = lowestCostOfConsumption.toFixed(2);
+        this._whenLowestCostOfConsumption = d + " " + t;
         return this;
     }
     CalculateAverageCostOfConsumption(data, length) {
@@ -280,6 +304,8 @@ class StatisticsBuilder {
             // Cost
             this._highestCostOfConsumption,
             this._whenHighestCostOfConsumption,
+            this._lowestConsumption,
+            this._whenLowestCostOfConsumption,
             this._averageCostOfConsumption,
             this._totalCostOfConsumption,
             // Network fees

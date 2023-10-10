@@ -17,6 +17,8 @@ class Statistics {
         // Cost
         HighestCostOfConsumption,
         WhenHighestCostOfConsumption,
+        LowestCostOfConsumption,
+        WhenLowestCostOfConsumption,
         AverageCostOfConsumption,
         TotalCostOfConsumption,
         // Grid fees
@@ -45,6 +47,8 @@ class Statistics {
         // Cost
         this._HighestCostOfConsumption = HighestCostOfConsumption;
         this._WhenHighestCostOfConsumption = WhenHighestCostOfConsumption;
+        this._LowestCostOfConsumption = LowestCostOfConsumption;
+        this._WhenLowestCostOfConsumption = WhenLowestCostOfConsumption;
         this._AverageCostOfConsumption = AverageCostOfConsumption;
         this._TotalCostOfConsumption = TotalCostOfConsumption;
         // Grid fees
