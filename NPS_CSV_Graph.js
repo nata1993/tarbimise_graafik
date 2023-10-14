@@ -235,7 +235,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 Statistics._HighestPriceOfElectricity,
                 Statistics._LowestPriceOfElectricity,
                 [
-                    6, 12, 500
+                    0, 6, 12, 20, 500
                 ],
                 "elering_graph"
             );

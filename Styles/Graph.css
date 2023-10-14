@@ -1,17 +1,21 @@
 #low_price {
-    stroke: #0A0;
+    stroke: rgb(255, 221, 0);
     stroke-width: 2;
 }
 #medium_price {
-    stroke: #FE0;
+    stroke: rgb(255, 136, 0);
     stroke-width: 2;
 }
 #extreme_price {
-    stroke: #F0F;
+    stroke: #F00;
     stroke-width: 2;
 }
 #high_price {
-    stroke: #F00;
+    stroke: #F0F;
+    stroke-width: 2;
+}
+#below_price {
+    stroke: #0A0;
     stroke-width: 2;
 }
 

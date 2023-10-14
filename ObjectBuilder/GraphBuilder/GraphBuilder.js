@@ -175,7 +175,9 @@ class GraphBuilder {
         // electricity price levels
         const pricelevel1 = price_levels[0];
         const pricelevel2 = price_levels[1];
-        const extremepricelevel = price_levels[2];
+        const pricelevel3 = price_levels[2];
+        const pricelevel4 = price_levels[3];
+        const extremepricelevel = price_levels[4];
 
         // element preparation
         const element = document.getElementById(element_id);
@@ -192,18 +194,20 @@ class GraphBuilder {
             // scaling formula from https://writingjavascript.com/scaling-values-between-two-ranges
             const y = (hourPrice - lowest_price) * ((graph_mapping_coordinates[0] + (this.graph_usable_height*0.1)) - graph_mapping_coordinates[1]) / (highest_price - lowest_price) + graph_mapping_coordinates[1];
             if (hourPrice <= pricelevel1) {
-                element_str += `<line id="low_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
+                element_str += `<line id="below_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
             else if (hourPrice > pricelevel1 && hourPrice <= pricelevel2) {
+                element_str += `<line id="low_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
+            }
+            else if (hourPrice > pricelevel2 && hourPrice <= pricelevel3) {
                 element_str += `<line id="medium_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
-            else if (hourPrice >= extremepricelevel) {
-                element_str += `<line id="extreme_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
-            }
-            else {
+            else if (hourPrice > pricelevel3 && hourPrice <= pricelevel4) {
                 element_str += `<line id="high_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
             }
-            
+            else if (hourPrice > extremepricelevel) {
+                element_str += `<line id="extreme_price" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" />`;
+            }
             x1 += width;
             x2 += width;
         }
