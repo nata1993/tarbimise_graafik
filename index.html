@@ -29,6 +29,7 @@
                 <label>Select CSV file:</label>
                 <label>Graph start date:</label>
                 <label>Graph end date:</label>
+                <label>Electricity provider margin (s/kwh):</label>
                 <label>Daytime network fee (s/kwh):</label>
                 <label>Nighttime network fee (s/kwh):</label>
                 <label>Excise (s/kwh):</label>
@@ -40,6 +41,7 @@
                 <input type="date" id="date_end" />
                 <input type="number" id="network_fee_day" min="0" step="any" />
                 <input type="number" id="network_fee_night" min="0" step="any" />
+                <input type="number" id="provider_margin" min="0" step="any" />
                 <input type="number" id="excise_tariff" min="0" step="any" />
                 <input type="number" id="renew_tariff" min="0" step="any" />
             </div>
@@ -66,6 +68,10 @@
             <h3>Electricity statistics</h3>
             <div id="electricity_statistics">
                 <div>
+                    <div class="titleContainer" title="Electricity service provider margin it takes by providing you electricity from market spot (NPS).">
+                        <h4>Electricity service provider margin</h4>
+                        <p id="provider_fee">-</p>
+                    </div>
                     <div class="titleContainer" title="Highest NPS market price of electricity in a given period.">
                         <h4>Period highest price of electricity</h4>
                         <p id="highestPrice">-</p>

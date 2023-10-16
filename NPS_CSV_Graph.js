@@ -2,8 +2,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     const elem1 = document.getElementById("network_fee_day");
     const elem2 = document.getElementById("network_fee_night");
-    const elem3 = document.getElementById("excise_tariff");
-    const elem4 = document.getElementById("renew_tariff");
+    const elem3 = document.getElementById("provider_margin");
+    const elem4 = document.getElementById("excise_tariff");
+    const elem5 = document.getElementById("renew_tariff");
 
     elem1.addEventListener("change", (event) => {
         CookieHandler.SetLocalCookie("network_fee_day", elem1.value);
@@ -12,16 +13,20 @@ document.addEventListener("DOMContentLoaded", (event) => {
         CookieHandler.SetLocalCookie("network_fee_night", elem2.value);
     });
     elem3.addEventListener("change", (event) => {
-        CookieHandler.SetLocalCookie("excise", elem3.value);
+        CookieHandler.SetLocalCookie("provider_margin", elem3.value);
     });
     elem4.addEventListener("change", (event) => {
-        CookieHandler.SetLocalCookie("renewable_energy", elem4.value);
+        CookieHandler.SetLocalCookie("excise", elem4.value);
+    });
+    elem5.addEventListener("change", (event) => {
+        CookieHandler.SetLocalCookie("renewable_energy", elem5.value);
     });
 
     elem1.value = CookieHandler.GetLocalCookie("network_fee_day");
     elem2.value = CookieHandler.GetLocalCookie("network_fee_night");
-    elem3.value = CookieHandler.GetLocalCookie("excise");
-    elem4.value = CookieHandler.GetLocalCookie("renewable_energy");
+    elem3.value = CookieHandler.GetLocalCookie("provider_margin");
+    elem4.value = CookieHandler.GetLocalCookie("excise");
+    elem5.value = CookieHandler.GetLocalCookie("renewable_energy");
 });
 
 // Draw Nord Pool Spot prices based on user selected date range
@@ -123,6 +128,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             // Build statistics dataset
             const grid_tarrif_day = Number(CookieHandler.GetLocalCookie("network_fee_day"));
             const grid_tarrif_night = Number(CookieHandler.GetLocalCookie("network_fee_night"));
+            const provider_margin = Number(CookieHandler.GetLocalCookie("provider_margin"));
             const excise = Number(CookieHandler.GetLocalCookie("excise"));
             const renew_tariff = Number(CookieHandler.GetLocalCookie("renewable_energy"));
             const grid_tarrifs = [grid_tarrif_day, grid_tarrif_night, excise, renew_tariff];
@@ -344,6 +350,9 @@ function StatisticsText(Statistics, ConsumptionData) {
     }
     if(CookieHandler.GetLocalCookie("network_fee_night") !== null && CookieHandler.GetLocalCookie("network_fee_night") !== "") {
         document.getElementById("nighttime_grid_tariff").innerHTML = `${CookieHandler.GetLocalCookie("network_fee_night")} \u00A2/kWh`;
+    }
+    if(CookieHandler.GetLocalCookie("provider_margin") !== null && CookieHandler.GetLocalCookie("provider_margin") !== "") {
+        document.getElementById("provider_fee").innerHTML = `${CookieHandler.GetLocalCookie("provider_margin")} \u00A2/kWh`;
     }
     if(CookieHandler.GetLocalCookie("excise") !== null && CookieHandler.GetLocalCookie("excise") !== "") {
         document.getElementById("excise").innerHTML = `${CookieHandler.GetLocalCookie("excise")} \u00A2/kWh`;
