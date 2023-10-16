@@ -11,10 +11,7 @@
 </head>
 <body>
     <div class="head">
-        <p class="notification" id="no_grid_charges">
-            Day/nighttime network fee, excise and/or renewable energy fee was not supplied.
-            Because of this, the grid charges could not be fully calculated.
-        </p>
+        <p class="notification" id="no_grid_charges"></p>
         <div class="indent">
             <h1>Electricity consumption calculator</h1>
             <p>
@@ -39,9 +36,9 @@
                 <input id="csvFileInput" type="file" accept=".csv" title="CSV file exported from Elektrilevi" onchange="drawGraphs()" />
                 <input type="date" id="date_start" />
                 <input type="date" id="date_end" />
+                <input type="number" id="provider_margin" min="0" step="any" />
                 <input type="number" id="network_fee_day" min="0" step="any" />
                 <input type="number" id="network_fee_night" min="0" step="any" />
-                <input type="number" id="provider_margin" min="0" step="any" />
                 <input type="number" id="excise_tariff" min="0" step="any" />
                 <input type="number" id="renew_tariff" min="0" step="any" />
             </div>

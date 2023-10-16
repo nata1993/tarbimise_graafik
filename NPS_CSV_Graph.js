@@ -163,8 +163,15 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .BuildStatistics();
 
             const notification_bar = document.getElementById("no_grid_charges");
-            if(excise == 0 || renew_tariff == 0 || grid_tarrif_day == 0 || grid_tarrif_night == 0 ) {
+            if (excise == 0 || renew_tariff == 0 || grid_tarrif_day == 0 || grid_tarrif_night == 0 ) {
                 notification_bar.style.display = "block";
+                notification_bar.innerHTML = "Day/nighttime network fee, excise and/or renewable energy fee was not supplied. " +
+                                                "Because of this, the grid charges could not be fully calculated."
+            }
+            else if (provider_margin == 0) {
+                notification_bar.style.display = "block";
+                notification_bar.innerHTML = "Electricity provider margin is not provided. " + 
+                                                "Because of that, electricity and cost statistics are calculated without it.";
             }
             else {
                 notification_bar.style.display = "none";
