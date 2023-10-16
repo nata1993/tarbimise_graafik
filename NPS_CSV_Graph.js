@@ -186,7 +186,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateGraphsContainerPosition()
             .BuildGraphsContainer("graphs_container");
 
-            // Create container for the graph
+            // Create container for the graph itself
             const graphs_count = 3;
             const GraphContainers = new GraphBuilder()
             .CalculateGraphContainerPosition(
@@ -202,7 +202,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             const graph_height = GraphContainers._Graph_containers[0][0].xy1[1] - GraphContainers._Graph_containers[0][0].xy[1];
             const ratio_for_usable_graph_height = 0.9;
 
-            // Create Elering electricity prices graph
+            // Create Elering electricity prices graph base
             const EleringGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -214,7 +214,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
-            // Create consumption graph
+            // Create consumption graph base
             const ConsumptionGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -226,7 +226,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
-            // Create cost graph
+            // Create cost graph base
             const CostGraph = new GraphBuilder()
             .PrepareGraphsForDrawing(graph_height, ratio_for_usable_graph_height)
             .BuildBaseGraph(
@@ -238,7 +238,7 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
                 15
             );
 
-            // Build the graphs
+            // Build the graphs themselves
             EleringGraph.BuildEleringGraph(
                 [
                     EleringGraph.graph_y1,
