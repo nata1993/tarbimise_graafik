@@ -142,6 +142,8 @@ function NPS_CSV_Graph_Generator(CSV_File_Results) {
             .CalculateWeightedAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedDaytimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
             .CalculateWeightedNighttimeAveragePriceOfElectricity(Merged_Data._MergedData, Merged_Data._MergedDataWithoutNull)
+            // Margin
+            .CalculateTotalCostOfProviderMargin(provider_margin, ConsumptionData._ConsumptionDataTotalConsumption)
             // Consumption
             .FindHighestConsumption(Merged_Data._MergedData)
             .CalculateDayHighestConsumption(Merged_Data._MergedData)
@@ -333,6 +335,9 @@ function StatisticsText(Statistics, ConsumptionData) {
     document.getElementById("weightedPrice").innerHTML = `${Statistics._WeightedAveragePriceOfElectricity} \u00A2/kWh`;
     document.getElementById("weightedDaytimePrice").innerHTML = `${Statistics._DaytimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
     document.getElementById("weightedNighttimePrice").innerHTML = `${Statistics._NighttimeWeightedAveragePriceOfElectricity} \u00A2/kWh`;
+
+    // Margin
+    document.getElementById("marginCost").innerHTML = `${Statistics._TotalServiceProviderMarginCost} €`;
 
     // Consumption
     document.getElementById("highestConsumption").innerHTML = `${Statistics._HighestConsumption} kWh`;

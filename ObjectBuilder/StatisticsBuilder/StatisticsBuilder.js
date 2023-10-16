@@ -92,6 +92,12 @@ class StatisticsBuilder {
         return this; 
     }
 
+    // Electricity provider statistics
+    CalculateTotalCostOfProviderMargin(margin, totalConsumption ) {
+        this._totalMarginCost = ((margin * totalConsumption) / 100).toFixed(2);
+        return this;
+    }
+
     // Electricity consumtion statistics
     FindHighestConsumption(data) {
         let highestConsumption = 0;
@@ -296,6 +302,8 @@ class StatisticsBuilder {
             this._weightedAveragePriceOfElectricity,
             this._daytimeWeightedAveragePriceOfElectricity,
             this._nighttimeWeightedAveragePriceOfElectricity,
+            // Margin
+            this._totalMarginCost,
             // Consumption
             this._highestConsumption,
             this._highestDayConsumption,

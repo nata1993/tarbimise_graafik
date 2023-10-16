@@ -9,6 +9,8 @@ class Statistics {
         WeightedAveragePriceOfElectricity,
         DaytimeWeightedAveragePriceOfElectricity,
         NighttimeWeightedAveragePriceOfElectricity,
+        // Margin
+        TotalMarginCost,
         // Consumption
         HighestConsumption,
         HighestDayConsumption,
@@ -39,6 +41,8 @@ class Statistics {
         this._WeightedAveragePriceOfElectricity = WeightedAveragePriceOfElectricity;
         this._DaytimeWeightedAveragePriceOfElectricity = DaytimeWeightedAveragePriceOfElectricity;
         this._NighttimeWeightedAveragePriceOfElectricity = NighttimeWeightedAveragePriceOfElectricity;
+        // Margin
+        this._TotalServiceProviderMarginCost = TotalMarginCost;
         // Consumption
         this._HighestConsumption = HighestConsumption;
         this._HighestDayConsumption = HighestDayConsumption;
