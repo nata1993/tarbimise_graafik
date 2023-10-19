@@ -286,7 +286,7 @@ class StatisticsBuilder {
 
     // Total fees
     CalculateTotalFees() {
-        this._totalFees = this._totalNetworkFee + this._totalCostOfConsumption;
+        this._totalFees = (this._totalNetworkFee + this._totalCostOfConsumption).toFixed(2);
         return this;
     }
 

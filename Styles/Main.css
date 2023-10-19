@@ -82,12 +82,12 @@ h3 {
 }
 
 /* Statistical text below SVG */
-#electricity_statistics, #network_statistics, #total_statistics {
+#electricity_statistics, #user_statistics, #network_statistics, #total_statistics {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
-#electricity_statistics div, #network_statistics div, #total_statistics div {
+#electricity_statistics div, #user_statistics div, #network_statistics div, #total_statistics div {
     padding: 15px;
     flex: 1;
 }
