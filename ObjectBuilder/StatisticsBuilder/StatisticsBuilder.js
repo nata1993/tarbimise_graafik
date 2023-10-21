@@ -103,9 +103,8 @@ class StatisticsBuilder {
         let highestConsumption = 0;
         const length = data.length;
         for (let i = 0; i < length; i++) {
-            let h = data[i]["consumption"];
-            if(h > highestConsumption) {
-                highestConsumption = h;
+            if(data[i]["consumption"] > highestConsumption) {
+                highestConsumption = data[i]["consumption"];
             }
         }
         this._highestConsumption = highestConsumption;
